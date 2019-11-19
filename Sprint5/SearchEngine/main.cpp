@@ -31,7 +31,7 @@ int main()
     file >> j;
 
    // cout << j;
-    cout << j["plain"] << endl;
-     cout << j["html"];
+   // cout << j["plain"] << endl;
+   // cout << j["html"];
 
 }
