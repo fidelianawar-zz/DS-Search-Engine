@@ -18,26 +18,26 @@ int main()
 {
 
     int mode;
-    DSAVLTree<string>* newTree = new DSAVLTree<string>;
-    newTree->insert("Dallas");
-    newTree->insert("Austin");
-    newTree->insert("Houston");
-    newTree->insert("NYC");
-    newTree->insert("Dallas");
-   // newTree->printInOrder();
+//    DSAVLTree<string>* newTree = new DSAVLTree<string>;
+//    newTree->insert("Dallas");
+//    newTree->insert("Austin");
+//    newTree->insert("Houston");
+//    newTree->insert("NYC");
+//    newTree->insert("Dallas");
+//   // newTree->printInOrder();
 
-    bool result = newTree->isEmpty()? true: false;
-  //  result == false? cout << "Tree contains members" << endl : cout << "Tree is empty"<< endl;
+//    bool result = newTree->isEmpty()? true: false;
+//  //  result == false? cout << "Tree contains members" << endl : cout << "Tree is empty"<< endl;
 
 
-    ifstream file("101310.json");
+//    ifstream file("101310.json");
 
-    if(!file.is_open()){
-        cout << "File did not open";
-    }
+//    if(!file.is_open()){
+//        cout << "File did not open";
+//    }
 
-    json j;
-    file >> j;
+//    json j;
+//    file >> j;
 
    // cout << j;
 //    cout << j["plain"] << endl;
