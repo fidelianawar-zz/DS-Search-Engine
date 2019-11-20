@@ -4,8 +4,16 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.cpp
+        DocumentProcessor.cpp \
+        IndexHandler.cpp \
+        IndexInterface.cpp \
+        ProgramInterface.cpp \
+        stopwords.cpp
 
 HEADERS += \
+    DocumentProcessor.h \
+    IndexHandler.h \
+    IndexInterface.h \
     dsavltree.h \
-    json.hpp
+    json.hpp \
+    stopwords.h
