@@ -32,6 +32,18 @@ int main()
 
    // cout << j;
     cout << j["plain"] << endl;
-     cout << j["html"];
+    cout << j["html"];
 
+     /* Fidelia main
+
+        #include <iostream>
+        #include "readIndexFile.h"
+        using namespace std;
+
+        int main(int argc, char* const argv[])
+        {
+            readIndexFile indexFile;
+            indexFile.readInputData();
+        }
+      */
 }

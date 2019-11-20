@@ -4,8 +4,14 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += \
-        main.cpp
+        main.cpp \
+        readIndexFile.cpp
 
 HEADERS += \
     dsavltree.h \
-    json.hpp
+    dshashtable.h \
+    json.hpp \
+    readIndexFile.h
+
+DISTFILES += \
+    ../../../CSE2341-F19-Fidelia-Nawar/Sprint5/build-FinalProject-Desktop_Qt_5_10_0_GCC_64bit-Debug/101310.json
