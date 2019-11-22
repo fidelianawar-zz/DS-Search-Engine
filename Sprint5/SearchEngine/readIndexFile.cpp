@@ -37,5 +37,8 @@ void readIndexFile::readInputData(){
     contents = regex_replace(contents, numbers, a);
 
     cout << contents;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/FideliaBranch
 }
