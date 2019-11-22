@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 //#ifndef QUERYPROCESSOR_H
 //#define QUERYPROCESSOR_H
 //#include <queue>
@@ -28,7 +28,7 @@
 //};
 
 //#endif // QUERYPROCESSOR_H
-=======
+
 #ifndef QUERYPROCESSOR_H
 #define QUERYPROCESSOR_H
 #include <queue>
@@ -37,11 +37,11 @@
 #include <sstream>
 #include <vector>
 #include <locale>
-#include "word.h"
+#include "Word.h"
 #include "stopwords.h"
 #include "dsavltree.h"
 #include <algorithm>
-#include "searcher.h"
+//#include "searcher.h"
 
 using namespace std;
 
@@ -58,4 +58,3 @@ public:
 };
 
 #endif // QUERYPROCESSOR_H
->>>>>>> origin/FideliaBranch

@@ -1,6 +1,6 @@
 #include "indexAVL.h"
 
-indexAVL::indexAVL()
-{
+//indexAVL::indexAVL()
+//{
 
-}
+//}

@@ -1,6 +1,6 @@
 #include "AVLIndex.h"
 
-AVLIndex::AVLIndex()
-{
+//AVLIndex::AVLIndex()
+//{
 
-}
+//}

@@ -57,16 +57,16 @@ vector<pair<string, int>>& Word::getFiles() {
 }
 
 int Word::findFile(string file) {
-<<<<<<< HEAD
+
     for (unsigned int i = 0; i < files.size(); i++) {
-=======
+
     for (int i = 0; i < files.size(); i++) {
->>>>>>> f4484064109f08e06344542da1e21d6a676ab8b1
         if (files[i].first == file) {
             return i;
         }
     }
     return -1;
+}
 }
 
 bool Word::operator>(const Word& wrd) {
@@ -98,8 +98,8 @@ void Word::clearPunctuation() {
 }
 
 void Word::stemWord() {
-    Porter2Stemmer::trim(text);
-    Porter2Stemmer::stem(text);
+   // Porter2Stemmer::trim(text);
+    //Porter2Stemmer::stem(text);
 }
 
 
