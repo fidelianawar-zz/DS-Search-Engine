@@ -1,15 +1,33 @@
 #ifndef INDEXHANDLER_H
 #define INDEXHANDLER_H
-#include <iostream>
-#include "Word.h"
+#include "IndexInterface.h"
 
-class IndexInterface {
+class IndexHandler {
+    private:
+        fstream f;
+        IndexInterface* index;
+        //AvlTree<Word> index;
+        int numDocuments;
+        int numWordsIndexed;
+        int numWordsTotal;
+      //  PDFParser parser;
+        vector<string> txtFiles;
     public:
-        virtual void addWord(Word)=0;
-        virtual Word& find(std::string)=0;
-        virtual bool contains(std::string)=0;
-        virtual void printWords()=0;
-        virtual ~IndexInterface() = default;
+        IndexHandler();
+        IndexInterface* returnIndex();
+        vector<string> getTextFiles();
+        void chooseIndex();
+        void getIndex();
+
+        bool doesIndexExist();
+        void writeToIndex(DSAVLTree<Word>&);
+        void readFromIndex();
+        void clearIndex();
+
+        int getNumDocuments();
+        void printStatistics();
+        void getTopWords();
+
 };
 
-#endif // INDEXHANDLER_H
+#endif  // INDEXHANDLER_H

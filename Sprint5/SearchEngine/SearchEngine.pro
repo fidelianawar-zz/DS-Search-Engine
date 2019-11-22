@@ -5,9 +5,11 @@ CONFIG -= qt
 
 SOURCES += \
         DocumentProcessor.cpp \
-        IndexInterface.cpp \
+        IndexHandler.cpp \
         ProgramInterface.cpp \
         Word.cpp \
+        indexAVL.cpp \
+        indexHash.cpp \
         porter2_stemmer.cpp \
         stopwords.cpp
 
@@ -17,6 +19,8 @@ HEADERS += \
     IndexInterface.h \
     Word.h \
     dsavltree.h \
+    indexAVL.h \
+    indexHash.h \
     json.hpp \
     porter2_stemmer.h \
     stopwords.h

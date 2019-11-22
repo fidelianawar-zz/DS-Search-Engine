@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> f4484064109f08e06344542da1e21d6a676ab8b1
 #ifndef WORD_H
 #define WORD_H
 
@@ -9,8 +12,14 @@
 #include <algorithm>
 #include <cstring>
 #include <cctype>
+<<<<<<< HEAD
 #include "dsavltree.h"
 #include "porter2_stemmer.h"
+=======
+#include <vector>
+#include "dsavltree.h"
+#include "Porter2_Stemmer.h"
+>>>>>>> f4484064109f08e06344542da1e21d6a676ab8b1
 
 using namespace std;
 using namespace Porter2Stemmer;
@@ -44,4 +53,8 @@ class Word {
         void stemWord();
 };
 
+<<<<<<< HEAD
 #endif
+=======
+#endif // WORD_H
+>>>>>>> f4484064109f08e06344542da1e21d6a676ab8b1

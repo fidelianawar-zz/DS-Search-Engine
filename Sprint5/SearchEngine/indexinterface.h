@@ -6,8 +6,8 @@
 class IndexInterface {
     public:
         virtual void addWord(Word)=0;
-        virtual Word& find(std::string)=0;
-        virtual bool contains(std::string)=0;
+        virtual Word& find(string)=0;
+        virtual bool contains(string)=0;
         virtual void printWords()=0;
         virtual ~IndexInterface() = default;
 };

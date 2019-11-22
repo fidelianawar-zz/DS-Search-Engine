@@ -1,5 +1,6 @@
 #include <iostream>
 #include "dsavltree.h"
+#include "IndexHandler.h"
 #include <fstream>
 #include <json.hpp>
 
@@ -16,6 +17,7 @@ void interactiveMenu(){
 
 int main()
 {
+    IndexHandler indexHandler;
 
     int mode;
 //    DSAVLTree<string>* newTree = new DSAVLTree<string>;
