@@ -10,7 +10,6 @@
 #include <string>
 #include <regex>
 
-
 using namespace std;
 using nlohmann::json;
 
@@ -149,9 +148,9 @@ void DocumentProcessor::readInputData(){
         string word;
         ss >> word;
         //cout << word << " ";
-        parsed.insert(parseWords(word));
+        parsedWords.insert(parseWords(word));
     } while (ss);
 
-    parsed.printInOrder();
+    parsedWords.printInOrder();
 
 }

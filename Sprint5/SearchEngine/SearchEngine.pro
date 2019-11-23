@@ -12,8 +12,7 @@ SOURCES += \
     Word.cpp \
     indexAVL.cpp \
     indexHash.cpp \
-    queryProcessor.cpp \
-    readIndexFile.cpp
+    queryProcessor.cpp
 
 HEADERS += \
     AVLIndex.h \
@@ -27,9 +26,9 @@ HEADERS += \
     Word.h \
     dsavltree.h \
     dsavltree.h \
+    dsavltree.h \
     indexAVL.h \
     indexHash.h \
     indexHash.h \
     json.hpp \
-    json.hpp \
-    readIndexFile.h
+    json.hpp

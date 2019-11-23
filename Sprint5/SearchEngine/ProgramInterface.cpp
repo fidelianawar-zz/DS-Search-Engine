@@ -1,7 +1,7 @@
 #include <iostream>
 #include "dsavltree.h"
 #include "IndexHandler.h"
-#include "readIndexFile.h"
+#include "DocumentProcessor.h"
 #include <fstream>
 #include <json.hpp>
 
@@ -29,9 +29,9 @@ int main()
 
     mode == 1? maintenanceMenu(): interactiveMenu();
 
-    readIndexFile reader;
+    DocumentProcessor process;
 
-    reader.readInputData();
+    process.readInputData();
 
     //Okay so don't use your branch bc it's all very confusing, but I think this branch {master} is all caught up!
 
