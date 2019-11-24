@@ -159,10 +159,12 @@ inline string parseCaseTitle(string& absoluteURL)
 
 inline time_t parseDate(string& date)
 {
+
     std::tm parsed;
     memset(&parsed, 0, sizeof(parsed));
-    strptime(date.c_str(), "%Y-%m-%dT%H:%M:%SZ", &parsed);
-
+    strptime(date.c_str(), "%Y-%m-%dT%T%H:%M:%SZ", &parsed);
+    //2010-04-28T17:13:09Z
+   // cout <<date<<endl;
     return mktime(&parsed);
 }
 
@@ -175,7 +177,7 @@ void DocumentProcessor::readInputData(const string& directory){
         path += '/';
     }
 
-    cout << path << endl;
+   // cout << path << endl;
 
     DIR* corpus;
     struct dirent* dir;
@@ -238,6 +240,7 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         extracted.clear();
         j["absolute_url"].get_to(extracted);
         info.title = parseCaseTitle(extracted);
+      //  cout << info.title << "\t";
     }
 
     if (!j["date_created"].empty())
@@ -245,8 +248,9 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         extracted.clear();
         j["date_created"].get_to(extracted);
         info.date = parseDate(extracted);
+      //  cout << info.date;
     }
-
+//cout << endl;
 
     if(!j["plain"].empty()){
         contents = j["plain"];
