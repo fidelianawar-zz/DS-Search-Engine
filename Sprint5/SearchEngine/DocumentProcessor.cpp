@@ -128,29 +128,40 @@ void DocumentProcessor::readInputData(){
     opinion >> j;
     string contents;
     string a = "";
-    contents = j["html"];
-    regex numbers("[0-9]");
-    char buffer[256];
 
-    for(int i = 0; i < contents.size(); i++){
-        if(ispunct(contents[i])){
-            contents[i] = NULL;
+    if(j["plain"] == "null"){
+        contents = j["plain"];
+
+        for(unsigned int i = 0; i < contents.size(); i++){
+            if(ispunct(contents[i])){
+                contents[i] = '\0';
+            }
         }
+        istringstream ss(contents);
+        do {
+            string word;
+            ss >> word;
+            parsedWords.insert(parseWords(word));
+        } while (ss);
     }
 
-    //    contents = regex_replace(contents, regex(R"(/div|div|/p|class=|num id|san|num|href|footnote)"), a);
-    //    contents = regex_replace(contents, numbers, a);
+    if(j["html"] != NULL){
+        contents = j["html"];
 
-    //cout << contents;
-
-    istringstream ss(contents);
-    do {
-        string word;
-        ss >> word;
-        //cout << word << " ";
-        parsedWords.insert(parseWords(word));
-    } while (ss);
+        for(unsigned int i = 0; i < contents.size(); i++){
+            if(ispunct(contents[i])){
+                contents[i] = '\0';
+            }
+        }
+        istringstream ss(contents);
+        do {
+            string word;
+            ss >> word;
+            parsedWords.insert(parseWords(word));
+        } while (ss);
+    }
 
     parsedWords.printInOrder();
+
 
 }
