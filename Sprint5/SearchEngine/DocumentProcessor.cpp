@@ -10,6 +10,7 @@
 #include <string>
 #include <ctime>
 #include<dirent.h>
+#include "Word.h"
 
 
 using namespace std;
@@ -208,8 +209,12 @@ void DocumentProcessor::readInputData(const string& directory){
         }
     }
 
-    cout << numDocs <<endl;
-    parsedWords.printInOrder();
+    //cout << numDocs <<endl;
+
+   // parsedWords.printInOrder();
+    wordTree.printInOrder();
+   // wordTree.isEmpty() ? cout << "Tree is empty": cout << "Tree is not empty";
+
 
 }
 
@@ -264,7 +269,7 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         do {
             string word;
             ss >> word;
-            parsedWords.insert(parseWords(word));
+            insertWord(parseWords(word),info.title);
         } while (ss);
     }
 
@@ -280,8 +285,37 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         do {
             string word;
             ss >> word;
-            parsedWords.insert(parseWords(word));
+           insertWord(parseWords(word),info.title);
         } while (ss);
     }
 
+}
+void DocumentProcessor::insertWord(string parsedWord, string doc) {
+
+    parsedWords.insert(parsedWord);
+
+     if (stopWordsSet.count(parsedWord) == 0) {
+        Word newWord(parsedWord, doc);
+        if (newWord.getText() != "") {
+            if (!wordTree.contains(newWord)) {
+                numWordsIndexed++;
+                wordTree.insert(newWord);
+            }
+            else {
+                wordTree.find(newWord).addFile(doc);
+            }
+        }
+    }
+}
+
+int DocumentProcessor::getNumWordsIndexed() {
+    return numWordsIndexed;
+}
+
+int DocumentProcessor::getNumDocs() {
+    return numDocs;
+}
+
+int DocumentProcessor::getNumWordsTotal() {
+    return numWordsTotal;
 }

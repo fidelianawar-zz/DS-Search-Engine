@@ -25,10 +25,10 @@ int main(int argc, char *argv[])
         cout << "Welcome to Fidelia and Annalise's Search Engine!" << endl;
         cout << "Let's Search!" << endl << endl;
         cout << "There are 2 Modes: Maintenance and Interactive.\n>>Choose [1] for Maintenance or [2] for Interactive: " ;
-        cin >> mode;
-        cout << endl;
+//        cin >> mode;
+//        cout << endl;
 
-        mode == 1? maintenanceMenu(): interactiveMenu();
+//        mode == 1? maintenanceMenu(): interactiveMenu();
 
         string jsonPath = argv[1];
 
