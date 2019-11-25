@@ -29,8 +29,8 @@ public:
     int getNumWordsIndexed();
     int getNumDocs();
     int getNumWordsTotal();
-    void insertWord(string str, string pdfName);
-
+    void insertWord(string, string);
+    void search(const string& search);
 
 private:
     unordered_set<string> stopWordsSet;

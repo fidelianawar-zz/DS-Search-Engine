@@ -165,7 +165,6 @@ inline time_t parseDate(string& date)
     memset(&parsed, 0, sizeof(parsed));
     strptime(date.c_str(), "%Y-%m-%dT%T%H:%M:%SZ", &parsed);
     //2010-04-28T17:13:09Z
-   // cout <<date<<endl;
     return mktime(&parsed);
 }
 
@@ -177,8 +176,6 @@ void DocumentProcessor::readInputData(const string& directory){
     {
         path += '/';
     }
-
-   // cout << path << endl;
 
     DIR* corpus;
     struct dirent* dir;
@@ -209,13 +206,7 @@ void DocumentProcessor::readInputData(const string& directory){
         }
     }
 
-    //cout << numDocs <<endl;
-
-   // parsedWords.printInOrder();
-    wordTree.printInOrder();
-   // wordTree.isEmpty() ? cout << "Tree is empty": cout << "Tree is not empty";
-
-
+   // wordTree.printInOrder();
 }
 
 void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path){
@@ -245,7 +236,6 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         extracted.clear();
         j["absolute_url"].get_to(extracted);
         info.title = parseCaseTitle(extracted);
-      //  cout << info.title << "\t";
     }
 
     if (!j["date_created"].empty())
@@ -253,9 +243,7 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         extracted.clear();
         j["date_created"].get_to(extracted);
         info.date = parseDate(extracted);
-      //  cout << info.date;
     }
-//cout << endl;
 
     if(!j["plain"].empty()){
         contents = j["plain"];
@@ -269,7 +257,9 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         do {
             string word;
             ss >> word;
-            insertWord(parseWords(word),info.title);
+
+            if(parseWords(word).length() > 2)
+                insertWord(parseWords(word),info.title);
         } while (ss);
     }
 
@@ -285,7 +275,8 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         do {
             string word;
             ss >> word;
-           insertWord(parseWords(word),info.title);
+            if(parseWords(word).length() > 2)
+                insertWord(parseWords(word),info.title);
         } while (ss);
     }
 
@@ -294,7 +285,7 @@ void DocumentProcessor::insertWord(string parsedWord, string doc) {
 
     parsedWords.insert(parsedWord);
 
-     if (stopWordsSet.count(parsedWord) == 0) {
+    if (stopWordsSet.count(parsedWord) == 0) {
         Word newWord(parsedWord, doc);
         if (newWord.getText() != "") {
             if (!wordTree.contains(newWord)) {
@@ -318,4 +309,17 @@ int DocumentProcessor::getNumDocs() {
 
 int DocumentProcessor::getNumWordsTotal() {
     return numWordsTotal;
+}
+void DocumentProcessor::search(const string& search){
+
+  Word wordToSearch = parseWords(search);
+
+  //cout << wordToSearch << endl;
+
+  if(wordTree.contains(wordToSearch)==true){
+     cout << wordTree.find(wordToSearch);
+  }else{
+      cout << "Word is not Found" << endl;
+  }
+
 }

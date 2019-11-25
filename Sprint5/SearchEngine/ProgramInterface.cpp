@@ -18,25 +18,22 @@ void interactiveMenu(){
 
 int main(int argc, char *argv[])
 {
-    if(argc > 1){
+    if(argc > 2){
+        string jsonPath = argv[1];
+        DocumentProcessor process;
+        process.readInputData(argv[1]);
+        process.search(argv[2]);
+
+    }else{
         IndexHandler indexHandler;
 
         int mode;
         cout << "Welcome to Fidelia and Annalise's Search Engine!" << endl;
         cout << "Let's Search!" << endl << endl;
         cout << "There are 2 Modes: Maintenance and Interactive.\n>>Choose [1] for Maintenance or [2] for Interactive: " ;
-//        cin >> mode;
-//        cout << endl;
+        cin >> mode;
+        cout << endl;
 
-//        mode == 1? maintenanceMenu(): interactiveMenu();
-
-        string jsonPath = argv[1];
-
-        DocumentProcessor process;
-
-        process.readInputData(argv[1]);
+        mode == 1? maintenanceMenu(): interactiveMenu();
     }
-
-    //Okay so don't use your branch bc it's all very confusing, but I think this branch {master} is all caught up!
-
 }
