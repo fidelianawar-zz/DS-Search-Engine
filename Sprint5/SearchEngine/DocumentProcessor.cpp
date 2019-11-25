@@ -206,7 +206,8 @@ void DocumentProcessor::readInputData(const string& directory){
         }
     }
 
-   // wordTree.printInOrder();
+    //parsedWords.printInOrder();
+    //  wordTree.printInOrder();
 }
 
 void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path){
@@ -281,20 +282,27 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
     }
 
 }
+void DocumentProcessor::printParsingStats(){
+    numWordsTotal++;
+
+    if(numWordsTotal == 1)
+        cout << "Number of Words Parsed and Inserted: \n";
+    if(numWordsTotal % 100000 == 0)
+        cout <<"\t"<<numWordsTotal <<endl;
+}
 void DocumentProcessor::insertWord(string parsedWord, string doc) {
+ //   printParsingStats();
 
     parsedWords.insert(parsedWord);
 
-    if (stopWordsSet.count(parsedWord) == 0) {
-        Word newWord(parsedWord, doc);
-        if (newWord.getText() != "") {
-            if (!wordTree.contains(newWord)) {
-                numWordsIndexed++;
-                wordTree.insert(newWord);
-            }
-            else {
-                wordTree.find(newWord).addFile(doc);
-            }
+    Word newWord(parsedWord, doc);
+    if (newWord.getText() != "") {
+        if (!wordTree.contains(newWord)) {
+            numWordsIndexed++;
+            wordTree.insert(newWord);
+        }
+        else {
+            wordTree.find(newWord).addFile(doc);
         }
     }
 }
@@ -311,15 +319,27 @@ int DocumentProcessor::getNumWordsTotal() {
     return numWordsTotal;
 }
 void DocumentProcessor::search(const string& search){
+    cout << "Searching the Word: '" << search << "'\n";
 
-  Word wordToSearch = parseWords(search);
+    Word wordToSearch = parseWords(search);
 
-  //cout << wordToSearch << endl;
+    cout << "After stemming/removing stop words, your word is '" << wordToSearch.getText() << "'\n";
 
-  if(wordTree.contains(wordToSearch)==true){
-     cout << wordTree.find(wordToSearch);
-  }else{
-      cout << "Word is not Found" << endl;
-  }
+    cout << "Results: " << endl;
 
+
+    if(wordTree.contains(wordToSearch) == true){
+        cout << "Total # of Nodes '" << wordToSearch.getText()
+             << "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
+        cout << "Total # of Docs '" << wordToSearch.getText()
+             << "' Appears in: " << wordTree.find(wordToSearch).getFiles().size() << endl;
+        cout << "Total # of Appearances of '" << wordToSearch.getText()<< "': "
+             <<wordTree.find(wordToSearch).getTotalFrequency() << endl;
+
+
+        cout << endl;
+
+    }else{
+        cout << "Word is not Found" << endl;
+    }
 }

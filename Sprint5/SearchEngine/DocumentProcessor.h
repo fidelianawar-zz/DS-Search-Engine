@@ -31,9 +31,10 @@ public:
     int getNumWordsTotal();
     void insertWord(string, string);
     void search(const string& search);
+    void printParsingStats();
 
-private:
-    unordered_set<string> stopWordsSet;
+    private:
+        unordered_set<string> stopWordsSet;
     mutable unordered_map<string, string> stemCache;
     DSAVLTree<string> parsedWords;
     DSAVLTree<Word> wordTree;

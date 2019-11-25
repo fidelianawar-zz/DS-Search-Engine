@@ -8,16 +8,11 @@ Word::Word() {
 Word::Word(string wrd) {
     totalFrequency = 0;
     text = wrd;
-   // formatString();
-    //clearPunctuation();
-    //stemWord();
 }
 
 Word::Word(string wrd, string file) {
     totalFrequency = 0;
     text = wrd;
-   // formatString();
-   // clearPunctuation();
     addFile(file);
 }
 
