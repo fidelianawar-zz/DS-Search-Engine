@@ -204,7 +204,7 @@ void DocumentProcessor::readInputData(const string& directory){
     }
 
     //parsedWords.printInOrder();
-      //wordTree.printInOrder();
+     //wordTree.printInOrder();
 }
 
 void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path){
@@ -324,7 +324,7 @@ void DocumentProcessor::search(const string& search){
 
     cout << "Results: " << endl;
 
-    wordTree.countTotalNodes();
+  //  wordTree.countTotalNodes();
 //        cout << "Total # of Nodes '" << wordToSearch.getText()
 //             << "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
     cout << "Total # of Nodes in tree: "// << wordToSearch.getText()

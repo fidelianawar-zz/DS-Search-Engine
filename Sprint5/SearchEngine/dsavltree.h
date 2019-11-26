@@ -201,6 +201,7 @@ bool DSAVLTree<T>::isEmpty()
 template<class T>
 void DSAVLTree<T>::insert(T x)
 {
+    totalNodes++;
     insert(x,root);
 }
 
