@@ -180,7 +180,7 @@ void DocumentProcessor::readInputData(const string& directory){
     DIR* corpus;
     struct dirent* dir;
 
-    char filePath[4096];
+    char filePath[5000];
 
     while ((corpus = opendir(path.c_str())) == nullptr) {
         fprintf(stderr, "Could not open directory: %s\n", path.c_str());
@@ -193,13 +193,10 @@ void DocumentProcessor::readInputData(const string& directory){
 
             if (fileType == ".json") {
                 numDocs++;
-                strncpy(filePath, path.c_str(), 4095);
-                strncat(filePath, "/", 4095);
-                string dirPath = filePath;
-                strncat(filePath, dir->d_name, 4095);
+                strncpy(filePath, path.c_str(), 5000);
+                strncat(filePath, "/", 5000);
+                strncat(filePath, dir->d_name, 5000);
 
-                string newFileName = "\"" + fileName + "\"";
-                string textFile = onlyFile + ".txt";
                 parseInputData(filePath,path);
 
             }
@@ -207,7 +204,7 @@ void DocumentProcessor::readInputData(const string& directory){
     }
 
     //parsedWords.printInOrder();
-    //  wordTree.printInOrder();
+      //wordTree.printInOrder();
 }
 
 void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path){
