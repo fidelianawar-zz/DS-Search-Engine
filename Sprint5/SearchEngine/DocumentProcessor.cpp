@@ -17,22 +17,18 @@ DocumentProcessor::DocumentProcessor(){
     ifstream input("stopwords.txt");
     string stopWord;
 
-    while (input >> stopWord)
-    {
-        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c)
-        {
+    while (input >> stopWord){
+        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c){
             return !(c == '\'' || (c >= 'a' && c <= 'z'));
         }), stopWord.end());
 
-        if (stopWord.size() == 0)
-        {
+        if (stopWord.size() == 0){
             continue;
         }
 
         stopWordsSet.emplace(stopWord);
 
-        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c)
-        {
+        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c){
             return c == '\'';
         }), stopWord.end());
 
@@ -40,16 +36,19 @@ DocumentProcessor::DocumentProcessor(){
     }
 }
 
-string& DocumentProcessor::stripHTML(string& text) const
-{
-    for (unsigned int i = 0; i < text.size(); i++)
-    {
-        if (text[i] == '<')
-        {
+void DocumentProcessor::readDirectory() {
+    string directory;
+    cout << "Enter the directory path for the PDFs you want to parse: ";
+    cin >> directory;
+
+}
+
+string& DocumentProcessor::stripHTML(string& text) const{
+    for (unsigned int i = 0; i < text.size(); i++){
+        if (text[i] == '<'){
             unsigned int j = i;
 
-            while (text[j] != '>' && j < text.size())
-            {
+            while (text[j] != '>' && j < text.size()){
                 j++;
             }
 
@@ -62,29 +61,24 @@ string& DocumentProcessor::stripHTML(string& text) const
 }
 
 
-string DocumentProcessor::parseWords(const string& base) const
-{
+string DocumentProcessor::parseWords(const string& base) const{
     string processed = base;
 
-    if (processed.size() == 0)
-    {
+    if (processed.size() == 0){
         return processed;
     }
 
     lowerCase(processed);
 
-    processed.erase(std::remove_if(processed.begin(), processed.end(), [] (char c)
-    {
+    processed.erase(std::remove_if(processed.begin(), processed.end(), [] (char c){
         return !(c == '\'' || (c >= 'a' && c <= 'z'));
     }), processed.end());
 
-    if (processed.size() == 0)
-    {
+    if (processed.size() == 0){
         return processed;
     }
 
-    if (stopWordsSet.count(processed) > 0)
-    {
+    if (stopWordsSet.count(processed) > 0){
         return "";
     }
 
@@ -93,12 +87,10 @@ string DocumentProcessor::parseWords(const string& base) const
     return processed;
 }
 
-inline void DocumentProcessor::stemString(string& text) const
-{
+inline void DocumentProcessor::stemString(string& text) const{
     string key = text;
 
-    if (stemCache.find(key) != stemCache.end())
-    {
+    if (stemCache.find(key) != stemCache.end()){
         text = stemCache.at(text);
         return;
     }
@@ -107,13 +99,10 @@ inline void DocumentProcessor::stemString(string& text) const
     stemCache.emplace(key, text);
 }
 
-string& DocumentProcessor::lowerCase(string& text) const
-{
-    for (unsigned int i = 0; i < text.size(); i++)
-    {
+string& DocumentProcessor::lowerCase(string& text) const{
+    for (unsigned int i = 0; i < text.size(); i++){
         text[i] = tolower(text[i]);
     }
-
     return text;
 }
 
