@@ -327,15 +327,15 @@ void DocumentProcessor::search(const string& search){
 
     cout << "Results: " << endl;
 
-
-    if(wordTree.contains(wordToSearch) == true){
-        wordTree.countTotalNodes();
-
+    wordTree.countTotalNodes();
 //        cout << "Total # of Nodes '" << wordToSearch.getText()
 //             << "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
-        cout << "Total # of Nodes in tree: "// << wordToSearch.getText()
-             //<< "' has: "
-             <<wordTree.getTotalNodes() << endl;
+    cout << "Total # of Nodes in tree: "// << wordToSearch.getText()
+         //<< "' has: "
+         <<wordTree.getTotalNodes() << endl;
+
+    if(wordTree.contains(wordToSearch) == true){
+
         cout << "Total # of Docs '" << wordToSearch.getText()
              << "' Appears in: " << wordTree.find(wordToSearch).getFiles().size() << endl;
         cout << "Total # of Appearances of '" << wordToSearch.getText()<< "': "
