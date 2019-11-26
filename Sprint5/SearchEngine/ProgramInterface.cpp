@@ -16,23 +16,24 @@ void interactiveMenu(){
     cout << "Interactive\n";
 }
 
-int main()
+int main(int argc, char *argv[])
 {
-    IndexHandler indexHandler;
+    if(argc > 2){
+        string jsonPath = argv[1];
+        DocumentProcessor process;
+        process.readInputData(argv[1]);
+        process.search(argv[2]);
 
-    int mode;
-    cout << "Welcome to Fidelia and Annalise's Search Engine!" << endl;
-    cout << "Let's Search!" << endl << endl;
-    cout << "There are 2 Modes: Maintenance and Interactive.\n>>Choose [1] for Maintenance or [2] for Interactive: " ;
-    cin >> mode;
-    cout << endl;
+    }else{
+        IndexHandler indexHandler;
 
-    mode == 1? maintenanceMenu(): interactiveMenu();
+        int mode;
+        cout << "Welcome to Fidelia and Annalise's Search Engine!" << endl;
+        cout << "Let's Search!" << endl << endl;
+        cout << "There are 2 Modes: Maintenance and Interactive.\n>>Choose [1] for Maintenance or [2] for Interactive: " ;
+        cin >> mode;
+        cout << endl;
 
-    DocumentProcessor process;
-
-    process.readInputData();
-
-    //Okay so don't use your branch bc it's all very confusing, but I think this branch {master} is all caught up!
-
+        mode == 1? maintenanceMenu(): interactiveMenu();
+    }
 }
