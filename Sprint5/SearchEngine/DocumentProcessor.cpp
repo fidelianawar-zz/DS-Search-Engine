@@ -202,9 +202,9 @@ void DocumentProcessor::readInputData(const string& directory){
                 strncpy(filePath, path.c_str(), 5000);
                 strncat(filePath, "/", 5000);
                 strncat(filePath, dir->d_name, 5000);
-                if(numDocs <= 10000){
+              //  if(numDocs <= 10000){
                     parseInputData(filePath,path);
-                }
+                //}
 
             }
         }

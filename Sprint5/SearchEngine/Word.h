@@ -25,7 +25,7 @@ class Word {
 
     private:
         string text;
-        vector<pair<string, int>> files;
+        vector<pair<string, int> > files;
         int totalFrequency;
     public:
         Word();
@@ -38,7 +38,7 @@ class Word {
 
         void addFile(string);
         void addFileFromIndex(pair<string, int>);
-        vector<pair<string, int>>& getFiles();
+        vector<pair<string, int> >& getFiles();
         int findFile(string);
         bool operator>(const Word&);
         bool operator<(const Word&);
