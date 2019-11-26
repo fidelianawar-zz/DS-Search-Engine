@@ -9,9 +9,8 @@
 #include <vector>
 #include <string>
 #include <ctime>
-#include<dirent.h>
+#include <dirent.h>
 #include "Word.h"
-
 
 using namespace std;
 using nlohmann::json;
@@ -46,6 +45,7 @@ void DocumentProcessor::readDirectory() {
 
 }
 
+//strips HTML tags of processed document
 string& DocumentProcessor::stripHTML(string& text) const{
     for (unsigned int i = 0; i < text.size(); i++){
         if (text[i] == '<'){
@@ -63,7 +63,7 @@ string& DocumentProcessor::stripHTML(string& text) const{
     return text;
 }
 
-
+//parses word by turning it to lowercase, stemming, and removing stop words
 string DocumentProcessor::parseWords(const string& base) const{
     string processed = base;
 
@@ -90,6 +90,7 @@ string DocumentProcessor::parseWords(const string& base) const{
     return processed;
 }
 
+//stems string using Porter2_Stemmer
 inline void DocumentProcessor::stemString(string& text) const{
     string key = text;
 
@@ -102,6 +103,7 @@ inline void DocumentProcessor::stemString(string& text) const{
     stemCache.emplace(key, text);
 }
 
+//converts word to lowercase
 string& DocumentProcessor::lowerCase(string& text) const{
     for (unsigned int i = 0; i < text.size(); i++){
         text[i] = tolower(text[i]);
@@ -147,6 +149,7 @@ inline string parseCaseTitle(string& absoluteURL)
     return title.substr(0, title.size() - 1);
 }
 
+//parses date of document
 inline time_t parseDate(string& date)
 {
 
@@ -157,6 +160,7 @@ inline time_t parseDate(string& date)
     return mktime(&parsed);
 }
 
+//reads input document data by taking in file path and traveling to specified directory
 void DocumentProcessor::readInputData(const string& directory){
 
     string path = directory;
@@ -193,9 +197,10 @@ void DocumentProcessor::readInputData(const string& directory){
     }
 
     //parsedWords.printInOrder();
-      //wordTree.printInOrder();
+    //wordTree.printInOrder();
 }
 
+//parses document input to store json elements and distinguish between HTML and plaintext
 void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path){
 
     ifstream opinion(fileDirectory);
@@ -276,6 +281,8 @@ void DocumentProcessor::printParsingStats(){
     if(numWordsTotal % 100000 == 0)
         cout <<"\t"<<numWordsTotal <<endl;
 }
+
+//inserts parsed (lowercase, stemmed, removed stopword) word into tree
 void DocumentProcessor::insertWord(string parsedWord, string doc) {
     printParsingStats();
 
@@ -314,10 +321,10 @@ void DocumentProcessor::search(const string& search){
     cout << "Results: " << endl;
 
     wordTree.countTotalNodes();
-//        cout << "Total # of Nodes '" << wordToSearch.getText()
-//             << "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
+    //cout << "Total # of Nodes '" << wordToSearch.getText()
+    //<< "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
     cout << "Total # of Nodes in tree: "// << wordToSearch.getText()
-         //<< "' has: "
+            //<< "' has: "
          <<wordTree.getTotalNodes() << endl;
 
     if(wordTree.contains(wordToSearch) == true){
