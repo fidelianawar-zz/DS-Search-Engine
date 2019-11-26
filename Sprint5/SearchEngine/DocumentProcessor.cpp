@@ -9,13 +9,13 @@
 #include <vector>
 #include <string>
 #include <ctime>
-#include<dirent.h>
+#include <dirent.h>
 #include "Word.h"
-
 
 using namespace std;
 using nlohmann::json;
 
+//copy constructor for stop words set
 DocumentProcessor::DocumentProcessor(){
     ifstream input("stopWordFile.txt");
     string stopWord;
@@ -43,6 +43,7 @@ DocumentProcessor::DocumentProcessor(){
     }
 }
 
+//strips HTML tags from input corpus documents
 string& DocumentProcessor::stripHTML(string& text) const
 {
     for (unsigned int i = 0; i < text.size(); i++)
@@ -64,7 +65,7 @@ string& DocumentProcessor::stripHTML(string& text) const
     return text;
 }
 
-
+//parses word from document (changes to lowercase, stems, and removes stop words)
 string DocumentProcessor::parseWords(const string& base) const
 {
     string processed = base;
@@ -96,6 +97,7 @@ string DocumentProcessor::parseWords(const string& base) const
     return processed;
 }
 
+//stemming of words using Porter2_Stemmer
 inline void DocumentProcessor::stemString(string& text) const
 {
     string key = text;
@@ -110,6 +112,7 @@ inline void DocumentProcessor::stemString(string& text) const
     stemCache.emplace(key, text);
 }
 
+//changes word to lower case
 string& DocumentProcessor::lowerCase(string& text) const
 {
     for (unsigned int i = 0; i < text.size(); i++)
@@ -120,6 +123,7 @@ string& DocumentProcessor::lowerCase(string& text) const
     return text;
 }
 
+//parses title of document
 inline string parseCaseTitle(string& absoluteURL)
 {
     istringstream sections(absoluteURL);
@@ -158,6 +162,7 @@ inline string parseCaseTitle(string& absoluteURL)
     return title.substr(0, title.size() - 1);
 }
 
+//parses and returns the date
 inline time_t parseDate(string& date)
 {
 
@@ -168,6 +173,7 @@ inline time_t parseDate(string& date)
     return mktime(&parsed);
 }
 
+//reads input data using file path directory
 void DocumentProcessor::readInputData(const string& directory){
 
     string path = directory;
@@ -205,9 +211,13 @@ void DocumentProcessor::readInputData(const string& directory){
     }
 
     //parsedWords.printInOrder();
-     //wordTree.printInOrder();
+    //wordTree.printInOrder();
 }
 
+/*
+ * parses json elements of document
+ * chooses processing technique for HTML vs plaintext
+ */
 void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path){
 
     ifstream opinion(fileDirectory);
@@ -280,6 +290,8 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
     }
 
 }
+
+//displays "loading" information when parsing large amounts of data sets
 void DocumentProcessor::printParsingStats(){
     numWordsTotal++;
 
@@ -288,6 +300,11 @@ void DocumentProcessor::printParsingStats(){
     if(numWordsTotal % 100000 == 0)
         cout <<"\t"<<numWordsTotal <<endl;
 }
+
+/*
+ * inserts word AVL tree of parsed words (parsedWords)
+ * inserts word/respective document information into AVL tree of word objects (word tree)
+ */
 void DocumentProcessor::insertWord(string parsedWord, string doc) {
     printParsingStats();
 
@@ -316,6 +333,8 @@ int DocumentProcessor::getNumDocs() {
 int DocumentProcessor::getNumWordsTotal() {
     return numWordsTotal;
 }
+
+//search output for demo
 void DocumentProcessor::search(const string& search){
     cout << "Searching the Word: '" << search << "'\n";
 
@@ -325,11 +344,11 @@ void DocumentProcessor::search(const string& search){
 
     cout << "Results: " << endl;
 
-  //  wordTree.countTotalNodes();
-//        cout << "Total # of Nodes '" << wordToSearch.getText()
-//             << "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
+    //  wordTree.countTotalNodes();
+    //        cout << "Total # of Nodes '" << wordToSearch.getText()
+    //             << "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
     cout << "Total # of Nodes in tree: "// << wordToSearch.getText()
-         //<< "' has: "
+            //<< "' has: "
          <<wordTree.getTotalNodes() << endl;
 
     if(wordTree.contains(wordToSearch) == true){
@@ -338,7 +357,6 @@ void DocumentProcessor::search(const string& search){
              << "' Appears in: " << wordTree.find(wordToSearch).getFiles().size() << endl;
         cout << "Total # of Appearances of '" << wordToSearch.getText()<< "': "
              <<wordTree.find(wordToSearch).getTotalFrequency() << endl;
-        cout << "WE ARE HEREEEEE" << endl;
 
         cout << endl;
 
