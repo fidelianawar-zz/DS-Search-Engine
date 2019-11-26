@@ -27,6 +27,7 @@ HEADERS += \
     dsavltree.h \
     dsavltree.h \
     dsavltree.h \
+    dshashtable.h \
     indexAVL.h \
     indexHash.h \
     indexHash.h \
