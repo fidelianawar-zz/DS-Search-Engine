@@ -338,7 +338,7 @@ void DocumentProcessor::search(const string& search){
              << "' Appears in: " << wordTree.find(wordToSearch).getFiles().size() << endl;
         cout << "Total # of Appearances of '" << wordToSearch.getText()<< "': "
              <<wordTree.find(wordToSearch).getTotalFrequency() << endl;
-
+        cout << "WE ARE HEREEEEE" << endl;
 
         cout << endl;
 
