@@ -53,6 +53,7 @@ private:
     };
 
     AVLNode<T> *root;
+    int totalNodes;
 
     int max(int, int);
     int height(AVLNode<T>*);
@@ -67,7 +68,7 @@ private:
     void doubleRotateLeftChild( AVLNode<T>*&);
     void outputInOrder(AVLNode<T>*&, ostream&);
     T& find(T,  AVLNode<T>*);
-
+    void countTotalNodes(AVLNode<T>* node);
 
 
 public:
@@ -79,10 +80,12 @@ public:
     void clean();
     void insert(T);
     void printInOrder();
+    void countTotalNodes();
     bool isEmpty();
     bool contains(T);
     T& find(T);
     void outputInOrder(ostream&);
+    int getTotalNodes();
 
 };
 
@@ -249,6 +252,37 @@ void DSAVLTree<T>::printInOrder(AVLNode<T>* node)
     if (isEmpty() == true) {
         cout << "tree is empty";
     }
+}
+template<class T>
+void DSAVLTree<T>::countTotalNodes()
+{
+    countTotalNodes(root);
+}
+template<class T>
+void DSAVLTree<T>::countTotalNodes(AVLNode<T>* node)
+{
+    AVLNode<T>* temp = node;
+//    if(node != nullptr){
+//        countTotalNodes(node->left,totalNodes++);
+//        countTotalNodes(node->right,totalNodes++);
+//    }
+    while(node != nullptr){
+        node = node->left;
+        totalNodes++;
+    }
+    while(temp != nullptr){
+        temp = temp->right;
+        totalNodes++;
+    }
+
+    if (isEmpty() == true) {
+        cout << "tree is empty";
+    }
+}
+template<class T>
+int DSAVLTree<T>::getTotalNodes()
+{
+    return totalNodes;
 }
 template<class T>
 void DSAVLTree<T>:: outputInOrder(AVLNode<T>*& node, ostream& output)

@@ -291,7 +291,7 @@ void DocumentProcessor::printParsingStats(){
         cout <<"\t"<<numWordsTotal <<endl;
 }
 void DocumentProcessor::insertWord(string parsedWord, string doc) {
- //   printParsingStats();
+    printParsingStats();
 
     parsedWords.insert(parsedWord);
 
@@ -329,8 +329,13 @@ void DocumentProcessor::search(const string& search){
 
 
     if(wordTree.contains(wordToSearch) == true){
-        cout << "Total # of Nodes '" << wordToSearch.getText()
-             << "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
+        wordTree.countTotalNodes();
+
+//        cout << "Total # of Nodes '" << wordToSearch.getText()
+//             << "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
+        cout << "Total # of Nodes in tree: "// << wordToSearch.getText()
+             //<< "' has: "
+             <<wordTree.getTotalNodes() << endl;
         cout << "Total # of Docs '" << wordToSearch.getText()
              << "' Appears in: " << wordTree.find(wordToSearch).getFiles().size() << endl;
         cout << "Total # of Appearances of '" << wordToSearch.getText()<< "': "
