@@ -43,7 +43,6 @@ DocumentProcessor::DocumentProcessor(){
     }
 }
 
-//strips HTML tags of document being parsed
 string& DocumentProcessor::stripHTML(string& text) const
 {
     for (unsigned int i = 0; i < text.size(); i++)
@@ -65,7 +64,7 @@ string& DocumentProcessor::stripHTML(string& text) const
     return text;
 }
 
-//parses individual words of document (lowercases, stems, removes stop words)
+
 string DocumentProcessor::parseWords(const string& base) const
 {
     string processed = base;
@@ -97,7 +96,6 @@ string DocumentProcessor::parseWords(const string& base) const
     return processed;
 }
 
-//stems string using Porter2_Stemmer
 inline void DocumentProcessor::stemString(string& text) const
 {
     string key = text;
@@ -112,7 +110,6 @@ inline void DocumentProcessor::stemString(string& text) const
     stemCache.emplace(key, text);
 }
 
-//changes parsed word to lowercase syntax
 string& DocumentProcessor::lowerCase(string& text) const
 {
     for (unsigned int i = 0; i < text.size(); i++)
@@ -171,7 +168,6 @@ inline time_t parseDate(string& date)
     return mktime(&parsed);
 }
 
-//reads input data of document based upon file name specified in command line argument
 void DocumentProcessor::readInputData(const string& directory){
 
     string path = directory;
@@ -209,10 +205,9 @@ void DocumentProcessor::readInputData(const string& directory){
     }
 
     //parsedWords.printInOrder();
-    //wordTree.printInOrder();
+     //wordTree.printInOrder();
 }
 
-//stores json elements and parses between HTML/plaintext documents
 void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path){
 
     ifstream opinion(fileDirectory);
@@ -285,8 +280,6 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
     }
 
 }
-
-//prints "loading" information for large data sets
 void DocumentProcessor::printParsingStats(){
     numWordsTotal++;
 
@@ -295,11 +288,6 @@ void DocumentProcessor::printParsingStats(){
     if(numWordsTotal % 100000 == 0)
         cout <<"\t"<<numWordsTotal <<endl;
 }
-
-/*
- * inserts parsed words into parsedWords AVL tree
- * inserts parsed words and designated document into wordTree
- */
 void DocumentProcessor::insertWord(string parsedWord, string doc) {
     printParsingStats();
 
