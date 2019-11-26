@@ -9,9 +9,8 @@
 #include <vector>
 #include <string>
 #include <ctime>
-#include<dirent.h>
+#include <dirent.h>
 #include "Word.h"
-
 
 using namespace std;
 using nlohmann::json;
@@ -20,22 +19,18 @@ DocumentProcessor::DocumentProcessor(){
     ifstream input("stopWordFile.txt");
     string stopWord;
 
-    while (input >> stopWord)
-    {
-        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c)
-        {
+    while (input >> stopWord){
+        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c){
             return !(c == '\'' || (c >= 'a' && c <= 'z'));
         }), stopWord.end());
 
-        if (stopWord.size() == 0)
-        {
+        if (stopWord.size() == 0){
             continue;
         }
 
         stopWordsSet.emplace(stopWord);
 
-        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c)
-        {
+        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c){
             return c == '\'';
         }), stopWord.end());
 
@@ -43,17 +38,20 @@ DocumentProcessor::DocumentProcessor(){
     }
 }
 
-//strips HTML tags of document being parsed
-string& DocumentProcessor::stripHTML(string& text) const
-{
-    for (unsigned int i = 0; i < text.size(); i++)
-    {
-        if (text[i] == '<')
-        {
+void DocumentProcessor::readDirectory() {
+    string directory;
+    cout << "Enter the directory path for the PDFs you want to parse: ";
+    cin >> directory;
+
+}
+
+//strips HTML tags of processed document
+string& DocumentProcessor::stripHTML(string& text) const{
+    for (unsigned int i = 0; i < text.size(); i++){
+        if (text[i] == '<'){
             unsigned int j = i;
 
-            while (text[j] != '>' && j < text.size())
-            {
+            while (text[j] != '>' && j < text.size()){
                 j++;
             }
 
@@ -65,30 +63,25 @@ string& DocumentProcessor::stripHTML(string& text) const
     return text;
 }
 
-//parses individual words of document (lowercases, stems, removes stop words)
-string DocumentProcessor::parseWords(const string& base) const
-{
+//parses word by turning it to lowercase, stemming, and removing stop words
+string DocumentProcessor::parseWords(const string& base) const{
     string processed = base;
 
-    if (processed.size() == 0)
-    {
+    if (processed.size() == 0){
         return processed;
     }
 
     lowerCase(processed);
 
-    processed.erase(std::remove_if(processed.begin(), processed.end(), [] (char c)
-    {
+    processed.erase(std::remove_if(processed.begin(), processed.end(), [] (char c){
         return !(c == '\'' || (c >= 'a' && c <= 'z'));
     }), processed.end());
 
-    if (processed.size() == 0)
-    {
+    if (processed.size() == 0){
         return processed;
     }
 
-    if (stopWordsSet.count(processed) > 0)
-    {
+    if (stopWordsSet.count(processed) > 0){
         return "";
     }
 
@@ -98,12 +91,10 @@ string DocumentProcessor::parseWords(const string& base) const
 }
 
 //stems string using Porter2_Stemmer
-inline void DocumentProcessor::stemString(string& text) const
-{
+inline void DocumentProcessor::stemString(string& text) const{
     string key = text;
 
-    if (stemCache.find(key) != stemCache.end())
-    {
+    if (stemCache.find(key) != stemCache.end()){
         text = stemCache.at(text);
         return;
     }
@@ -112,14 +103,11 @@ inline void DocumentProcessor::stemString(string& text) const
     stemCache.emplace(key, text);
 }
 
-//changes parsed word to lowercase syntax
-string& DocumentProcessor::lowerCase(string& text) const
-{
-    for (unsigned int i = 0; i < text.size(); i++)
-    {
+//converts word to lowercase
+string& DocumentProcessor::lowerCase(string& text) const{
+    for (unsigned int i = 0; i < text.size(); i++){
         text[i] = tolower(text[i]);
     }
-
     return text;
 }
 
@@ -161,6 +149,7 @@ inline string parseCaseTitle(string& absoluteURL)
     return title.substr(0, title.size() - 1);
 }
 
+//parses date of document
 inline time_t parseDate(string& date)
 {
 
@@ -171,7 +160,7 @@ inline time_t parseDate(string& date)
     return mktime(&parsed);
 }
 
-//reads input data of document based upon file name specified in command line argument
+//reads input document data by taking in file path and traveling to specified directory
 void DocumentProcessor::readInputData(const string& directory){
 
     string path = directory;
@@ -200,9 +189,8 @@ void DocumentProcessor::readInputData(const string& directory){
                 strncpy(filePath, path.c_str(), 5000);
                 strncat(filePath, "/", 5000);
                 strncat(filePath, dir->d_name, 5000);
-                if(numDocs <= 10000){
-                    parseInputData(filePath,path);
-                }
+
+                parseInputData(filePath,path);
 
             }
         }
@@ -212,7 +200,7 @@ void DocumentProcessor::readInputData(const string& directory){
     //wordTree.printInOrder();
 }
 
-//stores json elements and parses between HTML/plaintext documents
+//parses document input to store json elements and distinguish between HTML and plaintext
 void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path){
 
     ifstream opinion(fileDirectory);
@@ -285,21 +273,16 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
     }
 
 }
-
-//prints "loading" information for large data sets
 void DocumentProcessor::printParsingStats(){
     numWordsTotal++;
 
     if(numWordsTotal == 1)
-        cout << "Number of Words Parsed: \n";
+        cout << "Number of Words Parsed and Inserted: \n";
     if(numWordsTotal % 100000 == 0)
         cout <<"\t"<<numWordsTotal <<endl;
 }
 
-/*
- * inserts parsed words into parsedWords AVL tree
- * inserts parsed words and designated document into wordTree
- */
+//inserts parsed (lowercase, stemmed, removed stopword) word into tree
 void DocumentProcessor::insertWord(string parsedWord, string doc) {
     printParsingStats();
 
@@ -337,11 +320,11 @@ void DocumentProcessor::search(const string& search){
 
     cout << "Results: " << endl;
 
-  //  wordTree.countTotalNodes();
-//        cout << "Total # of Nodes '" << wordToSearch.getText()
-//             << "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
+    wordTree.countTotalNodes();
+    //cout << "Total # of Nodes '" << wordToSearch.getText()
+    //<< "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
     cout << "Total # of Nodes in tree: "// << wordToSearch.getText()
-         //<< "' has: "
+            //<< "' has: "
          <<wordTree.getTotalNodes() << endl;
 
     if(wordTree.contains(wordToSearch) == true){

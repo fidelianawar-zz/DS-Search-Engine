@@ -43,7 +43,6 @@ DocumentProcessor::DocumentProcessor(){
     }
 }
 
-//strips HTML tags of document being parsed
 string& DocumentProcessor::stripHTML(string& text) const
 {
     for (unsigned int i = 0; i < text.size(); i++)
@@ -65,7 +64,7 @@ string& DocumentProcessor::stripHTML(string& text) const
     return text;
 }
 
-//parses individual words of document (lowercases, stems, removes stop words)
+
 string DocumentProcessor::parseWords(const string& base) const
 {
     string processed = base;
@@ -97,7 +96,6 @@ string DocumentProcessor::parseWords(const string& base) const
     return processed;
 }
 
-//stems string using Porter2_Stemmer
 inline void DocumentProcessor::stemString(string& text) const
 {
     string key = text;
@@ -112,7 +110,6 @@ inline void DocumentProcessor::stemString(string& text) const
     stemCache.emplace(key, text);
 }
 
-//changes parsed word to lowercase syntax
 string& DocumentProcessor::lowerCase(string& text) const
 {
     for (unsigned int i = 0; i < text.size(); i++)
@@ -171,7 +168,6 @@ inline time_t parseDate(string& date)
     return mktime(&parsed);
 }
 
-//reads input data of document based upon file name specified in command line argument
 void DocumentProcessor::readInputData(const string& directory){
 
     string path = directory;
@@ -200,19 +196,17 @@ void DocumentProcessor::readInputData(const string& directory){
                 strncpy(filePath, path.c_str(), 5000);
                 strncat(filePath, "/", 5000);
                 strncat(filePath, dir->d_name, 5000);
-                if(numDocs <= 10000){
-                    parseInputData(filePath,path);
-                }
+
+                parseInputData(filePath,path);
 
             }
         }
     }
 
     //parsedWords.printInOrder();
-    //wordTree.printInOrder();
+      //wordTree.printInOrder();
 }
 
-//stores json elements and parses between HTML/plaintext documents
 void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path){
 
     ifstream opinion(fileDirectory);
@@ -285,21 +279,14 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
     }
 
 }
-
-//prints "loading" information for large data sets
 void DocumentProcessor::printParsingStats(){
     numWordsTotal++;
 
     if(numWordsTotal == 1)
-        cout << "Number of Words Parsed: \n";
+        cout << "Number of Words Parsed and Inserted: \n";
     if(numWordsTotal % 100000 == 0)
         cout <<"\t"<<numWordsTotal <<endl;
 }
-
-/*
- * inserts parsed words into parsedWords AVL tree
- * inserts parsed words and designated document into wordTree
- */
 void DocumentProcessor::insertWord(string parsedWord, string doc) {
     printParsingStats();
 
@@ -337,7 +324,7 @@ void DocumentProcessor::search(const string& search){
 
     cout << "Results: " << endl;
 
-  //  wordTree.countTotalNodes();
+    wordTree.countTotalNodes();
 //        cout << "Total # of Nodes '" << wordToSearch.getText()
 //             << "' has: "<<wordTree.find(wordToSearch).getFiles().size()*wordTree.find(wordToSearch).getTotalFrequency()<< endl;        //check if this is correct
     cout << "Total # of Nodes in tree: "// << wordToSearch.getText()

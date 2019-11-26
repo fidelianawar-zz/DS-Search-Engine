@@ -21,6 +21,7 @@ class DocumentProcessor
 public:
     DocumentProcessor();
     void readInputData(const string&);
+    void readDirectory();
     void parseInputData(const string&, const string&);
     string& stripHTML(string& text) const;
     string parseWords(const string& base) const;
