@@ -196,8 +196,9 @@ void DocumentProcessor::readInputData(const string& directory){
                 strncpy(filePath, path.c_str(), 5000);
                 strncat(filePath, "/", 5000);
                 strncat(filePath, dir->d_name, 5000);
-
-                parseInputData(filePath,path);
+                if(numDocs <= 10000){
+                    parseInputData(filePath,path);
+                }
 
             }
         }
@@ -283,7 +284,7 @@ void DocumentProcessor::printParsingStats(){
     numWordsTotal++;
 
     if(numWordsTotal == 1)
-        cout << "Number of Words Parsed and Inserted: \n";
+        cout << "Number of Words Parsed: \n";
     if(numWordsTotal % 100000 == 0)
         cout <<"\t"<<numWordsTotal <<endl;
 }
