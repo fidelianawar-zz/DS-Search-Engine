@@ -4,6 +4,7 @@
 #include <unordered_set>
 #include <unordered_map>
 #include "dsavltree.h"
+#include "dshashtable.h"
 #include "Word.h"
 
 using namespace std;
@@ -20,9 +21,9 @@ class DocumentProcessor
 {
 public:
     DocumentProcessor();
-    void readInputData(const string&);
+    void readInputData(const string&, char);
     void readDirectory();
-    void parseInputData(const string&, const string&);
+    void parseInputData(const string&, const string&, char);
     string& stripHTML(string& text) const;
     string parseWords(const string& base) const;
     void stemString(string& text) const;
@@ -30,15 +31,17 @@ public:
     int getNumWordsIndexed();
     int getNumDocs();
     int getNumWordsTotal();
-    void insertWord(string, string);
+    void insertTree(string, string);
+    void insertHash(string, string);
     void search(const string& search);
     void printParsingStats();
 
     private:
-        unordered_set<string> stopWordsSet;
+    unordered_set<string> stopWordsSet;
     mutable unordered_map<string, string> stemCache;
     DSAVLTree<string> parsedWords;
     DSAVLTree<Word> wordTree;
+    DSHashtable<Word, string> wordHashTable;
     int numDocs;
     int numWordsIndexed;
     int numWordsTotal;

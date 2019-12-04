@@ -174,7 +174,7 @@ inline time_t parseDate(string& date)
 }
 
 //reads input data using file path directory
-void DocumentProcessor::readInputData(const string& directory){
+void DocumentProcessor::readInputData(const string& directory, char type){
 
     string path = directory;
 
@@ -202,8 +202,8 @@ void DocumentProcessor::readInputData(const string& directory){
                 strncpy(filePath, path.c_str(), 5000);
                 strncat(filePath, "/", 5000);
                 strncat(filePath, dir->d_name, 5000);
-               /// if(numDocs <= 1000){
-                    parseInputData(filePath,path);
+                /// if(numDocs <= 1000){
+                parseInputData(filePath,path,type);
                 //}
 
             }
@@ -211,6 +211,7 @@ void DocumentProcessor::readInputData(const string& directory){
     }
 
     //parsedWords.printInOrder();
+    wordHashTable.print();
     //wordTree.printInOrder();
 }
 
@@ -218,7 +219,7 @@ void DocumentProcessor::readInputData(const string& directory){
  * parses json elements of document
  * chooses processing technique for HTML vs plaintext
  */
-void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path){
+void DocumentProcessor::parseInputData(const string& fileDirectory, const string& path, char type){
 
     ifstream opinion(fileDirectory);
     if(!opinion){
@@ -267,8 +268,15 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
             string word;
             ss >> word;
 
-            if(parseWords(word).length() > 2)
-                insertWord(parseWords(word),info.title);
+            if(parseWords(word).length() > 2){
+                if (type == 'A'){
+                    insertTree(parseWords(word),info.title);
+                }
+                else{
+                    insertHash(parseWords(word),info.title);
+                }
+
+            }
         } while (ss);
     }
 
@@ -284,8 +292,12 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         do {
             string word;
             ss >> word;
-            if(parseWords(word).length() > 2)
-                insertWord(parseWords(word),info.title);
+            if (type == 'A'){
+                insertTree(parseWords(word),info.title);
+            }
+            else{
+                insertHash(parseWords(word),info.title);
+            }
         } while (ss);
     }
 
@@ -305,7 +317,7 @@ void DocumentProcessor::printParsingStats(){
  * inserts word AVL tree of parsed words (parsedWords)
  * inserts word/respective document information into AVL tree of word objects (word tree)
  */
-void DocumentProcessor::insertWord(string parsedWord, string doc) {
+void DocumentProcessor::insertTree(string parsedWord, string doc) {
     printParsingStats();
 
     parsedWords.insert(parsedWord);
@@ -319,6 +331,22 @@ void DocumentProcessor::insertWord(string parsedWord, string doc) {
         else {
             wordTree.find(newWord).addFile(doc);
         }
+    }
+}
+
+void DocumentProcessor::insertHash(string parsedWord, string document) {
+    Word newWord(parsedWord);
+    if(newWord.getText() != ""){
+        //     if (!wordHashTable.contains(newWord)){
+        numWordsIndexed++;
+        wordHashTable.insert(newWord, document);
+        //   }
+        //       else{
+        //            int keyindex = wordHashTable.getKeyIndex(newWord);
+        //            int index = wordHashTable.getIndex(newWord);
+        //            wordHashTable
+
+        //        }
     }
 }
 

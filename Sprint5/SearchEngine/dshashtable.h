@@ -33,12 +33,25 @@ private:
 
         V value;
 
+        vector<V> values;
+        info(K newKey){
+            key = newKey;
+        }
+
         info(K newKey, V newValue){
 
             key = newKey;
 
-            value = newValue;
+           // value = newValue;
+            values.push_back(newValue);
 
+        }
+       void addValue(V newValue){
+           for(int i = 0 ; i < values.size();i++){
+               if(newValue != values[i]){
+                   values.push_back(newValue);
+               }
+           }
         }
 
         K getkey(){
@@ -47,9 +60,9 @@ private:
 
         }
 
-        V& getValue(){
+        vector<V>& getValue(){
 
-            return value;
+            return values;
 
         }
 
@@ -97,7 +110,9 @@ public:
 
     bool isDSHashtableEmpty();
 
+int getKeyIndex(K);
 
+int getIndex(K);
 
     void print();
 
@@ -233,7 +248,11 @@ void DSHashtable<K, V>::insert(K key, V value)
 
     int index = hash<K>()(key) % size;
 
-    info obj(key, value);
+   // info obj(key, value);
+
+    info obj(key);
+
+    obj.addValue(value);
 
     listData[index].push_back(obj);
 
@@ -264,6 +283,41 @@ V& DSHashtable<K, V>::find(K keyToFind)
         }
 
     }
+
+}
+
+
+template<class K, class V>
+
+int DSHashtable<K, V>::getKeyIndex(K keyToFind)
+
+{
+
+    int index=hash<K>()(keyToFind) % size;
+
+    for(int j=0; j<listData[index].size(); j++)
+
+    {
+
+        if(listData[index][j].getkey() == keyToFind){
+
+            return j;
+
+        }
+
+    }
+
+}
+
+template<class K, class V>
+
+int DSHashtable<K, V>::getIndex(K keyToFind)
+
+{
+
+    int index=hash<K>()(keyToFind) % size;
+
+    return index;
 
 }
 
@@ -352,8 +406,9 @@ void DSHashtable<K, V>::print()
         for(int j=0; j<listData[i].size(); j++)
 
         {
+            for(int k = 0 ; k < listData[i][j].getValue().size(); k++)
 
-            cout<<listData[i][j].getValue();
+                cout<<listData[i][j].getValue().at(k);
 
         }
 

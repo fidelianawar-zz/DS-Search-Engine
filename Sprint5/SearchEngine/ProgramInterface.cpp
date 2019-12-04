@@ -19,10 +19,14 @@ void interactiveMenu(){
 int main(int argc, char *argv[])
 {
     if(argc > 2){
+        char type;
+        cout << "Which Studtuce" <<endl;
+        cin >> type;
         string jsonPath = argv[1];
         DocumentProcessor process;
-        process.readInputData(argv[1]);
-        process.search(argv[2]);
+        process.readInputData(argv[1],type);
+        //process.search(argv[2]);
+
 
     }else{
         IndexHandler indexHandler;
