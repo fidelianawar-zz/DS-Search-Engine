@@ -5,31 +5,31 @@ CONFIG -= qt
 
 SOURCES += \
     DocumentProcessor.cpp \
+    IndexAVL.cpp \
     IndexHandler.cpp \
+    IndexHash.cpp \
     Porter2_Stemmer.cpp \
     ProgramInterface.cpp \
+    QueryProcessor.cpp \
+    QuerySearcher.cpp \
     StopWords.cpp \
-    Word.cpp \
-    indexAVL.cpp \
-    indexHash.cpp \
-    queryProcessor.cpp
+    Word.cpp
 
 HEADERS += \
     AVLIndex.h \
+    DSAVLTree.h \
+    DSHashTable.h \
     DocumentProcessor.h \
     DocumentProcessor.h \
+    IndexAVL.h \
     IndexHandler.h \
+    IndexHash.h \
     IndexInterface.h \
     IndexInterface.h \
     Porter2_Stemmer.h \
+    QueryProcessor.h \
+    QuerySearcher.h \
     StopWords.h \
     Word.h \
-    dsavltree.h \
-    dsavltree.h \
-    dsavltree.h \
-    dshashtable.h \
-    indexAVL.h \
-    indexHash.h \
-    indexHash.h \
     json.hpp \
     json.hpp

@@ -3,8 +3,8 @@
 
 #include <unordered_set>
 #include <unordered_map>
-#include "dsavltree.h"
-#include "dshashtable.h"
+#include "DSAVLTree.h"
+#include "DSHashTable.h"
 #include "Word.h"
 
 using namespace std;

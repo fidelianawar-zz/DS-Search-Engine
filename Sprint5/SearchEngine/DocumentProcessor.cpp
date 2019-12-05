@@ -20,22 +20,18 @@ DocumentProcessor::DocumentProcessor(){
     ifstream input("stopWordFile.txt");
     string stopWord;
 
-    while (input >> stopWord)
-    {
-        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c)
-        {
+    while (input >> stopWord){
+        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c){
             return !(c == '\'' || (c >= 'a' && c <= 'z'));
         }), stopWord.end());
 
-        if (stopWord.size() == 0)
-        {
+        if (stopWord.size() == 0){
             continue;
         }
 
         stopWordsSet.emplace(stopWord);
 
-        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c)
-        {
+        stopWord.erase(std::remove_if(stopWord.begin(), stopWord.end(), [] (char c){
             return c == '\'';
         }), stopWord.end());
 
@@ -44,19 +40,13 @@ DocumentProcessor::DocumentProcessor(){
 }
 
 //strips HTML tags from input corpus documents
-string& DocumentProcessor::stripHTML(string& text) const
-{
-    for (unsigned int i = 0; i < text.size(); i++)
-    {
-        if (text[i] == '<')
-        {
+string& DocumentProcessor::stripHTML(string& text) const {
+    for (unsigned int i = 0; i < text.size(); i++){
+        if (text[i] == '<'){
             unsigned int j = i;
-
-            while (text[j] != '>' && j < text.size())
-            {
+            while (text[j] != '>' && j < text.size()){
                 j++;
             }
-
             text.erase(i, j - i + 1);
             i--;
         }
@@ -66,44 +56,35 @@ string& DocumentProcessor::stripHTML(string& text) const
 }
 
 //parses word from document (changes to lowercase, stems, and removes stop words)
-string DocumentProcessor::parseWords(const string& base) const
-{
+string DocumentProcessor::parseWords(const string& base) const{
     string processed = base;
-
-    if (processed.size() == 0)
-    {
+    if (processed.size() == 0){
         return processed;
     }
 
     lowerCase(processed);
 
-    processed.erase(std::remove_if(processed.begin(), processed.end(), [] (char c)
-    {
+    processed.erase(std::remove_if(processed.begin(), processed.end(), [] (char c){
         return !(c == '\'' || (c >= 'a' && c <= 'z'));
     }), processed.end());
 
-    if (processed.size() == 0)
-    {
+    if (processed.size() == 0){
         return processed;
     }
 
-    if (stopWordsSet.count(processed) > 0)
-    {
+    if (stopWordsSet.count(processed) > 0){
         return "";
     }
 
     stemString(processed);
-
     return processed;
 }
 
 //stemming of words using Porter2_Stemmer
-inline void DocumentProcessor::stemString(string& text) const
-{
+inline void DocumentProcessor::stemString(string& text) const{
     string key = text;
 
-    if (stemCache.find(key) != stemCache.end())
-    {
+    if (stemCache.find(key) != stemCache.end()){
         text = stemCache.at(text);
         return;
     }
@@ -113,10 +94,8 @@ inline void DocumentProcessor::stemString(string& text) const
 }
 
 //changes word to lower case
-string& DocumentProcessor::lowerCase(string& text) const
-{
-    for (unsigned int i = 0; i < text.size(); i++)
-    {
+string& DocumentProcessor::lowerCase(string& text) const{
+    for (unsigned int i = 0; i < text.size(); i++){
         text[i] = tolower(text[i]);
     }
 
@@ -124,15 +103,13 @@ string& DocumentProcessor::lowerCase(string& text) const
 }
 
 //parses title of document
-inline string parseCaseTitle(string& absoluteURL)
-{
+inline string parseCaseTitle(string& absoluteURL){
     istringstream sections(absoluteURL);
     string title;
 
     string r1;
 
-    for (int i = 0; i < 4; i++)
-    {
+    for (int i = 0; i < 4; i++){
         getline(sections, r1, '/');
     }
 
@@ -140,18 +117,14 @@ inline string parseCaseTitle(string& absoluteURL)
 
     string r2;
 
-    while (getline(split, r2, '-'))
-    {
-        if (r2 == "v")
-        {
+    while (getline(split, r2, '-')){
+        if (r2 == "v"){
             r2 = "v.";
         }
-        else if (r2.size() > 0)
-        {
+        else if (r2.size() > 0){
             r2[0] = toupper(r2[0]);
 
-            if (r2[r2.size() - 1] == '/')
-            {
+            if (r2[r2.size() - 1] == '/'){
                 r2 = r2.substr(0, r2.size() - 1);
             }
         }
@@ -163,23 +136,18 @@ inline string parseCaseTitle(string& absoluteURL)
 }
 
 //parses and returns the date
-inline time_t parseDate(string& date)
-{
-
+inline time_t parseDate(string& date){
     std::tm parsed;
     memset(&parsed, 0, sizeof(parsed));
     strptime(date.c_str(), "%Y-%m-%dT%T%H:%M:%SZ", &parsed);
-    //2010-04-28T17:13:09Z
     return mktime(&parsed);
 }
 
 //reads input data using file path directory
 void DocumentProcessor::readInputData(const string& directory, char type){
-
     string path = directory;
 
-    if (directory[directory.size() - 1] != '/')
-    {
+    if (directory[directory.size() - 1] != '/'){
         path += '/';
     }
 
@@ -191,6 +159,7 @@ void DocumentProcessor::readInputData(const string& directory, char type){
     while ((corpus = opendir(path.c_str())) == nullptr) {
         fprintf(stderr, "Could not open directory: %s\n", path.c_str());
     }
+
     while ((dir = readdir(corpus)) != nullptr) {
         if (strncmp(dir->d_name, "..", 2) != 0 && strncmp(dir->d_name, ".", 1) != 0) {
             string fileName = dir->d_name;
@@ -204,7 +173,6 @@ void DocumentProcessor::readInputData(const string& directory, char type){
                 strncat(filePath, dir->d_name, 5000);
                 /// if(numDocs <= 1000){
                 parseInputData(filePath,path,type);
-                //}
 
             }
         }

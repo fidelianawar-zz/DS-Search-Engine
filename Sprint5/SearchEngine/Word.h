@@ -9,11 +9,11 @@
 #include <algorithm>
 #include <cstring>
 #include <cctype>
-#include "dsavltree.h"
+#include "DSAVLTree.h"
 #include "Porter2_Stemmer.h"
 
 #include <vector>
-#include "dsavltree.h"
+#include "DSAVLTree.h"
 
 
 using namespace std;

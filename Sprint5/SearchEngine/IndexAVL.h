@@ -1,7 +1,7 @@
 #ifndef INDEXAVL_H
 #define INDEXAVL_H
 #include "IndexInterface.h"
-#include "dsavltree.h"
+#include "DSAVLTree.h"
 
 class indexAVL: public IndexInterface {
     private:

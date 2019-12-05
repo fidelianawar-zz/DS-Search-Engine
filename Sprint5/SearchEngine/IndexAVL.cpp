@@ -1,4 +1,4 @@
-#include "indexAVL.h"
+#include "IndexAVL.h"
 
 indexAVL::indexAVL() {
 

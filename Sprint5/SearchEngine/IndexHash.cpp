@@ -1,4 +1,4 @@
-#include "indexHash.h"
+#include "IndexHash.h"
 
 indexHash::indexHash()
 {

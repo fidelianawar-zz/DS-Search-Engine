@@ -39,7 +39,7 @@
 #include <locale>
 #include "Word.h"
 #include "StopWords.h"
-#include "dsavltree.h"
+#include "DSAVLTree.h"
 #include <algorithm>
 //#include "searcher.h"
 

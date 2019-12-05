@@ -1,9 +1,9 @@
 #ifndef INDEXHANDLER_H
 #define INDEXHANDLER_H
 #include "IndexInterface.h"
-#include "indexAVL.h"
-#include "indexHash.h"
-#include "dsavltree.h"
+#include "IndexAVL.h"
+#include "IndexHash.h"
+#include "DSAVLTree.h"
 
 class IndexHandler {
     private:

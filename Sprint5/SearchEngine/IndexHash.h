@@ -1,7 +1,7 @@
 #ifndef INDEXHASH_H
 #define INDEXHASH_H
 #include "IndexInterface.h"
-#include "dshashtable.h"
+#include "DSHashTable.h"
 
 class indexHash : public IndexInterface {
     private:

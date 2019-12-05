@@ -1,5 +1,5 @@
 #include <iostream>
-#include "dsavltree.h"
+#include "DSAVLTree.h"
 #include "IndexHandler.h"
 #include "DocumentProcessor.h"
 #include <fstream>
