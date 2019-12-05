@@ -21,6 +21,15 @@ public:
     bool checkWordExists(string);
     void printResults(vector<pair<string, int>>);
     vector<pair<string, int>> receiveStringRequest(string);
+    void notQuery();
+    void andQuery();
+    void orQuery();
+    void simpleQuery(string);
+
+    vector<pair<string, int>> differentVec(vector<pair<string, int>>&, vector<pair<string, int>>&);
+    vector<pair<string, int>> intersectVec(vector<pair<string, int>>&, vector<pair<string, int>>&);
+    vector<pair<string, int>> unionVec(vector<pair<string, int>>&, vector<pair<string, int>>&);
+
 };
 
 #endif // QUERYSEARCHER_H
