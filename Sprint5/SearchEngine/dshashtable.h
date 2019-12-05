@@ -47,8 +47,9 @@ private:
 
         }
        void addValue(V newValue){
+          value = newValue;
            for(int i = 0 ; i < values.size();i++){
-               if(newValue != values[i]){
+               if(!(newValue == values[i])){
                    values.push_back(newValue);
                }
            }
@@ -60,10 +61,14 @@ private:
 
         }
 
-        vector<V>& getValue(){
+        vector<V>& getValues(){
 
             return values;
 
+        }
+        V& getValue(){
+            cout << key << " ";
+            return value;
         }
 
     };
@@ -389,8 +394,6 @@ bool DSHashtable<K, V>::isDSHashtableEmpty()
 
 }
 
-
-
 //print values of table
 
 template<class K, class V>
@@ -398,7 +401,6 @@ template<class K, class V>
 void DSHashtable<K, V>::print()
 
 {
-
     for(int i=0; i<size; i++)
 
     {
@@ -406,10 +408,11 @@ void DSHashtable<K, V>::print()
         for(int j=0; j<listData[i].size(); j++)
 
         {
-            for(int k = 0 ; k < listData[i][j].getValue().size(); k++)
+        //  cout <<  listData[i][j].getKey() << "\t";
+          cout <<  listData[i][j].getValue()<<endl;
 
-                cout<<listData[i][j].getValue().at(k);
-
+          //  for(int k = 0 ; k < listData[i][j].getValue(); k++){
+               // cout<<listData[i][j].getValue().at(k);
         }
 
     }

@@ -24,13 +24,13 @@ void IndexHandler::chooseIndex() {
     cin >> choice;
 
     if (choice == 1) {
-        //index = new indexAVL;
+        index = new indexAVL();
         if (doesIndexExist()) {
             readFromIndex();
         }
     }
     else if (choice == 2) {
-       // index = new indexHash;
+        index = new indexHash();
         if (doesIndexExist()) {
             readFromIndex();
         }

@@ -1,16 +1,18 @@
 #ifndef INDEXHANDLER_H
 #define INDEXHANDLER_H
 #include "IndexInterface.h"
+#include "indexAVL.h"
+#include "indexHash.h"
+#include "dsavltree.h"
 
 class IndexHandler {
     private:
         fstream f;
         IndexInterface* index;
-        //AvlTree<Word> index;
+        DSAVLTree<Word> index1;
         int numDocuments;
         int numWordsIndexed;
         int numWordsTotal;
-      //  PDFParser parser;
         vector<string> txtFiles;
     public:
         IndexHandler();

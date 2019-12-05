@@ -211,7 +211,7 @@ void DocumentProcessor::readInputData(const string& directory, char type){
     }
 
     //parsedWords.printInOrder();
-    wordHashTable.print();
+   // wordHashTable.print();
     parsedHash.print();
     //wordTree.printInOrder();
 }
