@@ -212,6 +212,7 @@ void DocumentProcessor::readInputData(const string& directory, char type){
 
     //parsedWords.printInOrder();
     wordHashTable.print();
+    parsedHash.print();
     //wordTree.printInOrder();
 }
 
@@ -339,7 +340,8 @@ void DocumentProcessor::insertHash(string parsedWord, string document) {
     if(newWord.getText() != ""){
         //     if (!wordHashTable.contains(newWord)){
         numWordsIndexed++;
-        wordHashTable.insert(newWord, document);
+        //wordHashTable.insert(newWord, document);
+       parsedHash.insert(parsedWord,document);
         //   }
         //       else{
         //            int keyindex = wordHashTable.getKeyIndex(newWord);

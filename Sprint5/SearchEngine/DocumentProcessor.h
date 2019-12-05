@@ -42,6 +42,7 @@ public:
     DSAVLTree<string> parsedWords;
     DSAVLTree<Word> wordTree;
     DSHashtable<Word, string> wordHashTable;
+    DSHashtable<string,string>parsedHash;
     int numDocs;
     int numWordsIndexed;
     int numWordsTotal;
