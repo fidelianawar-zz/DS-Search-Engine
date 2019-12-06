@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.9.2, 2019-12-05T13:30:01. -->
+<!-- Written by QtCreator 4.9.2, 2019-12-06T11:36:31. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -57,7 +57,6 @@
   <valuemap type="QVariantMap">
    <valuelist type="QVariantList" key="ClangCodeModel.CustomCommandLineKey"/>
    <value type="bool" key="ClangCodeModel.UseGlobalConfig">false</value>
-   <value type="QString" key="ClangCodeModel.WarningConfigId">{aee1d411-7642-477d-99ed-b18ca80be765}</value>
   </valuemap>
  </data>
  <data>
@@ -307,7 +306,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">SearchEngine</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/student/Desktop/CSE2341-F19-Fidelia-Annalise/Sprint5/SearchEngine/SearchEngine.pro</value>
-    <value type="QString" key="RunConfiguration.Arguments">/home/student/Desktop/CSE2341-F19-Fidelia-Annalise/Sprint5/build-SearchEngine-Desktop_Qt_5_10_0_GCC_64bit-Debug/scotus-small beginning</value>
+    <value type="QString" key="RunConfiguration.Arguments">/home/student/Desktop/CSE2341-F19-Fidelia-Annalise/Sprint5/build-SearchEngine-Desktop_Qt_5_10_0_GCC_64bit-Debug/scotus-small</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>

@@ -26,9 +26,9 @@ public:
     void orQuery();
     void simpleQuery(string);
 
-    vector<pair<string, int>> differentVec(vector<pair<string, int>>&, vector<pair<string, int>>&);
-    vector<pair<string, int>> intersectVec(vector<pair<string, int>>&, vector<pair<string, int>>&);
-    vector<pair<string, int>> unionVec(vector<pair<string, int>>&, vector<pair<string, int>>&);
+    vector<pair<string, int>> differentVector(vector<pair<string, int>>&, vector<pair<string, int>>&);
+    vector<pair<string, int>> intersectVector(vector<pair<string, int>>&, vector<pair<string, int>>&);
+    vector<pair<string, int>> unionVector(vector<pair<string, int>>&, vector<pair<string, int>>&);
 
 };
 

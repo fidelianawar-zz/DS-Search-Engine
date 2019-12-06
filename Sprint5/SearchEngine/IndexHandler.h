@@ -9,7 +9,7 @@ class IndexHandler {
     private:
         fstream f;
         IndexInterface* index;
-        DSAVLTree<Word> index1;
+       // DSAVLTree<Word> index1;
         int numDocuments;
         int numWordsIndexed;
         int numWordsTotal;

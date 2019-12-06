@@ -10,6 +10,7 @@ QuerySearcher::QuerySearcher()
 
 }
 
+
 QuerySearcher::QuerySearcher(IndexInterface* handler, int numDocs)
 {
     index = handler;
@@ -70,7 +71,7 @@ void QuerySearcher::notQuery() {
             if (checkWordExists(input.front())) {
                 temp=receiveStringRequest(input.front());
                 if(!results.empty()){
-                    results=differentVector(results, temp);
+                 //   results=differentVector(results, temp);
                 }
             }
         }
@@ -103,7 +104,7 @@ void QuerySearcher::andQuery() {
             if (checkWordExists(input.front())) {
                 temp=receiveStringRequest(input.front());
                 if(!results.empty()){
-                    results=differentVector(results, temp);
+                  //  results=differentVector(results, temp);
                 }
             }
         }
@@ -114,7 +115,7 @@ void QuerySearcher::andQuery() {
                     results=temp;
                 }
                 else {
-                    results=intersectVector(results, temp);
+                 //   results=intersectVector(results, temp);
                 }
             }
             else {
@@ -133,8 +134,20 @@ void QuerySearcher::andQuery() {
     }
 
     printResults(results);
-}
+}/*
+vector<pair<string, int>> QuerySearcher:: unionVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
+vector<pair<string, int>> temp;
+return temp;
 
+}
+vector<pair<string, int>> QuerySearcher:: differentVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
+    vector<pair<string, int>> temp;
+    return temp;
+}
+vector<pair<string, int>> QuerySearcher:: intersectVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
+    vector<pair<string, int>> temp;
+    return temp;
+}*/
 void QuerySearcher::orQuery(){
     vector<pair<string, int>> results;
     vector<pair<string, int>> temp;
@@ -150,7 +163,7 @@ void QuerySearcher::orQuery(){
             if (checkWordExists(input.front())) {
                 temp=receiveStringRequest(input.front());
                 if(!results.empty()){
-                    results=differentVector(results, temp);
+                    //results=differentVector(results, temp);
                 }
             }
         }
@@ -161,7 +174,7 @@ void QuerySearcher::orQuery(){
                     results=temp;
                 }
                 else {
-                    results=unionVector(results, temp);
+                  //  results=unionVector(results, temp);
                 }
             }
         }
