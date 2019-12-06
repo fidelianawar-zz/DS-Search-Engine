@@ -2,6 +2,7 @@
 #include "DSAVLTree.h"
 #include "IndexHandler.h"
 #include "DocumentProcessor.h"
+#include "queryProcessor.h"
 #include <fstream>
 #include <json.hpp>
 
@@ -30,6 +31,7 @@ void maintenanceMenu(){
         cout << "\nInvalid Choice. Please Try again.\n\n";
         maintenanceMenu();
     }
+
 }
 
 void interactiveMenu(){
@@ -58,6 +60,15 @@ void interactiveMenu(){
     if(answer > 3){
         cout << "\nInvalid Choice. Please Try again.\n\n";
         interactiveMenu();
+    }
+
+    switch(answer){
+    case 1:
+        queryProcessor q;
+        q.requestInput();
+        break;
+   // default:
+       // break;
     }
 }
 
