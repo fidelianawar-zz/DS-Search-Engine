@@ -27,20 +27,21 @@ queue<string>& QueryProcessor::requestUserInput(){
     cout<<"Enter search query"<<endl;
     string query;
     string bufferQuery;
-   // getline(cin, bufferQuery);
-    cin >> bufferQuery;
+    getline(cin, bufferQuery);
+    cin.ignore();
     cout << "Search results for: '" << bufferQuery <<"' "<< endl;
     istringstream ss(bufferQuery);
 
     while(getline(ss, bufferQuery, ' '))
     {
-cout << "made it here " << endl;
+        cout << "made it inside while loop " << endl;
         Word w(bufferQuery);
         query=w.getText();
 
         //check for stop words
         if(sW.stopWordsTree.contains(query)){
             if(query == "and" || query == "or" || query == "not"){
+                cout << "query included and/or/not" << endl;
                 userInput.push(query);
                 continue;
             }
