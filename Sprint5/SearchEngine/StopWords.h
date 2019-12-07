@@ -3,14 +3,15 @@
 #include "DSAVLTree.h"
 #include <fstream>
 
-
 class StopWords
 {
 private:
-    DSAVLTree<string> stopWordsTree;
+
 public:
+    DSAVLTree<string> stopWordsTree;
     StopWords();
-    DSAVLTree<string>&getStopTree();
+    DSAVLTree<string>& getStopTree();
+    void populateStopWords();
 };
 
 #endif // STOPWORDS_H

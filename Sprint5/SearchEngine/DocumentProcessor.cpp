@@ -12,6 +12,8 @@
 #include <dirent.h>
 #include "Word.h"
 
+bool print = false;
+
 using namespace std;
 using nlohmann::json;
 
@@ -177,11 +179,15 @@ void DocumentProcessor::readInputData(const string& directory, char type){
             }
         }
     }
-
-    //parsedWords.printInOrder();
-   // wordHashTable.print();
-    parsedHash.print();
-    //wordTree.printInOrder();
+    if(print == true){
+        if(type == 'A'){
+            wordTree.printInOrder();
+            //parsedWords.printInOrder();
+        }else{
+            parsedHash.print();
+            //wordHashTable.print();
+        }
+    }
 }
 
 /*
@@ -309,7 +315,7 @@ void DocumentProcessor::insertHash(string parsedWord, string document) {
         //     if (!wordHashTable.contains(newWord)){
         numWordsIndexed++;
         //wordHashTable.insert(newWord, document);
-       parsedHash.insert(parsedWord,document);
+        parsedHash.insert(parsedWord,document);
         //   }
         //       else{
         //            int keyindex = wordHashTable.getKeyIndex(newWord);

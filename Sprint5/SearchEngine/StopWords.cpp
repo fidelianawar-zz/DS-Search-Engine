@@ -1,8 +1,15 @@
 #include "StopWords.h"
 
 StopWords::StopWords() {
+
+}
+DSAVLTree<string>& StopWords::getStopTree()
+{
+    return stopWordsTree;
+}
+void StopWords::populateStopWords(){
     ifstream inFile;
-    inFile.open("StopWords", ios::in);
+    inFile.open("stopWords.txt");
 
     if (!inFile) {
         cerr << "Stop words file could not be opened" << endl;
@@ -18,9 +25,8 @@ StopWords::StopWords() {
     }
 
     inFile.close();
-}
 
-DSAVLTree<string>& StopWords::getStopTree()
-{
-    return stopWordsTree;
+    stopWordsTree.isEmpty() == true? cout <<"is empty":cout<< "full";
+    cout << endl;
+
 }

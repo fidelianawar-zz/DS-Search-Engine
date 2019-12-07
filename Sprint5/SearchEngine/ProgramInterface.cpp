@@ -2,7 +2,7 @@
 #include "DSAVLTree.h"
 #include "IndexHandler.h"
 #include "DocumentProcessor.h"
-#include "queryProcessor.h"
+#include "QueryProcessor.h"
 #include <fstream>
 #include <json.hpp>
 
@@ -22,7 +22,7 @@ void maintenanceMenu(){
 
     cout << "[1] - Add opinions to index\n" <<
             "[2] - Clear Index\n" <<
-            "[3] - Populate Corous with New Index\n" <<
+            "[3] - Populate Corpus with New Index\n" <<
             ">> ";
 
     cin >> answer;
@@ -64,8 +64,8 @@ void interactiveMenu(){
 
     switch(answer){
     case 1:
-        queryProcessor q;
-        q.requestInput();
+        QueryProcessor q;
+        q.requestUserInput();
         break;
    // default:
        // break;
