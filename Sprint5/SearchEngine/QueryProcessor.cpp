@@ -8,6 +8,7 @@
 #include "DSAVLTree.h"
 #include "Word.h"
 #include <queue>
+#include <string>
 
 using namespace std;
 
@@ -22,12 +23,15 @@ queue<string>& QueryProcessor::requestUserInput(){
         userInput.pop();
     }
 
-    cout<<"Enter search query"<<endl;
+    cout<<"Enter search query: ";
     string query;
     string bufferQuery;
+
     getline(cin, bufferQuery);
     cin.ignore();
+
     cout << "Search results for: '" << bufferQuery <<"' "<< endl;
+
     istringstream ss(bufferQuery);
 
     while(getline(ss, bufferQuery, ' '))
