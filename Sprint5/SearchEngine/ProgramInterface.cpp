@@ -3,6 +3,7 @@
 #include "IndexHandler.h"
 #include "DocumentProcessor.h"
 #include "QueryProcessor.h"
+#include "QuerySearcher.h"
 #include <fstream>
 #include <json.hpp>
 
@@ -35,7 +36,7 @@ void maintenanceMenu(){
 
 }
 
-void interactiveMenu(){
+void interactiveMenu(char *argv[]){
     cout << "Interactive Mode:\n";
 
     /*
@@ -55,28 +56,37 @@ void interactiveMenu(){
     cout << "[1] - Load Index into AVL structure or Hash table\n" <<
             "[2] - Enter a query\n" <<
             "[3] - Print Statistics (# of opinions, avg # of indexed per opinion, and Top 50 most frequent words)\n" <<
-            ">> ";
+            "[4] - Exit"
+         << ">> ";
 
     cin >> answer;
 
-    if(answer > 3){
+    if(answer > 4){
         cout << "\nInvalid Choice. Please Try again.\n\n";
-        interactiveMenu();
+        interactiveMenu(argv);
+    }
+    DocumentProcessor process;
+
+    while(answer != 4){
+        if(answer == 1){
+            char type;
+            cout << "Which Structure: ";
+            cin >> type;
+            string jsonPath = argv[1];
+
+            process.readInputData(argv[1],type);
+        }
+        else if(answer == 2){
+            QueryProcessor q;
+            // q.requestUserInput();
+            QuerySearcher s;
+            s.getQuery();
+        }else if(answer == 3){
+            process.printParsingStats();
+        }
+        interactiveMenu(argv);
     }
 
-
-    switch(answer){
-    case 1:
-        QueryProcessor q;
-        q.requestUserInput();
-        break;
-    //case 2:
-
-       // break;
-
-        // default:
-        // break;
-    }
 }
 
 int main(int argc, char *argv[])
@@ -101,6 +111,6 @@ int main(int argc, char *argv[])
         cin >> mode;
         cout << endl;
 
-        mode == 1? maintenanceMenu(): interactiveMenu();
+        mode == 1? maintenanceMenu(): interactiveMenu(argv);
     }
 }

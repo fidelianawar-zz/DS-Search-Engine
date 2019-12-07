@@ -76,8 +76,9 @@ void QuerySearcher::notQuery() {
             }
         }
         else {
-            cout << endl<< "front word is not 'not'" << endl;
+            
             if (checkWordExists(input.front())) {
+                cout << endl<< "front word is not 'not'" << endl;
                 cout << "front word exists" << endl;
                 temp=receiveStringRequest(input.front());
                 if(results.empty()){

@@ -27,8 +27,9 @@ queue<string>& QueryProcessor::requestUserInput(){
     string query;
     string bufferQuery;
 
-    getline(cin, bufferQuery);
     cin.ignore();
+    getline(cin, bufferQuery);
+    //cin.ignore();
 
     cout << "Search results for: '" << bufferQuery <<"' "<< endl;
 
@@ -36,10 +37,9 @@ queue<string>& QueryProcessor::requestUserInput(){
 
     while(getline(ss, bufferQuery, ' '))
     {
-        cout << "made it inside while loop " << endl;
         Word w(bufferQuery);
         query=w.getText();
-
+        cout << endl << "the query is: " << query << endl << endl;
         //check for stop words
         if(sW.stopWordsTree.contains(query)){
             if(query == "and" || query == "or" || query == "not"){
@@ -49,22 +49,23 @@ queue<string>& QueryProcessor::requestUserInput(){
             }
             else
             {
-                cout<<"The stop word: '"<<query<<"' was detected please try again."<<endl;
-
                 //if stop word detected, clear queue
                 while(!userInput.empty()){
                     userInput.pop();
                 }
                 bufferQuery.clear();
+
+                cout << "Invalid Form. Please try again."<< endl;
                 requestUserInput();
                 break;
             }
         }
         else
         {
-            cout << "Query is not a stop word\n";
+            cout << query << " is not a stop word\n";
             userInput.push(query);
         }
     }
+    cout << "size of queue is: " << userInput.size() << endl;
     return userInput;
 }

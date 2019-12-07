@@ -12,7 +12,7 @@
 #include <dirent.h>
 #include "Word.h"
 
-bool print = false;
+bool print = true;
 
 using namespace std;
 using nlohmann::json;
