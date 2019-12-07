@@ -17,9 +17,7 @@ QueryProcessor::QueryProcessor()
 }
 
 queue<string>& QueryProcessor::requestUserInput(){
-
     sW.populateStopWords();
-
     while(!userInput.empty()){
         userInput.pop();
     }
