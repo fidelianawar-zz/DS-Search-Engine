@@ -11,6 +11,7 @@ using json = nlohmann::json;
 
 void maintenanceMenu(){
     cout << "Maintenace Mode:\n";
+
     /*
         allows the user to add opinions to the index by supplying the path to a folder containing new opinions
         allows the user to clear the index completely
@@ -36,6 +37,7 @@ void maintenanceMenu(){
 
 void interactiveMenu(){
     cout << "Interactive Mode:\n";
+
     /*
         allow the user to indicate if they want the index loaded into an AVL structure or a hash table structure (if a persisted index exists).
         allow the user to enter a properly formatted Boolean query (as described above).
@@ -62,13 +64,18 @@ void interactiveMenu(){
         interactiveMenu();
     }
 
+
     switch(answer){
     case 1:
         QueryProcessor q;
         q.requestUserInput();
         break;
-   // default:
+    //case 2:
+
        // break;
+
+        // default:
+        // break;
     }
 }
 
@@ -76,7 +83,7 @@ int main(int argc, char *argv[])
 {
     if(argc > 2){
         char type;
-        cout << "Which Structure" <<endl;
+        cout << "Which Structure: ";
         cin >> type;
         string jsonPath = argv[1];
         DocumentProcessor process;
