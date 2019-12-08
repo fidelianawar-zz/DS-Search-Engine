@@ -4,6 +4,7 @@
 #include "IndexAVL.h"
 #include "IndexHash.h"
 #include "DSAVLTree.h"
+#include "DSHashTable.h"
 #include "DocumentProcessor.h"
 
 class IndexHandler {

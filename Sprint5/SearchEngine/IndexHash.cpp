@@ -19,3 +19,6 @@ bool indexHash::contains(string str) {
 void indexHash::printWords() {
     words.print();
 }
+DSAVLTree<Word> indexHash::getStructure(){
+   // return words;
+}

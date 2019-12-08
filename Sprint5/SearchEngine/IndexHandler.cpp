@@ -28,7 +28,7 @@ void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
         process.readInputData(argv[1],choice);
     }
     else if (choice == 'H') {
-        //index = new indexHash;
+        index = new indexHash;
         process.setIndex(index);
         process.readInputData(argv[1],choice);
     }

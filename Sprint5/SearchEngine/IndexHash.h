@@ -2,6 +2,7 @@
 #define INDEXHASH_H
 #include "IndexInterface.h"
 #include "DSHashTable.h"
+#include "DSAVLTree.h"
 
 class indexHash : public IndexInterface {
     private:
@@ -13,6 +14,7 @@ class indexHash : public IndexInterface {
         bool contains(string);
         void printWords();
         ~indexHash() = default;
+        DSAVLTree<Word> getStructure();
 };
 
 #endif // INDEXHASH_H
