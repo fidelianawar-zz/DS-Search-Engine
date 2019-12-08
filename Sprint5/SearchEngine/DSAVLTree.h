@@ -174,8 +174,10 @@ void DSAVLTree<T>::clean()
 template<class T>
 void DSAVLTree<T>::clean(AVLNode<T>* node)
 {
-    AVLNode<T> * cur;
-    if(node  !=  nullptr){
+
+    if(node  !=  nullptr)
+    {
+        AVLNode<T> * cur;
         if(node->left  !=  nullptr){
             clean(node->left);
         }

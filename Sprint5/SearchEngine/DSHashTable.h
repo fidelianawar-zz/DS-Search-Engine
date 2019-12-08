@@ -29,7 +29,7 @@ private:
         }
         void addValue(V newValue){
             value = newValue;
-            for(int i = 0 ; i < values.size();i++){
+            for(unsigned int i = 0 ; i < values.size();i++){
                 if(!(newValue == values[i])){
                     values.push_back(newValue);
                 }
@@ -133,7 +133,7 @@ void DSHashtable<K, V>::insert(K key, V value){
 template<class K, class V>
 V& DSHashtable<K, V>::find(K keyToFind){
     int index=hash<K>()(keyToFind) % size;
-    for(int j=0; j<listData[index].size(); j++){
+    for(unsigned int j=0; j<listData[index].size(); j++){
         if(listData[index][j].getkey() == keyToFind){
             return listData[index][j].getValue();
         }
@@ -188,7 +188,7 @@ bool DSHashtable<K, V>::isDSHashtableEmpty(){
 template<class K, class V>
 void DSHashtable<K, V>::print(){
     for(int i=0; i<size; i++){
-        for(int j=0; j<listData[i].size(); j++){
+        for(unsigned int j=0; j<listData[i].size(); j++){
             //  cout <<  listData[i][j].getKey() << "\t";
             cout <<  listData[i][j].getValue()<<endl;
             //  for(int k = 0 ; k < listData[i][j].getValue(); k++){

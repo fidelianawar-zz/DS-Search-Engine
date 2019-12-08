@@ -5,6 +5,7 @@
 #include "DSAVLTree.h"
 #include "DSHashTable.h"
 #include "IndexInterface.h"
+#include "DocumentProcessor.h"
 
 class QuerySearcher
 {
@@ -13,10 +14,11 @@ private:
     IndexInterface* index;
     queue<string> input;
     int amountDocs;
+    DocumentProcessor process;
 
 public:
     QuerySearcher();
-    QuerySearcher(IndexInterface*, int);
+    QuerySearcher(IndexInterface*, int,DocumentProcessor);
     void getQuery();
     bool checkWordExists(string);
     void printResults(vector<pair<string, int>>);

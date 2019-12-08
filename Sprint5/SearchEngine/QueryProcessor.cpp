@@ -31,19 +31,19 @@ queue<string>& QueryProcessor::requestUserInput(){
     getline(cin, bufferQuery);
     //cin.ignore();
 
-    cout << "Search results for: '" << bufferQuery <<"' "<< endl;
+    cout << "\nSearch results for: '" << bufferQuery <<"' ";
 
     istringstream ss(bufferQuery);
 
     while(getline(ss, bufferQuery, ' '))
     {
         Word w(bufferQuery);
-        query=w.getText();
-        cout << endl << "the query is: " << query << endl << endl;
+        query = w.getText();
+      //  cout << endl << "the query is: " << query << endl << endl;
         //check for stop words
         if(sW.stopWordsTree.contains(query)){
             if(query == "and" || query == "or" || query == "not"){
-                cout << "query included and/or/not" << endl;
+              //  cout << "query included and/or/not" << endl;
                 userInput.push(query);
                 continue;
             }
@@ -62,10 +62,10 @@ queue<string>& QueryProcessor::requestUserInput(){
         }
         else
         {
-            cout << query << " is not a stop word\n";
+          //  cout << query << " is not a stop word\n";
             userInput.push(query);
         }
     }
-    cout << "size of queue is: " << userInput.size() << endl;
+  //  cout << "size of queue is: " << userInput.size() << endl;
     return userInput;
 }

@@ -8,6 +8,7 @@
 #include <algorithm>
 #include <vector>
 #include <string>
+#include <cstring>
 #include <ctime>
 #include <dirent.h>
 #include "Word.h"
@@ -191,7 +192,6 @@ void DocumentProcessor::readInputData(const string& directory, char type){
     if(print == true){
         if(type == 'A'){
             //wordTree.printInOrder();
-
             index->printWords();
             //parsedWords.printInOrder();
         }else{
@@ -257,7 +257,14 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
 
             if(parseWords(word).length() > 2){
                 if (type == 'A'){
-                    insertTree(parseWords(word),info.title);
+
+                    char buff[20];
+                    strftime(buff, 20, "%Y-%m-%d", localtime(&info.date));
+
+                    string date(buff);
+                    string titledate = to_string(info.id)+ ".json," + " Opinion Id: " + to_string(info.id)+ ", Court Case Title: " + info.title +", Date Created: "+ date;
+
+                    insertTree(parseWords(word),titledate);
                 }
                 else{
                     insertHash(parseWords(word),info.title);
@@ -280,7 +287,13 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
             string word;
             ss >> word;
             if (type == 'A'){
-                insertTree(parseWords(word),info.title);
+                char buff[20];
+                strftime(buff, 20, "%Y-%m-%d", localtime(&info.date));
+
+                string date(buff);
+                string titledate = to_string(info.id)+ ".json," + " Opinion Id: " + to_string(info.id)+ ", Court Case Title: " + info.title +", Date Created: "+ date;
+
+                insertTree(parseWords(word),titledate);
             }
             else{
                 insertHash(parseWords(word),info.title);
@@ -322,7 +335,7 @@ void DocumentProcessor::insertTree(string parsedWord, string doc) {
             // wordTree.insert(newWord);
         }
         else {
-           // indexer.words.find(newWord).addFile(doc);
+            // indexer.words.find(newWord).addFile(doc);
             index->find(newWord.getText()).addFile(doc);
 
         }

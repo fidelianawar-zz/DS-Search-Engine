@@ -54,7 +54,7 @@ int Word::findFile(string file) {
 
     for (unsigned int i = 0; i < files.size(); i++) {
 
-        for (int i = 0; i < files.size(); i++) {
+        for (unsigned int i = 0; i < files.size(); i++) {
             if (files[i].first == file) {
                 return i;
             }

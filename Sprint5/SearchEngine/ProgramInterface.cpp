@@ -92,9 +92,10 @@ void interactiveMenu(char *argv[]){
             cout << "Choose a data structure?\n";
             string jsonPath = argv[1];
             indexHandler.chooseIndex(process,argv);
+            cout << "Index Loaded.\n\n";
         }
         else if(answer == 2){
-            QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs());
+            QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs(),process);
             s.getQuery();
         }
         else if(answer == 3){

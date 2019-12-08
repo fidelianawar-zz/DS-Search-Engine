@@ -2,6 +2,8 @@
 #include "QueryProcessor.h"
 #include <iostream>
 #include <vector>
+#include <array>
+#include <sstream>
 
 using namespace std;
 
@@ -11,10 +13,11 @@ QuerySearcher::QuerySearcher()
 }
 
 
-QuerySearcher::QuerySearcher(IndexInterface* handler, int numDocs)
+QuerySearcher::QuerySearcher(IndexInterface* handler, int numDocs,DocumentProcessor process)
 {
     index = handler;
     amountDocs = numDocs;
+    process = process;
 }
 
 void QuerySearcher::getQuery(){
@@ -44,23 +47,42 @@ void QuerySearcher::getQuery(){
 bool QuerySearcher::checkWordExists(string word){
     cout << endl;
     if (index->contains(word)) {
-        cout << word << " exists in corpus" << endl;
+        // cout << word << " exists in corpus" << endl;
         return true;
     }
     else {
-        cout << word << " does not exist in the corpus" << endl;
+        // cout << word << " does not exist in the corpus" << endl;
         return false;
     }
 }
 
 void QuerySearcher::printResults(vector<pair<string, int>> d){
-    cout << endl << "The number of documents are: " << d.size() << endl;
+    cout << endl << "The number of documents found: " << d.size() << endl<<endl;
 
     if(!d.empty()){
         for(int i = 0; i < d.size(); i++){
-            cout << d[i].first << " - " << d[i].second << endl;
+            cout << "# of Appearances: " << d[i].second << "\t\n";
+
+            stringstream ss(d[i].first);
+
+            vector<string> result;
+
+            while( ss.good() )
+            {
+                string substr;
+                getline( ss, substr, ',' );
+                result.push_back( substr );
+            }
+            for (std::size_t i = 0; i < result.size(); i++)
+                std::cout<<"\t" << result[i] << std::endl;
+
+
         }
     }
+
+    /*
+        year, parties to the case, which justice wrote the majority opinion, etc
+    */
     cout << endl;
 }
 
@@ -114,7 +136,7 @@ void QuerySearcher::andQuery() {
             if (checkWordExists(input.front())) {
                 temp=receiveStringRequest(input.front());
                 if(!results.empty()){
-                   results = differentVector(results, temp);
+                    results = differentVector(results, temp);
                 }
             }
         }
@@ -182,15 +204,15 @@ vector<pair<string, int>> QuerySearcher:: intersectVector(vector<pair<string, in
     vector<pair<string, int>> finalAndVector;
     vector<pair<string, int>>::iterator it;
 
-        for(unsigned int i = 0; i < a.size(); i++){
-            for(unsigned int j = 0; j < b.size(); j++){
-                if(a[i].first == b[j].first){
-                    a[i].second += b[j].second;
-                    finalAndVector.push_back( make_pair(a[i].first,a[i].second));
-                }
+    for(unsigned int i = 0; i < a.size(); i++){
+        for(unsigned int j = 0; j < b.size(); j++){
+            if(a[i].first == b[j].first){
+                a[i].second += b[j].second;
+                finalAndVector.push_back( make_pair(a[i].first,a[i].second));
             }
         }
-        return finalAndVector;
+    }
+    return finalAndVector;
 }
 
 void QuerySearcher::orQuery(){

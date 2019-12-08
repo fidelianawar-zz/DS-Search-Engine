@@ -42,6 +42,7 @@ public:
     void insertHash(string, string);
     void search(const string& search);
     void printParsingStats();
+    void getCaption(string);
 
     private:
     unordered_set<string> stopWordsSet;
