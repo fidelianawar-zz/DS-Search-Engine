@@ -9,6 +9,7 @@
 
 using namespace std;
 using json = nlohmann::json;
+IndexHandler indexHandler;
 
 void maintenanceMenu(){
     cout << "Maintenace Mode:\n";
@@ -56,7 +57,7 @@ void interactiveMenu(char *argv[]){
     cout << "[1] - Load Index into AVL structure or Hash table\n" <<
             "[2] - Enter a query\n" <<
             "[3] - Print Statistics (# of opinions, avg # of indexed per opinion, and Top 50 most frequent words)\n" <<
-            "[4] - Exit"
+            "[4] - Exit\n"
          << ">> ";
 
     cin >> answer;
@@ -70,9 +71,21 @@ void interactiveMenu(char *argv[]){
     while(answer != 4){
         if(answer == 1){
             char type;
-            cout << "Which Structure: ";
-            cin >> type;
+            cout << "Choose a data structure?\n";
+            //cin >> type;
             string jsonPath = argv[1];
+            indexHandler.chooseIndex();
+            /*if(type == 'A'){
+
+                break;
+            }else if(type == 'H'){
+                indexHandler.chooseIndex();
+                break;
+            }
+
+            */
+
+
 
             process.readInputData(argv[1],type);
         }
@@ -102,7 +115,6 @@ int main(int argc, char *argv[])
 
 
     }else{
-        IndexHandler indexHandler;
 
         int mode;
         cout << "Welcome to Fidelia and Annalise's Search Engine!" << endl;
@@ -112,5 +124,6 @@ int main(int argc, char *argv[])
         cout << endl;
 
         mode == 1? maintenanceMenu(): interactiveMenu(argv);
+
     }
 }

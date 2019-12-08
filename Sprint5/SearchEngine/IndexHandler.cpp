@@ -15,21 +15,21 @@ vector<string> IndexHandler::getTextFiles() {
 }
 
 void IndexHandler::chooseIndex() {
-    int choice;
+    char choice;
 
-    cout << "1) AVL tree" << endl;
-    cout << "2) Hash table" << endl;
-    cout << "3) Return to query menu" << endl;
-    cout << "Action: ";
+    cout << "\t[A] AVL tree" << endl;
+    cout << "\t[H] Hash table" << endl;
+    cout << "\t[X] Return to query menu" << endl;
+    cout << ">> ";
     cin >> choice;
 
-    if (choice == 1) {
+    if (choice == 'A') {
         index = new indexAVL();
         if (doesIndexExist()) {
             readFromIndex();
         }
     }
-    else if (choice == 2) {
+    else if (choice == 'H') {
         index = new indexHash();
         if (doesIndexExist()) {
             readFromIndex();
@@ -87,27 +87,27 @@ void IndexHandler::readFromIndex() {
     string word;
     int numFiles;
 
-    f >> numDocuments;
-    f >> numWordsIndexed;
-    f >> numWordsTotal;
+    cout << numDocuments;
+    cout <<numWordsIndexed;
+    cout <<numWordsTotal;
 
-    f >> word;
+    cout <<word;
 
-    while (!f.eof()) {
+   // while (!f.eof()) {
         Word entry(word);
-        f >> numFiles;
+        cout <<numFiles;
         int frequency;
-        string pdf;
+        string corpusDoc;
         for (int i = 0; i < numFiles; i++) {
-            f >> frequency;
-            getline(f, pdf);
-            pdf = pdf.substr(1, pdf.length());
-            entry.addFileFromIndex(pair<string, int>(pdf, frequency));
+            cout <<frequency;
+            getline(f, corpusDoc);
+            corpusDoc = corpusDoc.substr(1, corpusDoc.length());
+            entry.addFileFromIndex(pair<string, int>(corpusDoc, frequency));
         }
 
         index->addWord(entry);
-        f >> word;
-    }
+        cout <<word;
+   // }
 
     //index->printWords();
 
