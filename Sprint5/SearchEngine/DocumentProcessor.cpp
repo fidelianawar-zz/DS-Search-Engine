@@ -267,7 +267,7 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
                     insertTree(parseWords(word),titledate);
                 }
                 else{
-                    insertHash(parseWords(word),info.title);
+                    //insertHash(parseWords(word),info.title);
                 }
 
             }
@@ -296,7 +296,7 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
                 insertTree(parseWords(word),titledate);
             }
             else{
-                insertHash(parseWords(word),info.title);
+                //insertHash(parseWords(word),info.title);
             }
         } while (ss);
     }
@@ -342,23 +342,23 @@ void DocumentProcessor::insertTree(string parsedWord, string doc) {
     }
 }
 
-void DocumentProcessor::insertHash(string parsedWord, string document) {
-    Word newWord(parsedWord);
-    if(newWord.getText() != ""){
-        //     if (!wordHashTable.contains(newWord)){
-        numWordsIndexed++;
-        //wordHashTable.insert(newWord, document);
-        parsedHash.insert(parsedWord,document);
-        index->addWord(newWord);
-        //   }
-        //       else{
-        //            int keyindex = wordHashTable.getKeyIndex(newWord);
-        //            int index = wordHashTable.getIndex(newWord);
-        //            wordHashTable
+//void DocumentProcessor::insertHash(string parsedWord, string document) {
+//    Word newWord(parsedWord);
+//    if(newWord.getText() != ""){
+//        //     if (!wordHashTable.contains(newWord)){
+//        numWordsIndexed++;
+//        //wordHashTable.insert(newWord, document);
+//        parsedHash.insert(parsedWord,document);
+//        index->addWord(newWord);
+//        //   }
+//        //       else{
+//        //            int keyindex = wordHashTable.getKeyIndex(newWord);
+//        //            int index = wordHashTable.getIndex(newWord);
+//        //            wordHashTable
 
-        //        }
-    }
-}
+//        //        }
+//    }
+//}
 
 int DocumentProcessor::getNumWordsIndexed() {
     return numWordsIndexed;

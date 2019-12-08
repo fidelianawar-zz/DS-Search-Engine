@@ -18,7 +18,7 @@ private:
 
 public:
     QuerySearcher();
-    QuerySearcher(IndexInterface*, int,DocumentProcessor);
+    QuerySearcher(IndexInterface*, int);
     void getQuery();
     bool checkWordExists(string);
     void printResults(vector<pair<string, int>>);

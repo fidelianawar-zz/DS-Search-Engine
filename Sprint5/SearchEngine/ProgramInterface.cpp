@@ -95,7 +95,8 @@ void interactiveMenu(char *argv[]){
             cout << "Index Loaded.\n\n";
         }
         else if(answer == 2){
-            QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs(),process);
+            //QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs(),process);
+            QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs());
             s.getQuery();
         }
         else if(answer == 3){

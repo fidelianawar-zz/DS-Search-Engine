@@ -71,7 +71,7 @@ public:
 
 //default constr: initalizes predetermined size
 template<class K, class V>
-DSHashtable<K, V>::DSHashtable(): size(10000) {   
+DSHashtable<K, V>::DSHashtable(): size(10000) {
     listData = new vector<info>[size];
 }
 
@@ -100,13 +100,16 @@ DSHashtable<K, V>::DSHashtable(DSHashtable &rhs){
 
 //overloaded equals operator for deep copy
 template<class K, class V>
-DSHashtable<K, V>& DSHashtable<K, V>::operator=(DSHashtable<K, V> &otherList){
+DSHashtable<K, V>& DSHashtable<K, V>::operator=(DSHashtable<K, V>& otherList)
+{
     size=otherList.size;
-    if(listData !=nullptr){
+    if(listData !=nullptr)
+    {
         delete [] listData;
     }
     listData=new vector<V> [size];
-    for(int i =0; i<size; i++){
+    for(int i =0; i<size; i++)
+    {
         listData[i]=otherList.listData[i];
     }
     return *this;
