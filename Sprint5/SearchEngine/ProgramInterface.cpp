@@ -66,35 +66,22 @@ void interactiveMenu(char *argv[]){
         cout << "\nInvalid Choice. Please Try again.\n\n";
         interactiveMenu(argv);
     }
+
     DocumentProcessor process;
 
     while(answer != 4){
         if(answer == 1){
-            char type;
             cout << "Choose a data structure?\n";
             //cin >> type;
             string jsonPath = argv[1];
-            indexHandler.chooseIndex();
-            /*if(type == 'A'){
+            indexHandler.chooseIndex(process,argv);
 
-                break;
-            }else if(type == 'H'){
-                indexHandler.chooseIndex();
-                break;
-            }
-
-            */
-
-
-
-            process.readInputData(argv[1],type);
         }
         else if(answer == 2){
-            QueryProcessor q;
-            // q.requestUserInput();
-            QuerySearcher s;
+            QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs());
             s.getQuery();
-        }else if(answer == 3){
+        }
+        else if(answer == 3){
             process.printParsingStats();
         }
         interactiveMenu(argv);

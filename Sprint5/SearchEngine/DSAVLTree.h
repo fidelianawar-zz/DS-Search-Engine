@@ -130,20 +130,20 @@ DSAVLTree<T>& DSAVLTree<T>::operator = (DSAVLTree<T>& rhs)
     }
     return *this;
 }
-/*
+
 template<typename T>
-DSAVLTree<T>::AVLNode<T>* DSAVLTree<T>::copy(AVLNode<T>*& node)
+typename DSAVLTree<T>::template AVLNode<T>* DSAVLTree<T>::copy(AVLNode<T>*& node)
 {
     if(node!=nullptr){
         AVLNode<T>* zleft = copy( node->left );
         AVLNode<T>* zright = copy( node->right );
-        return new AVLNode<T>(node->data, zleft, zright, node->height);
+        return new  AVLNode<T>(node->data, zleft, zright, node->height);
     }
     else if(node==nullptr)
     {
         return nullptr;
     }
-}*/
+}
 
 template<class T>
 T& DSAVLTree<T>::find(T data)

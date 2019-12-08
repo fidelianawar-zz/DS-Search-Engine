@@ -43,6 +43,9 @@ DocumentProcessor::DocumentProcessor(){
         stopWordsSet.emplace(stopWord);
     }
 }
+void DocumentProcessor::setIndex(IndexInterface*index){
+    this->index = index;
+}
 
 //strips HTML tags from input corpus documents
 string& DocumentProcessor::stripHTML(string& text) const {
@@ -189,9 +192,10 @@ void DocumentProcessor::readInputData(const string& directory, char type){
         if(type == 'A'){
             //wordTree.printInOrder();
 
-            indexer.printWords();
+            index->printWords();
             //parsedWords.printInOrder();
         }else{
+            index->printWords();
             parsedHash.print();
             //wordHashTable.print();
         }
@@ -312,6 +316,7 @@ void DocumentProcessor::insertTree(string parsedWord, string doc) {
         if (!indexer.words.contains(newWord)) {
             numWordsIndexed++;
             indexer.addWord(newWord);
+            index->addWord(newWord);
             // wordTree.insert(newWord);
         }
         else {
@@ -327,6 +332,7 @@ void DocumentProcessor::insertHash(string parsedWord, string document) {
         numWordsIndexed++;
         //wordHashTable.insert(newWord, document);
         parsedHash.insert(parsedWord,document);
+        index->addWord(newWord);
         //   }
         //       else{
         //            int keyindex = wordHashTable.getKeyIndex(newWord);

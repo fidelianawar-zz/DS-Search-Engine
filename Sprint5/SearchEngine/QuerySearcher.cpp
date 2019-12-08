@@ -43,6 +43,8 @@ void QuerySearcher::getQuery(){
 }
 
 bool QuerySearcher::checkWordExists(string word){
+    index->printWords();
+    cout << endl;
     if (index->contains(word)) {
         cout << word << " exists in corpus" << endl;
         return true;
