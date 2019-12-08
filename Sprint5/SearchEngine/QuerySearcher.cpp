@@ -61,6 +61,7 @@ void QuerySearcher::printResults(vector<pair<string, int>> d){
             cout << d[i].first << " - " << d[i].second << endl;
         }
     }
+    cout << endl;
 }
 
 vector<pair<string, int>> QuerySearcher::receiveStringRequest(string request){
@@ -80,7 +81,7 @@ void QuerySearcher::notQuery() {
             if (checkWordExists(input.front())) {
                 temp=receiveStringRequest(input.front());
                 if(!results.empty()){
-                    //   results=differentVector(results, temp);
+                    results=differentVector(results, temp);
                 }
             }
         }
@@ -113,7 +114,7 @@ void QuerySearcher::andQuery() {
             if (checkWordExists(input.front())) {
                 temp=receiveStringRequest(input.front());
                 if(!results.empty()){
-                    //  results=differentVector(results, temp);
+                   results=differentVector(results, temp);
                 }
             }
         }
@@ -124,7 +125,7 @@ void QuerySearcher::andQuery() {
                     results=temp;
                 }
                 else {
-                    //   results=intersectVector(results, temp);
+                    results=intersectVector(results, temp);
                 }
             }
             else {
@@ -151,14 +152,37 @@ vector<pair<string, int>> temp;
 return temp;
 
 }
-vector<pair<string, int>> QuerySearcher:: differentVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
-    vector<pair<string, int>> temp;
-    return temp;
+*/
+vector<pair<string, int>> QuerySearcher:: differentVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b)
+{
+    for(unsigned int i=0; i<a.size(); i++){
+        for(unsigned int j=0; j<b.size(); j++){
+            if(a[i].first==b[j].first){
+                a.erase(a.begin()+i);
+                b.erase(b.begin()+j);
+            }
+        }
+    }
+    return a;
 }
+
+
 vector<pair<string, int>> QuerySearcher:: intersectVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
-    vector<pair<string, int>> temp;
-    return temp;
-}*/
+    vector<pair<string, int>> finalAndVector;
+    //vector<pair<string, int>>::iterator it;
+
+
+        for(unsigned int i=0; i<a.size(); i++){
+            for(unsigned int j=0; j<b.size(); j++){
+                if(a[i].first==b[j].first){
+                    a[i].second+=b[j].second;
+                    finalAndVector.push_back( make_pair(a[i].first,a[i].second));
+                }
+            }
+        }
+
+        return finalAndVector;
+}
 
 void QuerySearcher::orQuery(){
     vector<pair<string, int>> results;
