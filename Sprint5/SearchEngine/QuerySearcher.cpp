@@ -20,11 +20,10 @@ QuerySearcher::QuerySearcher(IndexInterface* handler, int numDocs)
 void QuerySearcher::getQuery(){
     QueryProcessor query;
     input = query.requestUserInput();
-    cout << "got into getQuery" << endl;
     if(input.size()==1){
         vector<pair<string, int>> data;
         if (checkWordExists(input.front())) {
-            data=receiveStringRequest(input.front());//equals a vector
+            data = receiveStringRequest(input.front());//equals a vector
         }
         input.pop();
         printResults(data);
@@ -43,7 +42,6 @@ void QuerySearcher::getQuery(){
 }
 
 bool QuerySearcher::checkWordExists(string word){
-    index->printWords();
     cout << endl;
     if (index->contains(word)) {
         cout << word << " exists in corpus" << endl;
@@ -56,7 +54,13 @@ bool QuerySearcher::checkWordExists(string word){
 }
 
 void QuerySearcher::printResults(vector<pair<string, int>> d){
-cout << "Print results"<< endl;
+    cout << endl << "The number of documents are: " << d.size() << endl;
+
+    if(!d.empty()){
+        for(int i = 0; i < d.size(); i++){
+            cout << d[i].first << " - " << d[i].second << endl;
+        }
+    }
 }
 
 vector<pair<string, int>> QuerySearcher::receiveStringRequest(string request){
@@ -70,21 +74,18 @@ void QuerySearcher::notQuery() {
 
 
     while(!input.empty()){
-        cout << "query is not empty" << endl;
         if(input.front() == "not"){
 
             input.pop();
             if (checkWordExists(input.front())) {
                 temp=receiveStringRequest(input.front());
                 if(!results.empty()){
-                 //   results=differentVector(results, temp);
+                    //   results=differentVector(results, temp);
                 }
             }
         }
         else {
-            cout << "the front of queue is: " << input.front() << endl;
             if (checkWordExists(input.front())) {
-                cout << "front word exists" << endl;
                 temp=receiveStringRequest(input.front());
                 if(results.empty()){
                     results=temp;
@@ -112,7 +113,7 @@ void QuerySearcher::andQuery() {
             if (checkWordExists(input.front())) {
                 temp=receiveStringRequest(input.front());
                 if(!results.empty()){
-                  //  results=differentVector(results, temp);
+                    //  results=differentVector(results, temp);
                 }
             }
         }
@@ -123,7 +124,7 @@ void QuerySearcher::andQuery() {
                     results=temp;
                 }
                 else {
-                 //   results=intersectVector(results, temp);
+                    //   results=intersectVector(results, temp);
                 }
             }
             else {
@@ -142,7 +143,9 @@ void QuerySearcher::andQuery() {
     }
 
     printResults(results);
-}/*
+}
+
+/*
 vector<pair<string, int>> QuerySearcher:: unionVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
 vector<pair<string, int>> temp;
 return temp;
@@ -156,6 +159,7 @@ vector<pair<string, int>> QuerySearcher:: intersectVector(vector<pair<string, in
     vector<pair<string, int>> temp;
     return temp;
 }*/
+
 void QuerySearcher::orQuery(){
     vector<pair<string, int>> results;
     vector<pair<string, int>> temp;
@@ -182,7 +186,7 @@ void QuerySearcher::orQuery(){
                     results=temp;
                 }
                 else {
-                  //  results=unionVector(results, temp);
+                    //  results=unionVector(results, temp);
                 }
             }
         }

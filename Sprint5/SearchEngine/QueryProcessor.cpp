@@ -55,7 +55,7 @@ queue<string>& QueryProcessor::requestUserInput(){
                 }
                 bufferQuery.clear();
 
-                cout << "Invalid Form. Please try again."<< endl;
+                cout << "Invalid Form (stop word). Please try again."<< endl;
                 requestUserInput();
                 break;
             }

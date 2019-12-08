@@ -15,7 +15,7 @@
 #include "IndexInterface.h"
 #include "IndexHash.h"
 
-bool print = true;
+bool print = false;
 
 using namespace std;
 using nlohmann::json;
@@ -313,14 +313,16 @@ void DocumentProcessor::insertTree(string parsedWord, string doc) {
 
     if (newWord.getText() != "") {
 
-        if (!indexer.words.contains(newWord)) {
+        if (!index->contains(newWord.getText())) {
             numWordsIndexed++;
-            indexer.addWord(newWord);
+            //indexer.addWord(newWord);
             index->addWord(newWord);
             // wordTree.insert(newWord);
         }
         else {
-            indexer.words.find(newWord).addFile(doc);
+           // indexer.words.find(newWord).addFile(doc);
+            index->find(newWord.getText()).addFile(doc);
+
         }
     }
 }
