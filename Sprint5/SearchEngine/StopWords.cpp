@@ -26,7 +26,7 @@ void StopWords::populateStopWords(){
 
     inFile.close();
 
-    stopWordsTree.isEmpty() == true? cout <<"is empty":cout<< "full";
-    cout << endl;
+   // stopWordsTree.isEmpty() == true? cout <<"is empty":cout<< "full";
+    //cout << endl;
 
 }

@@ -305,7 +305,9 @@ void DocumentProcessor::printParsingStats(){
  * inserts word/respective document information into AVL tree of word objects (word tree)
  */
 void DocumentProcessor::insertTree(string parsedWord, string doc) {
-    printParsingStats();
+    if(numDocs > 100000){
+        printParsingStats();
+    }
 
     parsedWords.insert(parsedWord);
 

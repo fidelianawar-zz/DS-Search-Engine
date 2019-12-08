@@ -2,9 +2,7 @@
 
 
 IndexHandler::IndexHandler() {
-    numDocuments = 0;
-    numWordsIndexed = 0;
-    numWordsTotal = 0;
+    numDocuments = numWordsIndexed = numWordsTotal = 0;
 }
 
 IndexInterface* IndexHandler::returnIndex() {

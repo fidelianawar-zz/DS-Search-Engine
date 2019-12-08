@@ -146,13 +146,25 @@ void QuerySearcher::andQuery() {
     printResults(results);
 }
 
-/*
-vector<pair<string, int>> QuerySearcher:: unionVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
-vector<pair<string, int>> temp;
-return temp;
 
+vector<pair<string, int>> QuerySearcher:: unionVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
+
+    for(unsigned int i = 0; i < a.size(); i++){
+        for(unsigned int j = 0; j < b.size(); j++){
+            if(a[i].first == b[j].first){
+                a[i].second += b[j].second;
+                b.erase(b.begin() + j);
+            }
+        }
+    }
+
+    for (pair<string, int> p: b) {
+        a.push_back(p);
+    }
+
+    return a;
 }
-*/
+
 vector<pair<string, int>> QuerySearcher:: differentVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b)
 {
     for(unsigned int i = 0; i < a.size(); i++){
@@ -166,11 +178,9 @@ vector<pair<string, int>> QuerySearcher:: differentVector(vector<pair<string, in
     return a;
 }
 
-
 vector<pair<string, int>> QuerySearcher:: intersectVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
     vector<pair<string, int>> finalAndVector;
-    //vector<pair<string, int>>::iterator it;
-
+    vector<pair<string, int>>::iterator it;
 
         for(unsigned int i = 0; i < a.size(); i++){
             for(unsigned int j = 0; j < b.size(); j++){
@@ -198,7 +208,7 @@ void QuerySearcher::orQuery(){
             if (checkWordExists(input.front())) {
                 temp = receiveStringRequest(input.front());
                 if(!results.empty()){
-                    //results=differentVector(results, temp);
+                    results = differentVector(results, temp);
                 }
             }
         }
@@ -209,7 +219,7 @@ void QuerySearcher::orQuery(){
                     results = temp;
                 }
                 else {
-                    //  results=unionVector(results, temp);
+                    results = unionVector(results, temp);
                 }
             }
         }

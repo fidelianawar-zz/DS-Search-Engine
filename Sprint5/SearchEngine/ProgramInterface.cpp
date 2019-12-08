@@ -11,6 +11,17 @@ using namespace std;
 using json = nlohmann::json;
 IndexHandler indexHandler;
 
+int mainMenu(){
+    int mode;
+    cout << "Welcome to Fidelia and Annalise's Search Engine!" << endl;
+    cout << "Let's Search!" << endl << endl;
+    cout << "There are 2 Modes: Maintenance and Interactive.\n>>Choose [1] for Maintenance or [2] for Interactive: " ;
+    cin >> mode;
+    cout << endl;
+
+    return mode;
+}
+
 void maintenanceMenu(){
     cout << "Maintenace Mode:\n";
 
@@ -34,7 +45,6 @@ void maintenanceMenu(){
         cout << "\nInvalid Choice. Please Try again.\n\n";
         maintenanceMenu();
     }
-
 }
 
 void interactiveMenu(char *argv[]){
@@ -57,14 +67,22 @@ void interactiveMenu(char *argv[]){
     cout << "[1] - Load Index into AVL structure or Hash table\n" <<
             "[2] - Enter a query\n" <<
             "[3] - Print Statistics (# of opinions, avg # of indexed per opinion, and Top 50 most frequent words)\n" <<
-            "[4] - Exit\n"
+            "[4] - Go back to Main Menu\n" <<
+            "[5] - Exit Search Engine\n"
          << ">> ";
 
     cin >> answer;
 
-    if(answer > 4){
+    if(answer > 5){
         cout << "\nInvalid Choice. Please Try again.\n\n";
         interactiveMenu(argv);
+    }
+    else if(answer == 4){
+        mainMenu();
+    }
+    else if(answer == 5){
+        cout << "Shutting Down.\n";
+        exit(EXIT_SUCCESS);
     }
 
     DocumentProcessor process;
@@ -72,10 +90,8 @@ void interactiveMenu(char *argv[]){
     while(answer != 4){
         if(answer == 1){
             cout << "Choose a data structure?\n";
-            //cin >> type;
             string jsonPath = argv[1];
             indexHandler.chooseIndex(process,argv);
-
         }
         else if(answer == 2){
             QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs());
@@ -86,31 +102,13 @@ void interactiveMenu(char *argv[]){
         }
         interactiveMenu(argv);
     }
-
 }
 
 int main(int argc, char *argv[])
 {
-    if(argc > 2){
-        char type;
-        cout << "Which Structure: ";
-        cin >> type;
-        string jsonPath = argv[1];
-        DocumentProcessor process;
-        process.readInputData(argv[1],type);
-        //process.search(argv[2]);
-
-
-    }else{
-
-        int mode;
-        cout << "Welcome to Fidelia and Annalise's Search Engine!" << endl;
-        cout << "Let's Search!" << endl << endl;
-        cout << "There are 2 Modes: Maintenance and Interactive.\n>>Choose [1] for Maintenance or [2] for Interactive: " ;
-        cin >> mode;
-        cout << endl;
-
-        mode == 1? maintenanceMenu(): interactiveMenu(argv);
-
+    if(argc > 1){
+        int choice = 0;
+        mainMenu();
+        choice == 1? maintenanceMenu(): interactiveMenu(argv);
     }
 }
