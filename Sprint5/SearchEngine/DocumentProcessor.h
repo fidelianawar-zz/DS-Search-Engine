@@ -6,6 +6,9 @@
 #include "DSAVLTree.h"
 #include "DSHashTable.h"
 #include "Word.h"
+#include "IndexAVL.h"
+#include "IndexInterface.h"
+#include "IndexHash.h"
 
 using namespace std;
 
@@ -19,6 +22,8 @@ struct DocumentInfo
 
 class DocumentProcessor
 {
+private:
+      indexAVL indexer;
 public:
     DocumentProcessor();
     void readInputData(const string&, char);

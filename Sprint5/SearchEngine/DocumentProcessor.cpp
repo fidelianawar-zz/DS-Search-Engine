@@ -11,8 +11,11 @@
 #include <ctime>
 #include <dirent.h>
 #include "Word.h"
+#include "IndexAVL.h"
+#include "IndexInterface.h"
+#include "IndexHash.h"
 
-bool print = false;
+bool print = true;
 
 using namespace std;
 using nlohmann::json;
@@ -158,6 +161,9 @@ void DocumentProcessor::readInputData(const string& directory, char type){
 
     char filePath[5000];
 
+    numWordsTotal = 0;
+    numWordsIndexed = 0;
+
     while ((corpus = opendir(path.c_str())) == nullptr) {
         fprintf(stderr, "Could not open directory: %s\n", path.c_str());
     }
@@ -181,7 +187,9 @@ void DocumentProcessor::readInputData(const string& directory, char type){
     }
     if(print == true){
         if(type == 'A'){
-            wordTree.printInOrder();
+            //wordTree.printInOrder();
+
+            indexer.printWords();
             //parsedWords.printInOrder();
         }else{
             parsedHash.print();
@@ -298,13 +306,16 @@ void DocumentProcessor::insertTree(string parsedWord, string doc) {
     parsedWords.insert(parsedWord);
 
     Word newWord(parsedWord, doc);
+
     if (newWord.getText() != "") {
-        if (!wordTree.contains(newWord)) {
+
+        if (!indexer.words.contains(newWord)) {
             numWordsIndexed++;
-            wordTree.insert(newWord);
+            indexer.addWord(newWord);
+            // wordTree.insert(newWord);
         }
         else {
-            wordTree.find(newWord).addFile(doc);
+            indexer.words.find(newWord).addFile(doc);
         }
     }
 }

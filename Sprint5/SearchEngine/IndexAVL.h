@@ -5,8 +5,9 @@
 
 class indexAVL: public IndexInterface {
     private:
-        DSAVLTree<Word> words;
+
     public:
+    DSAVLTree<Word> words;
         indexAVL();
         void addWord(Word);
         Word& find(string);

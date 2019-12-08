@@ -20,6 +20,7 @@ QuerySearcher::QuerySearcher(IndexInterface* handler, int numDocs)
 void QuerySearcher::getQuery(){
     QueryProcessor query;
     input = query.requestUserInput();
+    cout << "got into getQuery" << endl;
     if(input.size()==1){
         vector<pair<string, int>> data;
         if (checkWordExists(input.front())) {
@@ -43,6 +44,7 @@ void QuerySearcher::getQuery(){
 
 bool QuerySearcher::checkWordExists(string word){
     if (index->contains(word)) {
+        cout << word << " exists in corpus" << endl;
         return true;
     }
     else {
@@ -52,7 +54,7 @@ bool QuerySearcher::checkWordExists(string word){
 }
 
 void QuerySearcher::printResults(vector<pair<string, int>> d){
-
+cout << "Print results"<< endl;
 }
 
 vector<pair<string, int>> QuerySearcher::receiveStringRequest(string request){
@@ -64,9 +66,11 @@ void QuerySearcher::notQuery() {
     vector<pair<string, int>> temp;
     vector<pair<string, int>> results;
 
-    while(!input.empty()){
 
+    while(!input.empty()){
+        cout << "query is not empty" << endl;
         if(input.front() == "not"){
+
             input.pop();
             if (checkWordExists(input.front())) {
                 temp=receiveStringRequest(input.front());
@@ -76,7 +80,9 @@ void QuerySearcher::notQuery() {
             }
         }
         else {
+            cout << "the front of queue is: " << input.front() << endl;
             if (checkWordExists(input.front())) {
+                cout << "front word exists" << endl;
                 temp=receiveStringRequest(input.front());
                 if(results.empty()){
                     results=temp;
