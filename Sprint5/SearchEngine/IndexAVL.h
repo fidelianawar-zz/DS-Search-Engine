@@ -14,6 +14,7 @@ class indexAVL: public IndexInterface {
         bool contains(string);
         void printWords();
         ~indexAVL() = default;
+         DSAVLTree<Word> getStructure();
 };
 
 #endif // INDEXAVL_H

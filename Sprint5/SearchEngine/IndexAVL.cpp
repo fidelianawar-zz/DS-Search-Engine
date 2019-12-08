@@ -21,3 +21,7 @@ bool indexAVL::contains(string str) {
 void indexAVL::printWords() {
     words.printInOrder();
 }
+
+DSAVLTree<Word> indexAVL::getStructure(){
+    return words;
+}

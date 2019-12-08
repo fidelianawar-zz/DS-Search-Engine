@@ -4,6 +4,7 @@
 #include "IndexAVL.h"
 #include "IndexHash.h"
 #include "DSAVLTree.h"
+#include "DocumentProcessor.h"
 
 class IndexHandler {
     private:
@@ -18,7 +19,7 @@ class IndexHandler {
         IndexHandler();
         IndexInterface* returnIndex();
         vector<string> getTextFiles();
-        void chooseIndex();
+        void chooseIndex(DocumentProcessor,char *argv[]);
         void getIndex();
 
         bool doesIndexExist();

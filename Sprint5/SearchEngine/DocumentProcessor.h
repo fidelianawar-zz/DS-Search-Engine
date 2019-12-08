@@ -24,8 +24,10 @@ class DocumentProcessor
 {
 private:
       indexAVL indexer;
+      IndexInterface*index;
 public:
     DocumentProcessor();
+    void setIndex(IndexInterface*);
     void readInputData(const string&, char);
     void readDirectory();
     void parseInputData(const string&, const string&, char);

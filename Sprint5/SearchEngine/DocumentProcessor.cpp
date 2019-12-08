@@ -15,7 +15,7 @@
 #include "IndexInterface.h"
 #include "IndexHash.h"
 
-bool print = true;
+bool print = false;
 
 using namespace std;
 using nlohmann::json;
@@ -42,6 +42,9 @@ DocumentProcessor::DocumentProcessor(){
 
         stopWordsSet.emplace(stopWord);
     }
+}
+void DocumentProcessor::setIndex(IndexInterface*index){
+    this->index = index;
 }
 
 //strips HTML tags from input corpus documents
@@ -189,9 +192,10 @@ void DocumentProcessor::readInputData(const string& directory, char type){
         if(type == 'A'){
             //wordTree.printInOrder();
 
-            indexer.printWords();
+            index->printWords();
             //parsedWords.printInOrder();
         }else{
+            index->printWords();
             parsedHash.print();
             //wordHashTable.print();
         }
@@ -309,13 +313,16 @@ void DocumentProcessor::insertTree(string parsedWord, string doc) {
 
     if (newWord.getText() != "") {
 
-        if (!indexer.words.contains(newWord)) {
+        if (!index->contains(newWord.getText())) {
             numWordsIndexed++;
-            indexer.addWord(newWord);
+            //indexer.addWord(newWord);
+            index->addWord(newWord);
             // wordTree.insert(newWord);
         }
         else {
-            indexer.words.find(newWord).addFile(doc);
+           // indexer.words.find(newWord).addFile(doc);
+            index->find(newWord.getText()).addFile(doc);
+
         }
     }
 }
@@ -327,6 +334,7 @@ void DocumentProcessor::insertHash(string parsedWord, string document) {
         numWordsIndexed++;
         //wordHashTable.insert(newWord, document);
         parsedHash.insert(parsedWord,document);
+        index->addWord(newWord);
         //   }
         //       else{
         //            int keyindex = wordHashTable.getKeyIndex(newWord);

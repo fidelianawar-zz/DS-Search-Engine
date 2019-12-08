@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
 <<<<<<< HEAD
+<<<<<<< HEAD
 <!-- Written by QtCreator 4.9.2, 2019-12-07T19:07:48. -->
 =======
 <!-- Written by QtCreator 4.9.2, 2019-12-07T17:11:32. -->
 >>>>>>> 470c8b63e2bd15149fb62d8a2c30820dba4c056e
+=======
+<!-- Written by QtCreator 4.9.2, 2019-12-07T20:03:04. -->
+>>>>>>> 371eec470b47dda38db4269fbaa82722790b5a4f
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -310,7 +314,7 @@
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">SearchEngine</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/student/Desktop/CSE2341-F19-Fidelia-Annalise/Sprint5/SearchEngine/SearchEngine.pro</value>
-    <value type="QString" key="RunConfiguration.Arguments">/home/student/Desktop/CSE2341-F19-Fidelia-Annalise/Sprint5/build-SearchEngine-Desktop_Qt_5_10_0_GCC_64bit-Debug/scotus-small</value>
+    <value type="QString" key="RunConfiguration.Arguments">/home/student/Desktop/CSE2341-F19-Fidelia-Annalise/Sprint5/build-SearchEngine-Desktop_Qt_5_10_0_GCC_64bit-Debug/scotus-med</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>

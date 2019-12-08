@@ -1,5 +1,6 @@
 #include "IndexHandler.h"
 
+
 IndexHandler::IndexHandler() {
     numDocuments = 0;
     numWordsIndexed = 0;
@@ -14,7 +15,7 @@ vector<string> IndexHandler::getTextFiles() {
     return txtFiles;
 }
 
-void IndexHandler::chooseIndex() {
+void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
     char choice;
 
     cout << "\t[A] AVL tree" << endl;
@@ -24,16 +25,14 @@ void IndexHandler::chooseIndex() {
     cin >> choice;
 
     if (choice == 'A') {
-        index = new indexAVL();
-        if (doesIndexExist()) {
-            readFromIndex();
-        }
+        index = new indexAVL;
+        process.setIndex(index);
+        process.readInputData(argv[1],choice);
     }
     else if (choice == 'H') {
-        index = new indexHash();
-        if (doesIndexExist()) {
-            readFromIndex();
-        }
+        //index = new indexHash;
+        process.setIndex(index);
+        process.readInputData(argv[1],choice);
     }
     else {
         cout << "That is not a valid index option. Please choose AVL or hash." << endl;
@@ -93,21 +92,21 @@ void IndexHandler::readFromIndex() {
 
     cout <<word;
 
-   // while (!f.eof()) {
-        Word entry(word);
-        cout <<numFiles;
-        int frequency;
-        string corpusDoc;
-        for (int i = 0; i < numFiles; i++) {
-            cout <<frequency;
-            getline(f, corpusDoc);
-            corpusDoc = corpusDoc.substr(1, corpusDoc.length());
-            entry.addFileFromIndex(pair<string, int>(corpusDoc, frequency));
-        }
+    // while (!f.eof()) {
+    Word entry(word);
+    cout <<numFiles;
+    int frequency;
+    string corpusDoc;
+    for (int i = 0; i < numFiles; i++) {
+        cout <<frequency;
+        getline(f, corpusDoc);
+        corpusDoc = corpusDoc.substr(1, corpusDoc.length());
+        entry.addFileFromIndex(pair<string, int>(corpusDoc, frequency));
+    }
 
-        index->addWord(entry);
-        cout <<word;
-   // }
+    index->addWord(entry);
+    cout <<word;
+    // }
 
     //index->printWords();
 
