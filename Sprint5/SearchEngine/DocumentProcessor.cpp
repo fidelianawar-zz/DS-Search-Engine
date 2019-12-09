@@ -203,8 +203,9 @@ void DocumentProcessor::readInputData(const string& directory, char type){
         }
     }
 
-   // index->createPersistent();
+    //index->createPersistent();
 
+  //  index->getStructure().outputInOrder(f);
     if(print == true){
         if(type == 'A'){
             //wordTree.printInOrder();
@@ -367,7 +368,7 @@ void DocumentProcessor::printParsingStats(){
     numWordsTotal++;
 
     if(numWordsTotal == 1)
-        cout << "\nNumber of Words Parsed: \n";
+      //  cout << "\nNumber of Words Parsed: \n";
     if(numWordsTotal % 100000 == 0)
         cout <<"\t"<<numWordsTotal <<endl;
     // cout << "In Printingparsingstats"<<numWordsTotal << endl;

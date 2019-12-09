@@ -56,9 +56,13 @@ void ProgramInterface:: maintenanceMenu(char *argv[]){
         exit(EXIT_SUCCESS);
     }
     if(answer == 1){
-        indexHandler.chooseIndex(process,argv);
+
+        indexHandler.addToIndex(process,argv[1]);
+
     }else if(answer == 2){
+
         indexHandler.clearIndex();
+
     }else if(answer == 3){
         //populate with new index
     }
@@ -110,7 +114,7 @@ void ProgramInterface::interactiveMenu(char *argv[]){
 
     if(answer == 1){
         cout << "Choose a data structure?\n";
-        indexHandler.chooseIndex(process,argv);
+        indexHandler.chooseIndex(process,argv[1]);
         cout << "Index Loaded.\n\n";
 
     }

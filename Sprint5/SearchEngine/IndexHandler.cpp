@@ -8,8 +8,24 @@ IndexHandler::IndexHandler() {
 IndexInterface* IndexHandler::returnIndex() {
     return index;
 }
+void IndexHandler::addToIndex(DocumentProcessor process,string argv){
+    index = new indexAVL;
+    process.setIndex(index);
 
-void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
+    process.readInputData(argv,'A');
+
+    numDocuments = process.getNumDocs();
+    numWordsTotal = process.getNumWordsTotal();
+    numWordsIndexed = process.getNumWordsIndexed();
+
+    avgPerOpinion = process.getAvgWords();
+    allWords = process.getWordTree();
+
+    writeToIndex();
+    cout << "Persistent Index Created." << endl;
+}
+
+void IndexHandler::chooseIndex(DocumentProcessor process,string argv) {
     char choice;
 
     cout << "\t[A] AVL tree" << endl;
@@ -22,9 +38,7 @@ void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
         index = new indexAVL;
         process.setIndex(index);
 
-        process.readInputData(argv[1],choice);
-
-        readFromIndex();
+        process.readInputData(argv,choice);
 
         numDocuments = process.getNumDocs();
         numWordsTotal = process.getNumWordsTotal();
@@ -33,11 +47,12 @@ void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
         avgPerOpinion = process.getAvgWords();
         allWords = process.getWordTree();
 
+        writeToIndex();
     }
     else if (choice == 'H') {
         index = new indexHash;
         process.setIndex(index);
-      //  process.readInputData(argv[1],choice);
+        //  process.readInputData(argv[1],choice);
 
         readFromIndex();
 
@@ -84,6 +99,8 @@ int IndexHandler::getNumDocuments() {
     return numDocuments;
 }
 void IndexHandler::writeToIndex(DSAVLTree<Word> &words){
+
+
     f.open("indexCorpus.txt",ios::out);
 
     if(!f.is_open()){
@@ -95,6 +112,21 @@ void IndexHandler::writeToIndex(DSAVLTree<Word> &words){
     f << numWordsTotal << endl;
 
     words.outputInOrder(f);
+}
+void IndexHandler::writeToIndex(){
+
+
+    f.open("indexCorpus.txt",ios::out);
+
+    if(!f.is_open()){
+        cout << "Corpus did not open." << endl;
+    }
+
+    f<< numDocuments << endl;
+    f << numWordsIndexed << endl;
+    f << numWordsTotal << endl;
+
+    index->getStructure().outputInOrder(f);
 }
 
 void IndexHandler::printStatistics() {
@@ -122,16 +154,16 @@ void IndexHandler::getTopWords() {
 void IndexHandler::clearIndex(){
     f.open("indexCorpus.txt", ios::in);
 
-       if (!f) {
-           cerr << "Persistent index does not exist" << endl;
-       }
-       else {
-           f.close();
-           if (remove("indexCorpus.txt") != 0) {
-               perror("Error deleting file");
-           }
-           else {
-               puts("File successfully deleted");
-           }
-       }
+    if (!f) {
+        cerr << "Persistent index does not exist" << endl;
+    }
+    else {
+        f.close();
+        if (remove("indexCorpus.txt") != 0) {
+            perror("Error deleting file");
+        }
+        else {
+            puts("File successfully deleted");
+        }
+    }
 }

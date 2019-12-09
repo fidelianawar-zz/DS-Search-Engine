@@ -28,11 +28,14 @@ class IndexHandler {
         IndexHandler();
         IndexInterface* returnIndex();
         vector<string> getTextFiles();
-        void chooseIndex(DocumentProcessor,char *argv[]);
+        void chooseIndex(DocumentProcessor,string);
         void getIndex();
+        void addToIndex(DocumentProcessor,string);
+
 
         bool doesIndexExist();
         void writeToIndex(DSAVLTree<Word>&);
+        void writeToIndex();
         void readFromIndex();
         void clearIndex();
 
