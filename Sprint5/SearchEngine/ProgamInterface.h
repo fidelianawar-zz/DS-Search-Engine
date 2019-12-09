@@ -1,7 +1,12 @@
 #ifndef PROGAMINTERFACE_H
 #define PROGAMINTERFACE_H
+#include "IndexHandler.h"
+#include "DocumentProcessor.h"
 
 class ProgramInterface{
+private:
+    DocumentProcessor process;
+    IndexHandler indexHandler;
 
 public:
 

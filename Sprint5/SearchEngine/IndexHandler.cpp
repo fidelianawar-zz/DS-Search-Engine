@@ -21,7 +21,11 @@ void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
     if (choice == 'A') {
         index = new indexAVL;
         process.setIndex(index);
+
         process.readInputData(argv[1],choice);
+
+        index->createPersistent();
+
 
         numDocuments = process.getNumDocs();
         numWordsTotal = process.getNumWordsTotal();
@@ -35,6 +39,8 @@ void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
         index = new indexHash;
         process.setIndex(index);
         process.readInputData(argv[1],choice);
+    }else if(choice == 'P'){
+        index->createPersistent();
     }
     else {
         cout << "That is not a valid index option. Please choose AVL or hash." << endl;

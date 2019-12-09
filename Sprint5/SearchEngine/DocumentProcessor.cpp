@@ -203,7 +203,7 @@ void DocumentProcessor::readInputData(const string& directory, char type){
         }
     }
 
-    index->createPersistent();
+   // index->createPersistent();
 
     if(print == true){
         if(type == 'A'){
@@ -226,10 +226,6 @@ void DocumentProcessor::readInputData(const string& directory, char type){
         }
     }
 }
-
-//void DocumentProcessor::createOutputFile(string fileName){
-//    wordTree.createPersistent();
-//}
 
 /*
  * parses json elements of document

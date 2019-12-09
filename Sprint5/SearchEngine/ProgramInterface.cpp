@@ -1,7 +1,5 @@
 #include <iostream>
 #include "DSAVLTree.h"
-#include "IndexHandler.h"
-#include "DocumentProcessor.h"
 #include "QueryProcessor.h"
 #include "QuerySearcher.h"
 #include <fstream>
@@ -10,7 +8,6 @@
 
 using namespace std;
 using json = nlohmann::json;
-IndexHandler indexHandler;
 
 int ProgramInterface:: mainMenu(){
     int mode;
@@ -58,6 +55,9 @@ void ProgramInterface:: maintenanceMenu(char *argv[]){
         cout << "Shutting Down.\n";
         exit(EXIT_SUCCESS);
     }
+    if(answer == 1){
+        indexHandler.chooseIndex(process,argv);
+    }
 }
 
 void ProgramInterface::interactiveMenu(char *argv[]){
@@ -100,10 +100,7 @@ void ProgramInterface::interactiveMenu(char *argv[]){
         exit(EXIT_SUCCESS);
     }
 
-    DocumentProcessor process;
-
     string path_ = "";
-    int numDocs;
 
     if(answer == 1){
         cout << "Choose a data structure?\n";
