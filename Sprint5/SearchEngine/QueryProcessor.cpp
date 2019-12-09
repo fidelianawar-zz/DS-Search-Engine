@@ -22,7 +22,6 @@ queue<string>& QueryProcessor::requestUserInput(){
     while(!userInput.empty()){
         userInput.pop();
     }
-
     cout<<"Enter search query: ";
     string query;
     string bufferQuery;
@@ -39,17 +38,13 @@ queue<string>& QueryProcessor::requestUserInput(){
     {
         Word w(bufferQuery);
         query = w.getText();
-      //  cout << endl << "the query is: " << query << endl << endl;
-        //check for stop words
         if(sW.stopWordsTree.contains(query)){
-            if(query == "and" || query == "or" || query == "not"){
-              //  cout << "query included and/or/not" << endl;
+            if(query == "or" || query == "and" || query == "not"){
                 userInput.push(query);
                 continue;
             }
             else
             {
-                //if stop word detected, clear queue
                 while(!userInput.empty()){
                     userInput.pop();
                 }
@@ -62,10 +57,8 @@ queue<string>& QueryProcessor::requestUserInput(){
         }
         else
         {
-          //  cout << query << " is not a stop word\n";
             userInput.push(query);
         }
     }
-  //  cout << "size of queue is: " << userInput.size() << endl;
     return userInput;
 }

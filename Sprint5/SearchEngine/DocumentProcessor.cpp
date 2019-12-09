@@ -204,28 +204,16 @@ void DocumentProcessor::readInputData(const string& directory, char type){
             }
         }
     }
-
-    //index->createPersistent();
-
-  //  index->getStructure().outputInOrder(f);
     if(print == true){
         if(type == 'A'){
-            //wordTree.printInOrder();
             index->printWords();
             index->parseWords();
-            // index->getWordVec();
             vector<Word> temp;
             temp= index->getWordVec();
-            //temp = wordTree.getAllNodes();
             cout << temp.at(0);
-            //index->parseWords();
-            //index->printWords();
-
-            //parsedWords.printInOrder();
         }else{
             index->printWords();
             parsedHash.print();
-            //wordHashTable.print();
         }
     }
 }
@@ -247,6 +235,7 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
     DocumentInfo info;
     json j;
     opinion >> j;
+
     string contents;
     string a = "";
 
@@ -308,7 +297,6 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
                         }
                     }
                 }
-
             }
         } while (ss);
     }
@@ -392,13 +380,11 @@ void DocumentProcessor::insertTree(string parsedWord, string doc) {
 
         if (!index->contains(newWord.getText())) {
             numWordsIndexed++;
-            //indexer.addWord(newWord);
             index->addWord(newWord);
             wordTree.insert(newWord);
         }
         else {
             wordTree.find(newWord.getText()).addFile(doc);
-            // indexer.words.find(newWord).addFile(doc);
             index->find(newWord.getText()).addFile(doc);
 
         }
@@ -408,9 +394,7 @@ void DocumentProcessor::insertTree(string parsedWord, string doc) {
 void DocumentProcessor::insertHash(string parsedWord, string document) {
     Word newWord(parsedWord);
     if(newWord.getText() != ""){
-        //     if (!wordHashTable.contains(newWord)){
         numWordsIndexed++;
-        //wordHashTable.insert(newWord, document);
         parsedHash.insert(parsedWord,document);
         index->addWord(newWord);
     }
@@ -450,7 +434,7 @@ void DocumentProcessor::search(const string& search){
         cout << "Total # of Docs '" << wordToSearch.getText()
              << "' Appears in: " << wordTree.find(wordToSearch).getFiles().size() << endl;
         cout << "Total # of Appearances of '" << wordToSearch.getText()<< "': "
-             <<wordTree.find(wordToSearch).getTotalFrequency() << endl;
+             <<wordTree.find(wordToSearch).getFreq() << endl;
 
         cout << endl;
 

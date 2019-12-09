@@ -9,6 +9,7 @@
 
 class QuerySearcher
 {
+    //sort two pairs based upon which has higher ranking
     struct sort {
         bool operator()(const std::pair<string,int> &left, const std::pair<string,int> &right) {
             return left.second > right.second;
@@ -16,29 +17,32 @@ class QuerySearcher
     };
 
 private:
-    IndexInterface* index;
-    queue<string> input;
+    IndexInterface* indexObj;
+    queue<string> inputQuery;
     int amountDocs;
     DocumentProcessor process;
     string path_;
 
 public:
+
+    vector<pair<string, int>> notVec(vector<pair<string, int>>&, vector<pair<string, int>>&);
+    vector<pair<string, int>> andVec(vector<pair<string, int>>&, vector<pair<string, int>>&);
+    vector<pair<string, int>> orVec(vector<pair<string, int>>&, vector<pair<string, int>>&);
+
     QuerySearcher();
     QuerySearcher(IndexInterface*, int,char *argv[]);
     bool sortbysec(const pair<string,int> &a,
                    const pair<string,int> &b);
-    void getQuery();
+    void receiveQuery();
     bool checkWordExists(string);
-    void printResults(vector<pair<string, int>>);
-    vector<pair<string, int>> receiveStringRequest(string);
-    void notQuery();
-    void andQuery();
-    void orQuery();
-    void simpleQuery(string);
+    void print(vector<pair<string, int>>);
+    vector<pair<string, int>> getRequest(string);
 
-    vector<pair<string, int>> differentVector(vector<pair<string, int>>&, vector<pair<string, int>>&);
-    vector<pair<string, int>> intersectVector(vector<pair<string, int>>&, vector<pair<string, int>>&);
-    vector<pair<string, int>> unionVector(vector<pair<string, int>>&, vector<pair<string, int>>&);
+    void simple(string);
+
+    void notQ();
+    void andQ();
+    void orQ();
 
 };
 
