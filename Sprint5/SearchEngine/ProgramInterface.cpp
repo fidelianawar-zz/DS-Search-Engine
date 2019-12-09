@@ -6,12 +6,13 @@
 #include "QuerySearcher.h"
 #include <fstream>
 #include <json.hpp>
+#include "ProgamInterface.h"
 
 using namespace std;
 using json = nlohmann::json;
 IndexHandler indexHandler;
 
-int mainMenu(){
+int ProgramInterface:: mainMenu(){
     int mode;
     cout << "Welcome to Fidelia and Annalise's Search Engine!" << endl;
     cout << "Let's Search!" << endl << endl;
@@ -22,7 +23,7 @@ int mainMenu(){
     return mode;
 }
 
-void maintenanceMenu(){
+void ProgramInterface:: maintenanceMenu(char *argv[]){
     cout << "Maintenace Mode:\n";
 
     /*
@@ -37,17 +38,29 @@ void maintenanceMenu(){
     cout << "[1] - Add opinions to index\n" <<
             "[2] - Clear Index\n" <<
             "[3] - Populate Corpus with New Index\n" <<
-            ">> ";
+
+            "[4] - Go back to Main Menu\n" <<
+            "[5] - Exit Search Engine\n"
+         << ">> ";
 
     cin >> answer;
 
-    if(answer > 3){
+    if(answer > 5){
         cout << "\nInvalid Choice. Please Try again.\n\n";
-        maintenanceMenu();
+        maintenanceMenu(argv);
+    }
+    else if(answer == 4){
+
+        mainMenu() == 1? maintenanceMenu(argv): interactiveMenu(argv);
+
+    }
+    else if(answer == 5){
+        cout << "Shutting Down.\n";
+        exit(EXIT_SUCCESS);
     }
 }
 
-void interactiveMenu(char *argv[]){
+void ProgramInterface::interactiveMenu(char *argv[]){
     cout << "Interactive Mode:\n";
 
     /*
@@ -78,7 +91,9 @@ void interactiveMenu(char *argv[]){
         interactiveMenu(argv);
     }
     else if(answer == 4){
-        mainMenu();
+
+        mainMenu() == 1? maintenanceMenu(argv): interactiveMenu(argv);
+
     }
     else if(answer == 5){
         cout << "Shutting Down.\n";
@@ -95,7 +110,6 @@ void interactiveMenu(char *argv[]){
             cout << "Index Loaded.\n\n";
         }
         else if(answer == 2){
-            //QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs(),process);
             QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs());
             s.getQuery();
         }
@@ -109,8 +123,7 @@ void interactiveMenu(char *argv[]){
 int main(int argc, char *argv[])
 {
     if(argc > 1){
-        int choice = 0;
-        mainMenu();
-        choice == 1? maintenanceMenu(): interactiveMenu(argv);
+        ProgramInterface p;
+        p.mainMenu() == 1? p.maintenanceMenu(argv): p.interactiveMenu(argv);
     }
 }

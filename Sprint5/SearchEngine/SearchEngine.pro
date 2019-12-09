@@ -27,6 +27,7 @@ HEADERS += \
     IndexInterface.h \
     IndexInterface.h \
     Porter2_Stemmer.h \
+    ProgamInterface.h \
     QueryProcessor.h \
     QuerySearcher.h \
     StopWords.h \
