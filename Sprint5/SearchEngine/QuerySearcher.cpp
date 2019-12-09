@@ -13,10 +13,11 @@ QuerySearcher::QuerySearcher()
 
 
 
-QuerySearcher::QuerySearcher(IndexInterface* handler, int numDocs)
+QuerySearcher::QuerySearcher(IndexInterface* handler, int numDocs,char *argv[])
 {
     index = handler;
     amountDocs = numDocs;
+    path_ = argv[1];
 }
 
 void QuerySearcher::getQuery(){
@@ -87,6 +88,22 @@ void QuerySearcher::printResults(vector<pair<string, int>> d){
             }
         }
     }
+    char answer = 'N';
+    cout << "Would you like to choose one of the opinions from the result set above and have the first ~300 words of the opinion printed? [Y]/[N]"<< endl;
+
+    cin >> answer;
+
+    if (answer == 'Y'){
+        string answer = "";
+        string resultPath = "";
+        cout << "Type the desired opinion: " ;
+        cin >> answer;
+
+        resultPath = path_ + answer;
+//cout <<resultPath <<endl;
+        process.parseInputData(resultPath,"",'X');
+
+    }
 
     /*
         year, parties to the case, which justice wrote the majority opinion, etc
@@ -145,7 +162,7 @@ void QuerySearcher::andQuery() {
             if (checkWordExists(input.front())) {
                 temp=receiveStringRequest(input.front());
                 if(!results.empty()){
-                   results=differentVector(results, temp);
+                    results=differentVector(results, temp);
                 }
             }
         }
@@ -214,16 +231,16 @@ vector<pair<string, int>> QuerySearcher:: intersectVector(vector<pair<string, in
     //vector<pair<string, int>>::iterator it;
 
 
-        for(unsigned int i=0; i<a.size(); i++){
-            for(unsigned int j=0; j<b.size(); j++){
-                if(a[i].first==b[j].first){
-                    a[i].second+=b[j].second;
-                    finalAndVector.push_back( make_pair(a[i].first,a[i].second));
-                }
+    for(unsigned int i=0; i<a.size(); i++){
+        for(unsigned int j=0; j<b.size(); j++){
+            if(a[i].first==b[j].first){
+                a[i].second+=b[j].second;
+                finalAndVector.push_back( make_pair(a[i].first,a[i].second));
             }
         }
+    }
 
-        return finalAndVector;
+    return finalAndVector;
 }
 
 void QuerySearcher::orQuery(){

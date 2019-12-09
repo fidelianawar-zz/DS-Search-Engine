@@ -16,7 +16,7 @@
 #include "IndexInterface.h"
 #include "IndexHash.h"
 
-bool print = true;
+bool print = false;
 
 using namespace std;
 using nlohmann::json;
@@ -151,6 +151,9 @@ inline time_t parseDate(string& date){
     strptime(date.c_str(), "%Y-%m-%dT%T%H:%M:%SZ", &parsed);
     return mktime(&parsed);
 }
+string DocumentProcessor::getFilePath(){
+    return filePathtoUse;
+}
 
 //reads input data using file path directory
 void DocumentProcessor::readInputData(const string& directory, char type){
@@ -174,11 +177,14 @@ void DocumentProcessor::readInputData(const string& directory, char type){
         fprintf(stderr, "Could not open directory: %s\n", path.c_str());
     }
 
+    filePathtoUse = path;
+
     while ((dir = readdir(corpus)) != nullptr) {
         if (strncmp(dir->d_name, "..", 2) != 0 && strncmp(dir->d_name, ".", 1) != 0) {
             string fileName = dir->d_name;
             string onlyFile = fileName.substr(0, fileName.length()-5);
             string fileType = fileName.substr(fileName.length()-5, fileName.length());
+
 
             if (fileType == ".json") {
                 numDocs++;
@@ -186,6 +192,8 @@ void DocumentProcessor::readInputData(const string& directory, char type){
                 strncat(filePath, "/", 5000);
                 strncat(filePath, dir->d_name, 5000);
                 /// if(numDocs <= 1000){
+                ///
+
                 parseInputData(filePath,path,type);
 
             }
@@ -281,8 +289,17 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
 
                     insertTree(parseWords(word),titledate);
                 }
-                else{
+                else if (type == 'H'){
                     insertHash(parseWords(word),info.title);
+                }else if (type == 'X'){
+                    for(unsigned int i = 0; i < contents.size(); i++){
+                       // if(ispunct(contents[i])){
+                           cout << contents[i];
+                        //}
+                           if(i == 300){
+                               break;
+                           }
+                    }
                 }
 
             }
@@ -312,7 +329,7 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
                 insertTree(parseWords(word),titledate);
                 numWordsPerOpinion++;
             }
-            else{
+            else if (type =='H'){
                 char buff[20];
                 strftime(buff, 20, "%Y-%m-%d", localtime(&info.date));
 
@@ -321,6 +338,15 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
 
                 insertHash(parseWords(word),titledate);
                 numWordsPerOpinion++;
+            }else if (type == 'X'){
+                for(unsigned int i = 0; i < 300; i++){
+                   // if(ispunct(contents[i])){
+                       cout << contents[i];
+                       if(i == 300){
+                           break;
+                       }
+                    //}
+                }
             }
         } while (ss);
     }

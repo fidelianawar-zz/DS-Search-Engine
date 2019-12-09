@@ -20,10 +20,11 @@ private:
     queue<string> input;
     int amountDocs;
     DocumentProcessor process;
+    string path_;
 
 public:
     QuerySearcher();
-    QuerySearcher(IndexInterface*, int);
+    QuerySearcher(IndexInterface*, int,char *argv[]);
     bool sortbysec(const pair<string,int> &a,
                    const pair<string,int> &b);
     void getQuery();

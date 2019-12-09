@@ -45,6 +45,7 @@ public:
     void getCaption(string);
     void getStatistics();
     int getAvgWords();
+    string getFilePath();
    // DSAVLTree<Word> getWordTree();
    // int getNumDocs();
     vector<Word> getWordTree();
@@ -60,6 +61,7 @@ public:
     int numDocs;
     int numWordsIndexed;
     int numWordsTotal;
+    string filePathtoUse;
 
     vector<int> wordsPerOpinion;
 };

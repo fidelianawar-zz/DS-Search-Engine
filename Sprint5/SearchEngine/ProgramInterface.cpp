@@ -102,6 +102,7 @@ void ProgramInterface::interactiveMenu(char *argv[]){
 
     DocumentProcessor process;
 
+    string path_ = "";
     int numDocs;
 
     if(answer == 1){
@@ -111,7 +112,7 @@ void ProgramInterface::interactiveMenu(char *argv[]){
 
     }
     else if(answer == 2){
-        QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs());
+        QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs(),argv);
         s.getQuery();
     }
     else if(answer == 3){
