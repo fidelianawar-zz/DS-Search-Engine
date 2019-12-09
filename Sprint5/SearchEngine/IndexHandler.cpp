@@ -22,7 +22,7 @@ void IndexHandler::addToIndex(DocumentProcessor process,string argv){
     allWords = process.getWordTree();
 
     writeToIndex();
-    cout << "Persistent Index Created." << endl;
+    cout << "\nPersistent Index Created." << endl;
 }
 
 void IndexHandler::chooseIndex(DocumentProcessor process,string argv) {

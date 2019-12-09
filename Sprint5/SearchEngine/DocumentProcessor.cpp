@@ -196,9 +196,9 @@ void DocumentProcessor::readInputData(const string& directory, char type){
                 ///
                 indexPath = filePathtoUse + filePath;
                // createOutputFile(indexPath);
-               if(numDocs <= 20000){
+               //if(numDocs <= 5000){
                 parseInputData(filePath,path,type);
-               }
+               //}
             }
         }
     }
