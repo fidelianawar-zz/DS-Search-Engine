@@ -57,7 +57,13 @@ void ProgramInterface:: maintenanceMenu(char *argv[]){
     }
     if(answer == 1){
         indexHandler.chooseIndex(process,argv);
+    }else if(answer == 2){
+        indexHandler.clearIndex();
+    }else if(answer == 3){
+        //populate with new index
     }
+
+    maintenanceMenu(argv);
 }
 
 void ProgramInterface::interactiveMenu(char *argv[]){
