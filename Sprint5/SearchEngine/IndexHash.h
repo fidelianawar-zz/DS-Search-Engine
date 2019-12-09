@@ -14,6 +14,7 @@ class indexHash : public IndexInterface {
         bool contains(string);
         void printWords();
         void parseWords();
+        void createPersistent();
         ~indexHash() = default;
         DSAVLTree<Word> getStructure();
         vector<Word> getWordVec();

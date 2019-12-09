@@ -19,6 +19,9 @@ bool indexHash::contains(string str) {
 void indexHash::printWords() {
     words.print();
 }
+void indexHash::createPersistent(){
+  //  words.createPersistent();
+}
 DSAVLTree<Word> indexHash::getStructure(){
    // return words;
 }

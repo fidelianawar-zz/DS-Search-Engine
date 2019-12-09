@@ -27,6 +27,7 @@ void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
         numWordsTotal = process.getNumWordsTotal();
         numWordsIndexed = process.getNumWordsIndexed();
 
+        writeToIndex(process.getWordAVL());
         avgPerOpinion = process.getAvgWords();
         allWords = process.getWordTree();
     }
@@ -42,6 +43,16 @@ void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
 }
 int IndexHandler::getNumDocuments() {
     return numDocuments;
+}
+void IndexHandler::writeToIndex(DSAVLTree<Word> &words){
+    f.open("indexCorpus.txt",ios::out);
+
+    f<< numDocuments << endl;
+    f << numWordsIndexed << endl;
+    f << numWordsTotal << endl;
+
+    words.outputInOrder(f);
+
 }
 
 void IndexHandler::printStatistics() {

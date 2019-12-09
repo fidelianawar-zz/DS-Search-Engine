@@ -160,6 +160,7 @@ void DocumentProcessor::readInputData(const string& directory, char type){
     numDocs = 0;
 
     string path = directory;
+    string indexPath;
 
     if (directory[directory.size() - 1] != '/'){
         path += '/';
@@ -193,24 +194,27 @@ void DocumentProcessor::readInputData(const string& directory, char type){
                 strncat(filePath, dir->d_name, 5000);
                 /// if(numDocs <= 1000){
                 ///
-
+                indexPath = filePathtoUse + filePath;
+               // createOutputFile(indexPath);
+               if(numDocs <= 20000){
                 parseInputData(filePath,path,type);
-
+               }
             }
         }
-        // cout << numDocs << endl;
     }
+
+    index->createPersistent();
 
     if(print == true){
         if(type == 'A'){
             //wordTree.printInOrder();
             index->printWords();
             index->parseWords();
-           // index->getWordVec();
-           vector<Word> temp;
-           temp= index->getWordVec();
-           //temp = wordTree.getAllNodes();
-           cout << temp.at(0);
+            // index->getWordVec();
+            vector<Word> temp;
+            temp= index->getWordVec();
+            //temp = wordTree.getAllNodes();
+            cout << temp.at(0);
             //index->parseWords();
             //index->printWords();
 
@@ -222,6 +226,10 @@ void DocumentProcessor::readInputData(const string& directory, char type){
         }
     }
 }
+
+//void DocumentProcessor::createOutputFile(string fileName){
+//    wordTree.createPersistent();
+//}
 
 /*
  * parses json elements of document
@@ -293,12 +301,12 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
                     insertHash(parseWords(word),info.title);
                 }else if (type == 'X'){
                     for(unsigned int i = 0; i < contents.size(); i++){
-                       // if(ispunct(contents[i])){
-                           cout << contents[i];
+                        // if(ispunct(contents[i])){
+                        cout << contents[i];
                         //}
-                           if(i == 300){
-                               break;
-                           }
+                        if(i == 300){
+                            break;
+                        }
                     }
                 }
 
@@ -338,19 +346,23 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
 
                 insertHash(parseWords(word),titledate);
                 numWordsPerOpinion++;
-            }else if (type == 'X'){
+            }
+            else if (type == 'X'){
                 for(unsigned int i = 0; i < 300; i++){
-                   // if(ispunct(contents[i])){
-                       cout << contents[i];
-                       if(i == 300){
-                           break;
-                       }
+                    // if(ispunct(contents[i])){
+                    cout << contents[i];
+                    if(i == 300){
+                        break;
+                    }
                     //}
                 }
             }
+            else if (type == 'P'){
+            }
+
         } while (ss);
     }
-   // cout << numWordsPerOpinion<<endl;
+    // cout << numWordsPerOpinion<<endl;
     wordsPerOpinion.push_back(numWordsPerOpinion);
 }
 
@@ -383,9 +395,10 @@ void DocumentProcessor::insertTree(string parsedWord, string doc) {
             numWordsIndexed++;
             //indexer.addWord(newWord);
             index->addWord(newWord);
-           // wordTree.insert(newWord);
+            wordTree.insert(newWord);
         }
         else {
+            wordTree.find(newWord.getText()).addFile(doc);
             // indexer.words.find(newWord).addFile(doc);
             index->find(newWord.getText()).addFile(doc);
 
@@ -401,13 +414,6 @@ void DocumentProcessor::insertHash(string parsedWord, string document) {
         //wordHashTable.insert(newWord, document);
         parsedHash.insert(parsedWord,document);
         index->addWord(newWord);
-        //   }
-        //       else{
-        //            int keyindex = wordHashTable.getKeyIndex(newWord);
-        //            int index = wordHashTable.getIndex(newWord);
-        //            wordHashTable
-
-        //        }
     }
 }
 
@@ -466,19 +472,22 @@ int DocumentProcessor:: getAvgWords(){
 }
 vector<Word> DocumentProcessor:: getWordTree(){
     index->parseWords();
-   // index->getWordVec();
-   vector<Word> temp;
-   vector<Word> parsed;
-   temp= index->getWordVec();
+    // index->getWordVec();
+    vector<Word> temp;
+    vector<Word> parsed;
+    temp= index->getWordVec();
 
-   for(unsigned int i = 0; i < temp.size();i++){
+    for(unsigned int i = 0; i < temp.size();i++){
 
-       if(stopWordsSet.count(temp[i].getText()) > -1 || temp[i].getText().size() < 4 ||temp[i].getText() == "that" || temp[i].getText() == "classfootnot"||temp[i].getText() =="classcasecit"||
-               temp[i].getText() =="classindentth"){
+        if(stopWordsSet.count(temp[i].getText()) > -1 || temp[i].getText().size() < 4 ||temp[i].getText() == "that" || temp[i].getText() == "classfootnot"||temp[i].getText() =="classcasecit"||
+                temp[i].getText() =="classindentth"){
 
-       }else{
-           parsed.push_back((temp[i]));
-       }
-   }
+        }else{
+            parsed.push_back((temp[i]));
+        }
+    }
     return parsed;
+}
+DSAVLTree<Word>& DocumentProcessor:: getWordAVL(){
+    return wordTree;
 }

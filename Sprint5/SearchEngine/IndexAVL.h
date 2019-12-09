@@ -14,6 +14,7 @@ class indexAVL: public IndexInterface {
         bool contains(string);
         void printWords();
         void parseWords();
+        void createPersistent();
         ~indexAVL() = default;
          DSAVLTree<Word> getStructure();
         vector<Word> getWordVec();

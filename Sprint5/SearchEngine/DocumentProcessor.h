@@ -46,9 +46,11 @@ public:
     void getStatistics();
     int getAvgWords();
     string getFilePath();
+    void createOutputFile(string);
    // DSAVLTree<Word> getWordTree();
    // int getNumDocs();
     vector<Word> getWordTree();
+     DSAVLTree<Word>& getWordAVL();
 
 
     private:

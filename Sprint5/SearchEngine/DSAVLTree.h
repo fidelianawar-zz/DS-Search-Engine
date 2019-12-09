@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <iostream>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -72,6 +73,7 @@ private:
     void countTotalNodes(AVLNode<T>* node);
     void parseInOrder(AVLNode<T>* node);
     vector<T> allNodes;
+    ostream& createPersistent(AVLNode<T>* node);
 
 public:
     DSAVLTree();
@@ -90,8 +92,34 @@ public:
     int getTotalNodes();
     void parseInOrder();
     vector<T> getAllNodes();
+    void createPersistent();
 
 };
+
+template<class T>
+void DSAVLTree<T>::createPersistent(){
+    createPersistent(root);
+}
+
+template<class T>
+ostream& DSAVLTree<T>::createPersistent(AVLNode<T>* node){
+    ofstream output("indexCorpus.txt");
+
+    if(!output.is_open()){
+        cout << "Could Not Open Persistent Index" << endl;
+    }
+
+    if(node != nullptr){
+        createPersistent(node->left);
+        output << node->data<<" "<<endl;
+        createPersistent(node->right);
+    }
+
+    if (isEmpty() == true) {
+        cout << "tree is empty";
+    }
+
+}
 
 template<class T>
 DSAVLTree<T>::DSAVLTree(){

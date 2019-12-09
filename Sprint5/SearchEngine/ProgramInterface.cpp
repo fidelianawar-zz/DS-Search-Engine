@@ -35,7 +35,7 @@ void ProgramInterface:: maintenanceMenu(char *argv[]){
 
     int answer;
 
-    cout << "[1] - Add opinions to index\n" <<
+    cout << "[1] - Add opinions to the persistent index\n" <<
             "[2] - Clear Index\n" <<
             "[3] - Populate Corpus with New Index\n" <<
 
