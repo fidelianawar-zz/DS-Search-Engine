@@ -58,7 +58,7 @@ void QuerySearcher::printResults(vector<pair<string, int>> d){
     cout << endl << "The number of documents found: " << d.size() << endl<<endl;
 
     if(!d.empty()){
-        for(int i = 0; i < d.size(); i++){
+        for(unsigned int i = 0; i < d.size(); i++){
             cout << "# of Appearances: " << d[i].second << "\t\n";
 
             stringstream ss(d[i].first);
