@@ -102,22 +102,20 @@ void ProgramInterface::interactiveMenu(char *argv[]){
 
     DocumentProcessor process;
 
-    while(answer != 4){
-        if(answer == 1){
-            cout << "Choose a data structure?\n";
-            string jsonPath = argv[1];
-            indexHandler.chooseIndex(process,argv);
-            cout << "Index Loaded.\n\n";
-        }
-        else if(answer == 2){
-            QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs());
-            s.getQuery();
-        }
-        else if(answer == 3){
-            process.printParsingStats();
-        }
-        interactiveMenu(argv);
+    if(answer == 1){
+        cout << "Choose a data structure?\n";
+        string jsonPath = argv[1];
+        indexHandler.chooseIndex(process,argv);
+        cout << "Index Loaded.\n\n";
     }
+    else if(answer == 2){
+        QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs());
+        s.getQuery();
+    }
+    else if(answer == 3){
+        process.printParsingStats();
+    }
+    interactiveMenu(argv);
 }
 
 int main(int argc, char *argv[])

@@ -9,6 +9,11 @@
 
 class QuerySearcher
 {
+    struct sort {
+        bool operator()(const std::pair<string,int> &left, const std::pair<string,int> &right) {
+            return left.second > right.second;
+        }
+    };
 
 private:
     IndexInterface* index;
@@ -19,6 +24,8 @@ private:
 public:
     QuerySearcher();
     QuerySearcher(IndexInterface*, int);
+    bool sortbysec(const pair<string,int> &a,
+                   const pair<string,int> &b);
     void getQuery();
     bool checkWordExists(string);
     void printResults(vector<pair<string, int>>);

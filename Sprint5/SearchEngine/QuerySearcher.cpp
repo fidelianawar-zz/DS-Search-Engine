@@ -12,6 +12,7 @@ QuerySearcher::QuerySearcher()
 }
 
 
+
 QuerySearcher::QuerySearcher(IndexInterface* handler, int numDocs)
 {
     index = handler;
@@ -53,13 +54,20 @@ bool QuerySearcher::checkWordExists(string word){
         return false;
     }
 }
+bool sortbysec(const pair<string,int> &a,
+              const pair<string,int> &b)
+{
+    return (a.second < b.second);
+}
+
 
 void QuerySearcher::printResults(vector<pair<string, int>> d){
     cout << endl << "The number of documents found: " << d.size() << endl<<endl;
 
+     std::sort(d.begin(), d.end(),sort());
+
     if(!d.empty()){
         for(unsigned int i = 0; i < d.size(); i++){
-            cout << "# of Appearances: " << d[i].second << "\t\n";
 
             stringstream ss(d[i].first);
 
@@ -69,16 +77,20 @@ void QuerySearcher::printResults(vector<pair<string, int>> d){
             {
                 string substr;
                 getline( ss, substr, ',' );
-                result.push_back( substr );
+                result.push_back(substr);
             }
-            for (std::size_t i = 0; i < result.size(); i++)
-                std::cout<<"\t" << result[i] << std::endl;
+
+            cout << "# of Appearances: " << d[i].second << "\t\n";
+
+            for (size_t i = 0; i < result.size(); i++)
+                cout<<"\t" << result[i] << endl;
         }
     }
 
     /*
         year, parties to the case, which justice wrote the majority opinion, etc
     */
+
     cout << endl;
 }
 
