@@ -54,17 +54,11 @@ bool QuerySearcher::checkWordExists(string word){
         return false;
     }
 }
-bool sortbysec(const pair<string,int> &a,
-              const pair<string,int> &b)
-{
-    return (a.second < b.second);
-}
-
 
 void QuerySearcher::printResults(vector<pair<string, int>> d){
     cout << endl << "The number of documents found: " << d.size() << endl<<endl;
 
-     std::sort(d.begin(), d.end(),sort());
+    std::sort(d.begin(), d.end(),sort());
 
     if(!d.empty()){
         for(unsigned int i = 0; i < d.size(); i++){

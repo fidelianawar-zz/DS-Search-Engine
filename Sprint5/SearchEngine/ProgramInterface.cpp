@@ -102,18 +102,27 @@ void ProgramInterface::interactiveMenu(char *argv[]){
 
     DocumentProcessor process;
 
+    int numDocs;
+
     if(answer == 1){
         cout << "Choose a data structure?\n";
-        string jsonPath = argv[1];
         indexHandler.chooseIndex(process,argv);
         cout << "Index Loaded.\n\n";
+
+        numDocs = indexHandler.getNumDocuments();
+
+       // indexHandler.printStatistics();
     }
     else if(answer == 2){
         QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs());
         s.getQuery();
     }
     else if(answer == 3){
-        process.printParsingStats();
+        //indexHandler.printStatistics();
+        //cout << indexHandler.getNumDocuments();
+       // process.getStatistics();
+        indexHandler.printStatistics();
+
     }
     interactiveMenu(argv);
 }

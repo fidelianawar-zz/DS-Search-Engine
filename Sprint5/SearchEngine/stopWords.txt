@@ -634,3 +634,6 @@ yourself
 yourselves
 you've
 zero
+classfootnot
+classnumspan
+classnum

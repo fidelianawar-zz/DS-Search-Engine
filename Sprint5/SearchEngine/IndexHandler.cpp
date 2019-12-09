@@ -9,10 +9,6 @@ IndexInterface* IndexHandler::returnIndex() {
     return index;
 }
 
-vector<string> IndexHandler::getTextFiles() {
-    return txtFiles;
-}
-
 void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
     char choice;
 
@@ -26,6 +22,13 @@ void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
         index = new indexAVL;
         process.setIndex(index);
         process.readInputData(argv[1],choice);
+
+        numDocuments = process.getNumDocs();
+        numWordsTotal = process.getNumWordsTotal();
+        numWordsIndexed = process.getNumWordsIndexed();
+
+        avgPerOpinion = process.getAvgWords();
+        allWords = process.getWordTree();
     }
     else if (choice == 'H') {
         index = new indexHash;
@@ -37,107 +40,29 @@ void IndexHandler::chooseIndex(DocumentProcessor process,char *argv[]) {
     }
     cout << endl;
 }
-/*
-void IndexHandler::getIndex() {
-    parser.readDirectory();
-    numDocuments = parser.getNumDocs();
-    numWordsIndexed = parser.getNumWordsIndexed();
-    numWordsTotal = parser.getNumWordsTotal();
-    writeToIndex(parser.getWords());
-}
-*/
-bool IndexHandler::doesIndexExist() {
-    f.open("index.txt", ios::in);
-    if (!f) {
-        f.close();
-        //cerr << "Persistent index could not be opened for reading" << endl;
-        return false;
-    }
-    else {
-        f.close();
-        return true;
-    }
-}
-
-void IndexHandler::writeToIndex(DSAVLTree<Word>& words) {
-
-    bool persistenceExists = doesIndexExist();
-    f.open("index.txt", ios::out);
-    if (!persistenceExists) {
-        //cerr << "Persistent index could not be opened for writing" << endl;
-        f << numDocuments << endl;
-        f << numWordsIndexed << endl;
-        f << numWordsTotal << endl;
-
-        words.outputInOrder(f);
-    }
-    else {
-        words.outputInOrder(f);
-    }
-
-    f.close();
-}
-
-void IndexHandler::readFromIndex() {
-    f.open("index.txt", ios::in);
-
-    string word;
-    int numFiles;
-
-    cout << numDocuments;
-    cout <<numWordsIndexed;
-    cout <<numWordsTotal;
-
-    cout <<word;
-
-    // while (!f.eof()) {
-    Word entry(word);
-    cout <<numFiles;
-    int frequency;
-    string corpusDoc;
-    for (int i = 0; i < numFiles; i++) {
-        cout <<frequency;
-        getline(f, corpusDoc);
-        corpusDoc = corpusDoc.substr(1, corpusDoc.length());
-        entry.addFileFromIndex(pair<string, int>(corpusDoc, frequency));
-    }
-
-    index->addWord(entry);
-    cout <<word;
-    // }
-
-    //index->printWords();
-
-    f.close();
-}
-
-void IndexHandler::clearIndex() {
-    f.open("index.txt", ios::in);
-
-    if (!f) {
-        cerr << "Persistent index does not exist" << endl;
-    }
-    else {
-        f.close();
-        if (remove("index.txt") != 0) {
-            perror("Error deleting file");
-        }
-        else {
-            puts("File successfully deleted");
-        }
-    }
-}
-
 int IndexHandler::getNumDocuments() {
     return numDocuments;
 }
 
 void IndexHandler::printStatistics() {
-    cout << "Number of documents parsed: " << numDocuments << endl;
-    cout << "Number of words indexed: " << numWordsIndexed << endl;
-    cout << "Number of pages indexed: " << numWordsTotal/400 << endl << endl;
+    cout << "Total number of opinions indexed: " << numDocuments << endl;
+    cout << "Average number of words indexed per opinion (after removal of stop words): " << avgPerOpinion << endl;
+    cout << "Number of words total: " << numWordsTotal << endl;
+    cout<<   "Top 50 most frequent words (after removal of stop words): ";
+    getTopWords();
+    cout << endl << endl;
 }
 
 void IndexHandler::getTopWords() {
+    vector<pair<string,int>> sortedFreq;
+    for(int i = 0; i < allWords.size(); i++){
+        sortedFreq.push_back(std::make_pair(allWords[i].getText(),allWords[i].getTotalFrequency()));
+    }
 
+    std::sort(sortedFreq.begin(),sortedFreq.end(),sort());
+
+    cout << "Word\tFreequency" << endl;
+    for(int i = 0; i < 50; i++){
+       cout << sortedFreq[i].first << "\t" << sortedFreq[i].second << endl;
+    }
 }

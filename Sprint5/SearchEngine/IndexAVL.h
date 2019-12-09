@@ -13,8 +13,10 @@ class indexAVL: public IndexInterface {
         Word& find(string);
         bool contains(string);
         void printWords();
+        void parseWords();
         ~indexAVL() = default;
          DSAVLTree<Word> getStructure();
+        vector<Word> getWordVec();
 };
 
 #endif // INDEXAVL_H

@@ -16,14 +16,14 @@
 #include "IndexInterface.h"
 #include "IndexHash.h"
 
-bool print = false;
+bool print = true;
 
 using namespace std;
 using nlohmann::json;
 
 //copy constructor for stop words set
 DocumentProcessor::DocumentProcessor(){
-    ifstream input("stopWordFile.txt");
+    ifstream input("stopWords.txt");
     string stopWord;
 
     while (input >> stopWord){
@@ -154,6 +154,8 @@ inline time_t parseDate(string& date){
 
 //reads input data using file path directory
 void DocumentProcessor::readInputData(const string& directory, char type){
+    numDocs = 0;
+
     string path = directory;
 
     if (directory[directory.size() - 1] != '/'){
@@ -188,11 +190,22 @@ void DocumentProcessor::readInputData(const string& directory, char type){
 
             }
         }
+        // cout << numDocs << endl;
     }
+
     if(print == true){
         if(type == 'A'){
             //wordTree.printInOrder();
             index->printWords();
+            index->parseWords();
+           // index->getWordVec();
+           vector<Word> temp;
+           temp= index->getWordVec();
+           //temp = wordTree.getAllNodes();
+           cout << temp.at(0);
+            //index->parseWords();
+            //index->printWords();
+
             //parsedWords.printInOrder();
         }else{
             index->printWords();
@@ -213,6 +226,8 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         cerr << "Cannot open input data file" << endl;
         exit(EXIT_FAILURE);
     }
+
+    int numWordsPerOpinion = 0;
 
     DocumentInfo info;
     json j;
@@ -284,6 +299,7 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
         }
         istringstream ss(contents);
         do {
+
             string word;
             ss >> word;
             if (type == 'A'){
@@ -294,6 +310,7 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
                 string titledate = to_string(info.id)+ ".json," + " Opinion Id: " + to_string(info.id)+ ", Court Case Title: " + info.title +", Date Created: "+ date;
 
                 insertTree(parseWords(word),titledate);
+                numWordsPerOpinion++;
             }
             else{
                 char buff[20];
@@ -303,10 +320,12 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
                 string titledate = to_string(info.id)+ ".json," + " Opinion Id: " + to_string(info.id)+ ", Court Case Title: " + info.title +", Date Created: "+ date;
 
                 insertHash(parseWords(word),titledate);
+                numWordsPerOpinion++;
             }
         } while (ss);
     }
-
+   // cout << numWordsPerOpinion<<endl;
+    wordsPerOpinion.push_back(numWordsPerOpinion);
 }
 
 //displays "loading" information when parsing large amounts of data sets
@@ -314,9 +333,10 @@ void DocumentProcessor::printParsingStats(){
     numWordsTotal++;
 
     if(numWordsTotal == 1)
-        cout << "Number of Words Parsed: \n";
+        cout << "\nNumber of Words Parsed: \n";
     if(numWordsTotal % 100000 == 0)
         cout <<"\t"<<numWordsTotal <<endl;
+    // cout << "In Printingparsingstats"<<numWordsTotal << endl;
 }
 
 /*
@@ -324,9 +344,8 @@ void DocumentProcessor::printParsingStats(){
  * inserts word/respective document information into AVL tree of word objects (word tree)
  */
 void DocumentProcessor::insertTree(string parsedWord, string doc) {
-    if(numDocs > 100000){
-        printParsingStats();
-    }
+
+    printParsingStats();
 
     parsedWords.insert(parsedWord);
 
@@ -338,7 +357,7 @@ void DocumentProcessor::insertTree(string parsedWord, string doc) {
             numWordsIndexed++;
             //indexer.addWord(newWord);
             index->addWord(newWord);
-            // wordTree.insert(newWord);
+           // wordTree.insert(newWord);
         }
         else {
             // indexer.words.find(newWord).addFile(doc);
@@ -407,4 +426,32 @@ void DocumentProcessor::search(const string& search){
     }else{
         cout << "Word is not Found" << endl;
     }
+}
+
+int DocumentProcessor:: getAvgWords(){
+
+    int n = 0;
+    double mean = 0.0;
+    for (auto x : wordsPerOpinion) {
+        double delta = x - mean;
+        mean += delta/++n;
+    }
+    return mean;
+}
+vector<Word> DocumentProcessor:: getWordTree(){
+    index->parseWords();
+   // index->getWordVec();
+   vector<Word> temp;
+   vector<Word> parsed;
+   temp= index->getWordVec();
+
+   for(int i = 0; i < temp.size();i++){
+
+       if(stopWordsSet.count(temp[i].getText()) > -1 || temp[i].getText().size() < 4 ||temp[i].getText() == "that" || temp[i].getText() == "classfootnot"){
+
+       }else{
+           parsed.push_back((temp[i]));
+       }
+   }
+    return parsed;
 }

@@ -2,6 +2,7 @@
 #define DSDSAVLTree_H
 #include <stdexcept>
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -69,7 +70,8 @@ private:
     void outputInOrder(AVLNode<T>*&, ostream&);
     T& find(T,  AVLNode<T>*);
     void countTotalNodes(AVLNode<T>* node);
-
+    void parseInOrder(AVLNode<T>* node);
+    vector<T> allNodes;
 
 public:
     DSAVLTree();
@@ -86,6 +88,8 @@ public:
     T& find(T);
     void outputInOrder(ostream&);
     int getTotalNodes();
+    void parseInOrder();
+    vector<T> getAllNodes();
 
 };
 
@@ -250,6 +254,30 @@ void DSAVLTree<T>::printInOrder(AVLNode<T>* node)
         printInOrder(node->left);
         cout<<node->data<<" "<<endl;
         printInOrder(node->right);
+    }
+
+    if (isEmpty() == true) {
+        cout << "tree is empty";
+    }
+}
+template<class T>
+void DSAVLTree<T>::parseInOrder()
+{
+    parseInOrder(root);
+}
+template<class T>
+vector<T> DSAVLTree<T>::getAllNodes()
+{
+    return allNodes;
+}
+template<class T>
+void DSAVLTree<T>::parseInOrder(AVLNode<T>* node)
+{
+    if(node != nullptr){
+        parseInOrder(node->left);
+        //cout<<node->data<<" "<<endl;
+        allNodes.push_back(node->data);
+        parseInOrder(node->right);
     }
 
     if (isEmpty() == true) {

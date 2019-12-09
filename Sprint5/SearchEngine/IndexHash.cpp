@@ -22,3 +22,9 @@ void indexHash::printWords() {
 DSAVLTree<Word> indexHash::getStructure(){
    // return words;
 }
+void indexHash::parseWords(){
+   // words.parseInOrder();
+}
+vector<Word> indexHash::getWordVec(){
+  //  return words.getAllNodes();
+}

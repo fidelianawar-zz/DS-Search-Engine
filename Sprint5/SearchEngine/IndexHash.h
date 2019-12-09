@@ -13,8 +13,10 @@ class indexHash : public IndexInterface {
         Word& find(string);
         bool contains(string);
         void printWords();
+        void parseWords();
         ~indexHash() = default;
         DSAVLTree<Word> getStructure();
+        vector<Word> getWordVec();
 };
 
 #endif // INDEXHASH_H

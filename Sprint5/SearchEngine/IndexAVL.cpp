@@ -25,3 +25,9 @@ void indexAVL::printWords() {
 DSAVLTree<Word> indexAVL::getStructure(){
     return words;
 }
+void indexAVL::parseWords(){
+    words.parseInOrder();
+}
+vector<Word> indexAVL::getWordVec(){
+    return words.getAllNodes();
+}

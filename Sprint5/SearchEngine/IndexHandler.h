@@ -6,16 +6,24 @@
 #include "DSAVLTree.h"
 #include "DSHashTable.h"
 #include "DocumentProcessor.h"
+#include "Word.h"
 
 class IndexHandler {
+    struct sort {
+        bool operator()(const std::pair<string,int> &left, const std::pair<string,int> &right) {
+            return left.second > right.second;
+        }
+    };
     private:
         fstream f;
-        IndexInterface* index;
-       // DSAVLTree<Word> index1;
+        IndexInterface * index;
+        DSAVLTree<Word> wordTree;
         int numDocuments;
         int numWordsIndexed;
         int numWordsTotal;
+        int avgPerOpinion;
         vector<string> txtFiles;
+        vector<Word> allWords;
     public:
         IndexHandler();
         IndexInterface* returnIndex();

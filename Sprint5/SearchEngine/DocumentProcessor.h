@@ -43,6 +43,12 @@ public:
     void search(const string& search);
     void printParsingStats();
     void getCaption(string);
+    void getStatistics();
+    int getAvgWords();
+   // DSAVLTree<Word> getWordTree();
+   // int getNumDocs();
+    vector<Word> getWordTree();
+
 
     private:
     unordered_set<string> stopWordsSet;
@@ -54,6 +60,8 @@ public:
     int numDocs;
     int numWordsIndexed;
     int numWordsTotal;
+
+    vector<int> wordsPerOpinion;
 };
 
 #endif // DOCUMENTPROCESSOR_H
