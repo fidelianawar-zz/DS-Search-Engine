@@ -56,11 +56,13 @@ bool QuerySearcher::checkWordExists(string word){
 }
 
 void QuerySearcher::printResults(vector<pair<string, int>> d){
+    cout <<"\nDocument Results:" << endl;
     cout << endl << "The number of documents found: " << d.size() << endl<<endl;
 
     std::sort(d.begin(), d.end(),sort());
 
     if(!d.empty()){
+
         for(unsigned int i = 0; i < d.size(); i++){
 
             stringstream ss(d[i].first);
@@ -73,11 +75,16 @@ void QuerySearcher::printResults(vector<pair<string, int>> d){
                 getline( ss, substr, ',' );
                 result.push_back(substr);
             }
+            cout << "#" << i+1 << " - ";
 
-            cout << "# of Appearances: " << d[i].second << "\t\n";
+            cout << "Number of Appearances: " << d[i].second << "\t\n";
 
             for (size_t i = 0; i < result.size(); i++)
                 cout<<"\t" << result[i] << endl;
+
+            if(i == 14){
+                break;
+            }
         }
     }
 

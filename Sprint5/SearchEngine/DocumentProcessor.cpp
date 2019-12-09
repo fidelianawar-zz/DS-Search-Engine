@@ -445,7 +445,7 @@ vector<Word> DocumentProcessor:: getWordTree(){
    vector<Word> parsed;
    temp= index->getWordVec();
 
-   for(int i = 0; i < temp.size();i++){
+   for(unsigned int i = 0; i < temp.size();i++){
 
        if(stopWordsSet.count(temp[i].getText()) > -1 || temp[i].getText().size() < 4 ||temp[i].getText() == "that" || temp[i].getText() == "classfootnot"||temp[i].getText() =="classcasecit"||
                temp[i].getText() =="classindentth"){
