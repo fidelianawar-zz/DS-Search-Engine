@@ -637,3 +637,8 @@ zero
 classfootnot
 classnumspan
 classnum
+span
+classinden
+classindentth
+classcasecit
+
