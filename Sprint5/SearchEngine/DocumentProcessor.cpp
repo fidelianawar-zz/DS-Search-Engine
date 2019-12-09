@@ -144,6 +144,10 @@ inline string parseCaseTitle(string& absoluteURL){
     return title.substr(0, title.size() - 1);
 }
 
+string DocumentProcessor::getFilePath(){
+    return filePathtoUse;
+}
+
 //parses and returns the date
 inline time_t parseDate(string& date){
     std::tm parsed;
@@ -151,9 +155,7 @@ inline time_t parseDate(string& date){
     strptime(date.c_str(), "%Y-%m-%dT%T%H:%M:%SZ", &parsed);
     return mktime(&parsed);
 }
-string DocumentProcessor::getFilePath(){
-    return filePathtoUse;
-}
+
 
 //reads input data using file path directory
 void DocumentProcessor::readInputData(const string& directory, char type){

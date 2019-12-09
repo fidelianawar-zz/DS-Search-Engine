@@ -111,7 +111,7 @@ void IndexHandler::writeToIndex(DSAVLTree<Word> &words){
     f << numWordsIndexed << endl;
     f << numWordsTotal << endl;
 
-    words.outputInOrder(f);
+    words.printInOrder(f);
 }
 void IndexHandler::writeToIndex(){
 
@@ -126,7 +126,7 @@ void IndexHandler::writeToIndex(){
     f << numWordsIndexed << endl;
     f << numWordsTotal << endl;
 
-    index->getStructure().outputInOrder(f);
+    index->getStructure().printInOrder(f);
 }
 
 void IndexHandler::printStatistics() {
