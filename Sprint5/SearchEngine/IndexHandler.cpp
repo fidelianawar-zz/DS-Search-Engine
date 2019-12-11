@@ -139,7 +139,7 @@ void IndexHandler::writeToIndex(){
 
 void IndexHandler::printStatistics() {
     cout << "Total number of opinions indexed: " << numDocuments << endl;
-    cout << "Average number of words indexed per opinion (after removal of stop words): " << avgPerOpinion << endl;
+    cout << "Average number of words indexed per opinion (after removal of stop words): " << numWordsIndexed << endl;
     cout << "Number of words total: " << numWordsTotal << endl;
     cout<<   "Top 50 most frequent words (after removal of stop words): ";
     getTopWords();
@@ -161,7 +161,7 @@ void IndexHandler::getTopWords() {
 
         std::sort(sortedFreq.begin(),sortedFreq.end(),sort());
 
-        cout << "Word\tFreequency" << endl;
+        cout << "Word\tFrequency" << endl;
         for(int i = 0; i < 50; i++){
             cout << sortedFreq[i].first << "\t" << sortedFreq[i].second << endl;
         }
