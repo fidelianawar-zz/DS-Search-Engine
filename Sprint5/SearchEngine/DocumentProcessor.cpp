@@ -195,17 +195,17 @@ void DocumentProcessor::readInputData(const string& directory, char type){
                 /// if(numDocs <= 1000){
                 ///
                 indexPath = filePathtoUse + filePath;
-               // createOutputFile(indexPath);
-               if(numDocs <= 5000){
-                parseInputData(filePath,path,type);
-               }
+                // createOutputFile(indexPath);
+                if(numDocs <= 5000){
+                    parseInputData(filePath,path,type);
+                }
             }
         }
     }
 
     //index->createPersistent();
 
-  //  index->getStructure().outputInOrder(f);
+    //  index->getStructure().outputInOrder(f);
     if(print == true){
         if(type == 'A'){
             //wordTree.printInOrder();
@@ -298,12 +298,10 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
                     insertHash(parseWords(word),info.title);
                 }else if (type == 'X'){
                     for(unsigned int i = 0; i < contents.size(); i++){
-                        // if(ispunct(contents[i])){
-                        cout << contents[i];
-                        //}
-                        if(i == 300){
-                            break;
-                        }
+                        cout << ispunct(contents[i]);
+                        //                        if(i == 300){
+                        //                            break;
+                        //                        }
                     }
                 }
 
@@ -312,6 +310,7 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
     }
 
     if(!j["html"].empty()){
+        int wordCount = 0;
         contents = j["html"];
 
         for(unsigned int i = 0; i < contents.size(); i++){
@@ -345,14 +344,21 @@ void DocumentProcessor::parseInputData(const string& fileDirectory, const string
                 numWordsPerOpinion++;
             }
             else if (type == 'X'){
-                for(unsigned int i = 0; i < 300; i++){
-                    // if(ispunct(contents[i])){
-                    cout << contents[i];
-                    if(i == 300){
-                        break;
+                if(wordCount <= 300){
+                    wordCount++;
+                    if(word != "div"||word != "p"){
+                        if(word[0] != 'c' && word[1]!= 'l' && word[2] != 'a' && word[3] != 's'&& word[4] != 's')
+                        cout << word << " ";
                     }
-                    //}
                 }
+
+//                for(unsigned int i = 0; i < contents.size(); i++){
+//                    //cout << ispunct(contents[i]);
+//                    cout << parseWords(&contents[i]) << " ";
+//                    if(i == 10){
+//                        break;
+//                    }
+//                }
             }
             else if (type == 'P'){
             }
@@ -368,9 +374,9 @@ void DocumentProcessor::printParsingStats(){
     numWordsTotal++;
 
     if(numWordsTotal == 1)
-      //  cout << "\nNumber of Words Parsed: \n";
-    if(numWordsTotal % 100000 == 0)
-        cout <<"\t"<<numWordsTotal <<endl;
+        //  cout << "\nNumber of Words Parsed: \n";
+        if(numWordsTotal % 100000 == 0)
+            cout <<"\t"<<numWordsTotal <<endl;
     // cout << "In Printingparsingstats"<<numWordsTotal << endl;
 }
 

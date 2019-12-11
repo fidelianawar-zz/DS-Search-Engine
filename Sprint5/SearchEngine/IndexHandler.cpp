@@ -145,12 +145,13 @@ void IndexHandler::printStatistics() {
 void IndexHandler::getTopWords() {
     vector<pair<string,int>> sortedFreq;
     for(unsigned int i = 0; i < allWords.size(); i++){
+
         sortedFreq.push_back(std::make_pair(allWords[i].getText(),allWords[i].getFreq()));
     }
 
     std::sort(sortedFreq.begin(),sortedFreq.end(),sort());
 
-    cout << "Word\tFreequency" << endl;
+    cout << "Word\tFrequency" << endl;
     for(int i = 0; i < 50; i++){
         cout << sortedFreq[i].first << "\t" << sortedFreq[i].second << endl;
     }
