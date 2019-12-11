@@ -27,6 +27,7 @@ private:
       IndexInterface*index;
 public:
     DocumentProcessor();
+    unordered_set<string>getStopWords();
     void setIndex(IndexInterface*);
     void readInputData(const string&, char);
     void readDirectory();

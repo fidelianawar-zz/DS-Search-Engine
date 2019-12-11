@@ -24,6 +24,7 @@ class IndexHandler {
         int avgPerOpinion;
         vector<string> txtFiles;
         vector<Word> allWords;
+
     public:
         IndexHandler();
         IndexInterface* returnIndex();

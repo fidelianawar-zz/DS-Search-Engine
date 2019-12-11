@@ -44,6 +44,11 @@ DocumentProcessor::DocumentProcessor(){
         stopWordsSet.emplace(stopWord);
     }
 }
+unordered_set<string> DocumentProcessor::getStopWords(){
+
+    return  stopWordsSet;
+}
+
 void DocumentProcessor::setIndex(IndexInterface*index){
     this->index = index;
 }

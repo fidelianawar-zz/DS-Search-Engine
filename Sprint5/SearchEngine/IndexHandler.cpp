@@ -38,7 +38,7 @@ void IndexHandler::chooseIndex(DocumentProcessor process,string argv) {
         index = new indexAVL;
         process.setIndex(index);
 
-      /*  process.readInputData(argv,choice);
+        /*  process.readInputData(argv,choice);
 
         numDocuments = process.getNumDocs();
         numWordsTotal = process.getNumWordsTotal();
@@ -47,8 +47,10 @@ void IndexHandler::chooseIndex(DocumentProcessor process,string argv) {
         avgPerOpinion = process.getAvgWords();
         allWords = process.getWordTree();
 */
-         readFromIndex(index);
-       // writeToIndex();
+        readFromIndex(index);
+
+
+        // writeToIndex();
     }
     else if (choice == 'H') {
         index = new indexHash;
@@ -82,8 +84,8 @@ void IndexHandler::readFromIndex(IndexInterface*index){
 
     f >> word;
 
-     while (!f.eof()) {
-    //while(numDocuments <=5000){
+    while (!f.eof()) {
+        //while(numDocuments <=5000){
         Word entry(word);
         f >> numFiles;
         int frequency;
@@ -96,6 +98,8 @@ void IndexHandler::readFromIndex(IndexInterface*index){
         }
 
         index->addWord(entry);
+
+        allWords.push_back(entry);
         f >> word;
     }
 }
@@ -143,16 +147,26 @@ void IndexHandler::printStatistics() {
 }
 
 void IndexHandler::getTopWords() {
+    DocumentProcessor p;
     vector<pair<string,int>> sortedFreq;
-    for(unsigned int i = 0; i < allWords.size(); i++){
-        sortedFreq.push_back(std::make_pair(allWords[i].getText(),allWords[i].getFreq()));
-    }
+    // allWords = indexT->getWordVec();
 
-    std::sort(sortedFreq.begin(),sortedFreq.end(),sort());
 
-    cout << "Word\tFreequency" << endl;
-    for(int i = 0; i < 50; i++){
-        cout << sortedFreq[i].first << "\t" << sortedFreq[i].second << endl;
+
+    if(allWords.size()!= 0){
+        for(unsigned int i = 0; i < allWords.size(); i++){
+            if(p.parseWords(allWords[i].getText()).size() > 3 && p.parseWords(allWords[i].getText()) != "brbr" )
+                sortedFreq.push_back(std::make_pair(p.parseWords(allWords[i].getText()),allWords[i].getFreq()));
+        }
+
+        std::sort(sortedFreq.begin(),sortedFreq.end(),sort());
+
+        cout << "Word\tFreequency" << endl;
+        for(int i = 0; i < 50; i++){
+            cout << sortedFreq[i].first << "\t" << sortedFreq[i].second << endl;
+        }
+    }else{
+        cout << "Word Vector empty\n";
     }
 }
 void IndexHandler::clearIndex(){
