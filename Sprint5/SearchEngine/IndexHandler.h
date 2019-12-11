@@ -36,7 +36,7 @@ class IndexHandler {
         bool doesIndexExist();
         void writeToIndex(DSAVLTree<Word>&);
         void writeToIndex();
-        void readFromIndex();
+        void readFromIndex(IndexInterface*index);
         void clearIndex();
 
         int getNumDocuments();

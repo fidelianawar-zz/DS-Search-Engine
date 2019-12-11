@@ -18,6 +18,8 @@ QueryProcessor::QueryProcessor()
 }
 
 queue<string>& QueryProcessor::requestUserInput(){
+
+    DocumentProcessor process;
     sW.populateStopWords();
     while(!userInput.empty()){
         userInput.pop();
@@ -38,6 +40,8 @@ queue<string>& QueryProcessor::requestUserInput(){
     {
         Word w(bufferQuery);
         query = w.getText();
+        query = process.parseWords(query);
+
         if(sW.stopWordsTree.contains(query)){
             if(query == "or" || query == "and" || query == "not"){
                 userInput.push(query);

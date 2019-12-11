@@ -196,9 +196,9 @@ void DocumentProcessor::readInputData(const string& directory, char type){
                 ///
                 indexPath = filePathtoUse + filePath;
                // createOutputFile(indexPath);
-               //if(numDocs <= 5000){
+               if(numDocs <= 5000){
                 parseInputData(filePath,path,type);
-               //}
+               }
             }
         }
     }
@@ -448,7 +448,7 @@ void DocumentProcessor::search(const string& search){
         cout << "Total # of Docs '" << wordToSearch.getText()
              << "' Appears in: " << wordTree.find(wordToSearch).getFiles().size() << endl;
         cout << "Total # of Appearances of '" << wordToSearch.getText()<< "': "
-             <<wordTree.find(wordToSearch).getTotalFrequency() << endl;
+             <<wordTree.find(wordToSearch).getFreq() << endl;
 
         cout << endl;
 

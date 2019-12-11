@@ -22,7 +22,7 @@ void IndexHandler::addToIndex(DocumentProcessor process,string argv){
     allWords = process.getWordTree();
 
     writeToIndex();
-    cout << "\nPersistent Index Created." << endl;
+    cout << "\nPersistent Index Created.\n" << endl;
 }
 
 void IndexHandler::chooseIndex(DocumentProcessor process,string argv) {
@@ -38,7 +38,7 @@ void IndexHandler::chooseIndex(DocumentProcessor process,string argv) {
         index = new indexAVL;
         process.setIndex(index);
 
-        process.readInputData(argv,choice);
+      /*  process.readInputData(argv,choice);
 
         numDocuments = process.getNumDocs();
         numWordsTotal = process.getNumWordsTotal();
@@ -46,15 +46,16 @@ void IndexHandler::chooseIndex(DocumentProcessor process,string argv) {
 
         avgPerOpinion = process.getAvgWords();
         allWords = process.getWordTree();
-
-        writeToIndex();
+*/
+         readFromIndex(index);
+       // writeToIndex();
     }
     else if (choice == 'H') {
         index = new indexHash;
         process.setIndex(index);
         //  process.readInputData(argv[1],choice);
 
-        readFromIndex();
+        readFromIndex(index);
 
     }/*else if(choice == 'P'){
         index->createPersistent();
@@ -64,7 +65,7 @@ void IndexHandler::chooseIndex(DocumentProcessor process,string argv) {
     }
     cout << endl;
 }
-void IndexHandler::readFromIndex(){
+void IndexHandler::readFromIndex(IndexInterface*index){
     f.open("indexCorpus.txt",ios::in);
     string word;
 
@@ -73,13 +74,16 @@ void IndexHandler::readFromIndex(){
     }
     int numFiles;
 
+    cout << "here!" << endl;
+
     f >> numDocuments;
     f >> numWordsIndexed;
     f >> numWordsTotal;
 
     f >> word;
 
-    while (!f.eof()) {
+     while (!f.eof()) {
+    //while(numDocuments <=5000){
         Word entry(word);
         f >> numFiles;
         int frequency;
