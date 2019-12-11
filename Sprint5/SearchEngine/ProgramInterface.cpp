@@ -120,7 +120,7 @@ void ProgramInterface::interactiveMenu(char *argv[]){
     }
     else if(answer == 2){
         QuerySearcher s(indexHandler.returnIndex(),process.getNumDocs(),argv);
-        s.getQuery();
+        s.receiveQuery();
     }
     else if(answer == 3){
 

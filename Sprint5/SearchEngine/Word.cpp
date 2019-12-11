@@ -1,38 +1,38 @@
 #include "Word.h"
 
 Word::Word() {
-    totalFrequency = 0;
+    freq = 0;
     text = "";
 }
 
-Word::Word(string wrd) {
-    totalFrequency = 0;
-    text = wrd;
+Word::Word(string wordd) {
+    freq = 0;
+    text = wordd;
 }
 
-Word::Word(string wrd, string file) {
-    totalFrequency = 0;
-    text = wrd;
+Word::Word(string wordd, string file) {
+    freq = 0;
+    text = wordd;
     addFile(file);
 }
 
-Word::Word(string str, pair<string, int> p) {
-    totalFrequency = p.second;
-    text = str;
-    files.push_back(p);
+Word::Word(string s_string, pair<string, int> pairElement) {
+    freq = pairElement.second;
+    text = s_string;
+    files.push_back(pairElement);
+}
+
+int Word::getFreq() {
+    return freq;
 }
 
 string Word::getText() {
     return text;
 }
 
-int Word::getTotalFrequency() {
-    return totalFrequency;
-}
-
 void Word::addFile(string file) {
-    totalFrequency += 1;
-    int index = findFile(file);
+    freq += 1;
+    int index = find(file);
     if (index != -1) {
         files[index].second += 1;
     }
@@ -41,16 +41,12 @@ void Word::addFile(string file) {
     }
 }
 
-void Word::addFileFromIndex(pair<string, int> file) {
-    totalFrequency += file.second;
+void Word::addIndexFile(pair<string, int> file) {
+    freq += file.second;
     files.push_back(file);
 }
 
-vector<pair<string, int>>& Word::getFiles() {
-    return files;
-}
-
-int Word::findFile(string file) {
+int Word::find(string file) {
 
     for (unsigned int i = 0; i < files.size(); i++) {
 
@@ -64,22 +60,27 @@ int Word::findFile(string file) {
     return -1;
 }
 
-bool Word::operator>(const Word& wrd) {
-    return text > wrd.text;
+vector<pair<string, int>>& Word::getFiles() {
+    return files;
 }
 
-bool Word::operator<(const Word& wrd) {
-    return text < wrd.text;
-}
 
-bool Word::operator==(const Word& wrd) {
-    return text == wrd.text;
-}
-
-ostream& operator<<(ostream& output, const Word& wrd) {
-    output << wrd.text << endl << wrd.files.size() << endl;
-    for (pair<string, int> p: wrd.files) {
-        output << p.second << " " << p.first << endl;
+ostream& operator<<(ostream& out, const Word& wordd) {
+    out << wordd.text << endl << wordd.files.size() << endl;
+    for (pair<string, int> p: wordd.files) {
+        out << p.second << " " << p.first << endl;
     }
-    return output;
+    return out;
 }
+
+bool Word::operator<(const Word& wordd) {
+    return text < wordd.text;
+}
+bool Word::operator>(const Word& wordd) {
+    return text > wordd.text;
+}
+
+bool Word::operator==(const Word& wordd) {
+    return text == wordd.text;
+}
+

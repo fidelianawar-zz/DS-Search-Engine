@@ -88,7 +88,7 @@ void IndexHandler::readFromIndex(){
             f >> frequency;
             getline(f, json);
             json = json.substr(1, json.length());
-            entry.addFileFromIndex(pair<string, int>(json, frequency));
+            entry.addIndexFile(pair<string, int>(json, frequency));
         }
 
         index->addWord(entry);
@@ -111,7 +111,7 @@ void IndexHandler::writeToIndex(DSAVLTree<Word> &words){
     f << numWordsIndexed << endl;
     f << numWordsTotal << endl;
 
-    words.outputInOrder(f);
+    words.printInOrder(f);
 }
 void IndexHandler::writeToIndex(){
 
@@ -126,7 +126,7 @@ void IndexHandler::writeToIndex(){
     f << numWordsIndexed << endl;
     f << numWordsTotal << endl;
 
-    index->getStructure().outputInOrder(f);
+    index->getStructure().printInOrder(f);
 }
 
 void IndexHandler::printStatistics() {
@@ -141,7 +141,7 @@ void IndexHandler::printStatistics() {
 void IndexHandler::getTopWords() {
     vector<pair<string,int>> sortedFreq;
     for(unsigned int i = 0; i < allWords.size(); i++){
-        sortedFreq.push_back(std::make_pair(allWords[i].getText(),allWords[i].getTotalFrequency()));
+        sortedFreq.push_back(std::make_pair(allWords[i].getText(),allWords[i].getFreq()));
     }
 
     std::sort(sortedFreq.begin(),sortedFreq.end(),sort());

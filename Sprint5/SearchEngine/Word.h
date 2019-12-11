@@ -24,28 +24,34 @@ class Word {
     friend ostream& operator<<(ostream&, const Word&);
 
     private:
+
+        int freq;
         string text;
         vector<pair<string, int> > files;
-        int totalFrequency;
+
     public:
         Word();
         Word(string);
         Word(string, string);
+
         Word(string, pair<string, int>);
 
+        int getFreq();
         string getText();
-        int getTotalFrequency();
+
+        void format();
+        void removePunc();
+        void stemm();
 
         void addFile(string);
-        void addFileFromIndex(pair<string, int>);
+        void addIndexFile(pair<string, int>);
         vector<pair<string, int> >& getFiles();
-        int findFile(string);
+        int find(string);
+
         bool operator>(const Word&);
         bool operator<(const Word&);
         bool operator==(const Word&);
-        void formatString();
-        void clearPunctuation();
-        void stemWord();
+
 };
 
 #endif // WORD_H

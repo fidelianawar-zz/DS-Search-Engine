@@ -15,10 +15,10 @@ private:
     template<class U>
     class AVLNode{
     public:
-        U data;
         AVLNode * left;
         AVLNode * right;
         int height = 0;
+        U data;
 
         AVLNode(){
             left = nullptr;
@@ -28,52 +28,54 @@ private:
         AVLNode(U& newData):data(newData), left(nullptr), right(nullptr){
             height = 0;
         }
-        AVLNode(U& newData,AVLNode *newLeft, AVLNode *newRight, int newHeight ){
-            data = newData;
-            left = newLeft;
-            right = newRight;
-            height = newHeight;
+        AVLNode(U& d_data,AVLNode *l_left, AVLNode *r_right, int h_height ){
+            data = d_data;
+            left = l_left;
+            right = r_right;
+            height = h_height;
         }
-        void operator = (AVLNode<U>& rhs) {
-            data = rhs.data;
-            if(rhs.left !=  nullptr){
+        void operator = (AVLNode<U>& otherNode) {
+            data = otherNode.data;
+            if(otherNode.left !=  nullptr){
                 left = new AVLNode<U>();
-                left = rhs.left;
+                left = otherNode.left;
             }
             else{
                 left = nullptr;
             }
-            if(rhs.right !=  nullptr){
+            if(otherNode.right !=  nullptr){
                 right = new AVLNode<U>();
-                right = rhs.right;
+                right = otherNode.right;
             }
             else{
                 right = nullptr;
             }
-            height = rhs.height;
+            height = otherNode.height;
         }
     };
 
     AVLNode<T> *root;
     int totalNodes;
 
-    int max(int, int);
-    int height(AVLNode<T>*);
-    void clean(AVLNode<T>*);
+    int maxValue(int, int);
+    int treeHeight(AVLNode<T>*);
+    void cleanTree(AVLNode<T>*);
     void insert(T, AVLNode<T>*&);
     void printInOrder(AVLNode<T>*);
     bool contains(T, AVLNode<T>*);
     AVLNode<T>* copy(AVLNode<T>*&);
-    void rotateLeftChild(AVLNode<T>*&);
-    void rotateRightChild(AVLNode<T>*&);
-    void doubleRotateRightChild(AVLNode<T>*&);
-    void doubleRotateLeftChild( AVLNode<T>*&);
-    void outputInOrder(AVLNode<T>*&, ostream&);
+
+    void printInOrder(AVLNode<T>*&, ostream&);
     T& find(T,  AVLNode<T>*);
     void countTotalNodes(AVLNode<T>* node);
     void parseInOrder(AVLNode<T>* node);
     vector<T> allNodes;
     ostream& createPersistent(AVLNode<T>* node);
+
+    void rotateLeftChild(AVLNode<T>*&);
+    void rotateRightChild(AVLNode<T>*&);
+    void doubleRotateRightChild(AVLNode<T>*&);
+    void doubleRotateLeftChild( AVLNode<T>*&);
 
 public:
     DSAVLTree();
@@ -81,19 +83,21 @@ public:
     DSAVLTree(DSAVLTree &rhs);
     ~DSAVLTree();
     DSAVLTree<T>& operator = (DSAVLTree<T>&);
-    void clean();
+    void cleanTree();
     void insert(T);
-    void printInOrder();
-    void countTotalNodes();
+
     bool isEmpty();
     bool contains(T);
     T& find(T);
-    void outputInOrder(ostream&);
-    int getTotalNodes();
-    void parseInOrder();
-    vector<T> getAllNodes();
+
     void createPersistent();
 
+    void printInOrder();
+    void countTotalNodes();
+    void printInOrder(ostream&);
+    int getTotalNodes();
+    void parseInOrder();
+     vector<T> getAllNodes();
 };
 
 template<class T>
@@ -122,22 +126,23 @@ ostream& DSAVLTree<T>::createPersistent(AVLNode<T>* node){
 }
 
 template<class T>
+void DSAVLTree<T>:: printInOrder(ostream& output)
+{
+    printInOrder(root, output);
+}
+template<class T>
+DSAVLTree<T>::DSAVLTree(DSAVLTree<T>& other){
+    root = nullptr;
+    if(this  !=  &other)
+    {
+        cleanTree();
+        root = copy(other.root);
+    }
+}
+
+template<class T>
 DSAVLTree<T>::DSAVLTree(){
     root = nullptr;
-}
-template<class T>
-void DSAVLTree<T>:: outputInOrder(ostream& output)
-{
-    outputInOrder(root, output);
-}
-template<class T>
-DSAVLTree<T>::DSAVLTree(DSAVLTree<T>& rhs){
-    root = nullptr;
-    if(this  !=  &rhs)
-    {
-        clean();
-        root = copy(rhs.root);
-    }
 }
 
 template<class T>
@@ -149,16 +154,16 @@ DSAVLTree<T>::DSAVLTree(T data){
 template<class T>
 DSAVLTree<T>::~DSAVLTree()
 {
-    clean();
+    cleanTree();
 }
 
 template<class T>
-DSAVLTree<T>& DSAVLTree<T>::operator = (DSAVLTree<T>& rhs)
+DSAVLTree<T>& DSAVLTree<T>::operator = (DSAVLTree<T>& otherTree)
 {
-    if(this  !=  &rhs)
+    if(this  !=  &otherTree)
     {
-        clean();
-        root = copy(rhs.root);
+        cleanTree();
+        root = copy(otherTree.root);
     }
     return *this;
 }
@@ -167,9 +172,9 @@ template<typename T>
 typename DSAVLTree<T>::template AVLNode<T>* DSAVLTree<T>::copy(AVLNode<T>*& node)
 {
     if(node!=nullptr){
-        AVLNode<T>* zleft = copy( node->left );
-        AVLNode<T>* zright = copy( node->right );
-        return new  AVLNode<T>(node->data, zleft, zright, node->height);
+        AVLNode<T>* lleft = copy( node->left );
+        AVLNode<T>* rright = copy( node->right );
+        return new  AVLNode<T>(node->data, lleft, rright, node->height);
     }
     else if(node==nullptr)
     {
@@ -177,11 +182,6 @@ typename DSAVLTree<T>::template AVLNode<T>* DSAVLTree<T>::copy(AVLNode<T>*& node
     }
 }
 
-template<class T>
-T& DSAVLTree<T>::find(T data)
-{
-    return find(data, root);
-}
 
 template<class T>
 T& DSAVLTree<T>::find(T data, AVLNode<T>* node)
@@ -194,42 +194,53 @@ T& DSAVLTree<T>::find(T data, AVLNode<T>* node)
         else
             return node->data;
     }
-    throw out_of_range("Element requested is not in Tree");
+    throw out_of_range("Data element is not present in tree.");
 }
 
 template<class T>
-void DSAVLTree<T>::clean()
+void DSAVLTree<T>::cleanTree()
 {
-    clean(root);
+    cleanTree(root);
 }
 
 template<class T>
-void DSAVLTree<T>::clean(AVLNode<T>* node)
+T& DSAVLTree<T>::find(T data)
+{
+    return find(data, root);
+}
+
+
+
+template<class T>
+void DSAVLTree<T>::cleanTree(AVLNode<T>* node)
 {
 
     if(node  !=  nullptr)
     {
-        AVLNode<T> * cur;
+        AVLNode<T> * current;
         if(node->left  !=  nullptr){
-            clean(node->left);
+            cleanTree(node->left);
         }
         if(node->right  !=  nullptr){
-            clean(node->right);
+            cleanTree(node->right);
         }
-        cur = node;
+        current = node;
         delete node;
     }
     node = nullptr;
 }
+
+
 template<class T>
-bool DSAVLTree<T>::isEmpty()
+bool DSAVLTree<T>::contains(T data)
 {
-    if(root == nullptr)
-    {
-        return true;
-    }
-    else
-        return false;
+    return contains(data, root);
+}
+
+template<class T>
+int DSAVLTree<T>::maxValue(int leftSide, int rightSide)
+{
+    return leftSide > rightSide? leftSide : rightSide;
 }
 
 template<class T>
@@ -240,10 +251,39 @@ void DSAVLTree<T>::insert(T x)
 }
 
 template<class T>
-bool DSAVLTree<T>::contains(T data)
+void DSAVLTree<T>::insert(T newData, AVLNode<T>*& node)
 {
-    return contains(data, root);
+
+    if( node == nullptr ){
+        node = new AVLNode<T>(newData);
+    }
+    else if(newData < node->data)
+    {
+        insert(newData, node->left);
+
+        if( treeHeight(node->left) - treeHeight(node->right) == 2 ){
+            if(newData < node->left->data){
+                rotateLeftChild(node);
+            }
+            else
+                doubleRotateLeftChild(node);
+        }
+    }
+
+    else if(node->data < newData)
+    {
+        insert(newData, node->right);
+        if( treeHeight(node->right) - treeHeight(node->left) == 2 ){
+            if(node->right->data < newData){
+                rotateRightChild(node);
+            }
+            else
+                doubleRotateRightChild(node);
+        }
+    }
+    node->height = maxValue( treeHeight( node->left ), treeHeight( node->right ) ) + 1;
 }
+
 
 template<class T>
 bool DSAVLTree<T>::contains(T data, AVLNode<T>* node)
@@ -259,16 +299,12 @@ bool DSAVLTree<T>::contains(T data, AVLNode<T>* node)
 }
 
 template<class T>
-int DSAVLTree<T>::height(AVLNode<T> *node)
+int DSAVLTree<T>::treeHeight(AVLNode<T> *node)
 {
     return node == nullptr? -1 : node->height;
 }
 
-template<class T>
-int DSAVLTree<T>::max(int leftSide, int rightSide)
-{
-    return leftSide > rightSide? leftSide : rightSide;
-}
+
 
 template<class T>
 void DSAVLTree<T>::printInOrder()
@@ -309,7 +345,7 @@ void DSAVLTree<T>::parseInOrder(AVLNode<T>* node)
     }
 
     if (isEmpty() == true) {
-        cout << "tree is empty";
+        cout << "The tree is empty";
     }
 }
 template<class T>
@@ -321,10 +357,6 @@ template<class T>
 void DSAVLTree<T>::countTotalNodes(AVLNode<T>* node)
 {
     AVLNode<T>* temp = node;
-//    if(node != nullptr){
-//        countTotalNodes(node->left,totalNodes++);
-//        countTotalNodes(node->right,totalNodes++);
-//    }
     while(node != nullptr){
         node = node->left;
         totalNodes++;
@@ -335,7 +367,7 @@ void DSAVLTree<T>::countTotalNodes(AVLNode<T>* node)
     }
 
     if (isEmpty() == true) {
-        cout << "tree is empty";
+        cout << "The tree is empty";
     }
 }
 template<class T>
@@ -344,48 +376,13 @@ int DSAVLTree<T>::getTotalNodes()
     return totalNodes;
 }
 template<class T>
-void DSAVLTree<T>:: outputInOrder(AVLNode<T>*& node, ostream& output)
+void DSAVLTree<T>:: printInOrder(AVLNode<T>*& node, ostream& output)
 {
     if(node != nullptr){
-        outputInOrder(node->left, output);
+        printInOrder(node->left, output);
         output<<node->data;
-        outputInOrder(node->right, output);
+        printInOrder(node->right, output);
     }
-}
-
-
-template<class T>
-void DSAVLTree<T>::insert(T newData, AVLNode<T>*& node)
-{
-
-    if( node == nullptr ){
-        node = new AVLNode<T>(newData);
-    }
-    else if(newData < node->data)
-    {
-        insert(newData, node->left);
-
-        if( height(node->left) - height(node->right) == 2 ){
-            if(newData < node->left->data){
-                rotateLeftChild(node);
-            }
-            else
-                doubleRotateLeftChild(node);
-        }
-    }
-
-    else if(node->data < newData)
-    {
-        insert(newData, node->right);
-        if( height(node->right) - height(node->left) == 2 ){
-            if(node->right->data < newData){
-                rotateRightChild(node);
-            }
-            else
-                doubleRotateRightChild(node);
-        }
-    }
-    node->height = max( height( node->left ), height( node->right ) ) + 1;
 }
 
 
@@ -397,8 +394,8 @@ void DSAVLTree<T>::rotateLeftChild(AVLNode<T>*& node1)
     node1->left = node2->right;
     node2->right = node1;
 
-    node1->height = max(height( node1->left), height(node1->right)) + 1;
-    node2->height = max(height( node2->left), node1->height) + 1;
+    node1->height = maxValue(treeHeight( node1->left), treeHeight(node1->right)) + 1;
+    node2->height = maxValue(treeHeight( node2->left), node1->height) + 1;
 
     node1 = node2;
 }
@@ -411,8 +408,8 @@ void DSAVLTree<T>::rotateRightChild(AVLNode<T>*& node1)
     node1->right = node2->left;
     node2->left = node1;
 
-    node1->height = max(height(node1->left), height( node1->right)) + 1;
-    node2->height = max(height(node2->right), node1->height) + 1;
+    node1->height = maxValue(treeHeight(node1->left), treeHeight( node1->right)) + 1;
+    node2->height = maxValue(treeHeight(node2->right), node1->height) + 1;
 
     node1 = node2;
 }
@@ -429,6 +426,17 @@ void DSAVLTree<T>::doubleRotateLeftChild( AVLNode<T>*& node2 )
 {
     rotateRightChild(node2->left);
     rotateLeftChild(node2);
+}
+
+template<class T>
+bool DSAVLTree<T>::isEmpty()
+{
+    if(root == nullptr)
+    {
+        return true;
+    }
+    else
+        return false;
 }
 
 #endif // DSDSAVLTree_H

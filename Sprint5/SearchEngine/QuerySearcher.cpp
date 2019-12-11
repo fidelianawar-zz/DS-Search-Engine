@@ -11,52 +11,46 @@ QuerySearcher::QuerySearcher()
 
 }
 
-
-
 QuerySearcher::QuerySearcher(IndexInterface* handler, int numDocs,char *argv[])
 {
-    index = handler;
+    indexObj = handler;
     amountDocs = numDocs;
     path_ = argv[1];
 }
 
-void QuerySearcher::getQuery(){
+//recieves query from user
+void QuerySearcher::receiveQuery(){
     QueryProcessor query;
-    input = query.requestUserInput();
-    if(input.size()==1){
-        vector<pair<string, int>> data;
-        if (checkWordExists(input.front())) {
-            data = receiveStringRequest(input.front());//equals a vector
+    inputQuery = query.requestUserInput();
+    if(inputQuery.size()==1){
+        vector<pair<string, int>> vectorPair;
+        if (checkWordExists(inputQuery.front())) {
+            vectorPair = getRequest(inputQuery.front());//equals a vector
         }
-        input.pop();
-        printResults(data);
+        inputQuery.pop();
+        print(vectorPair);
     }
-    else if(input.front()=="and")
+    else if(inputQuery.front()=="and")
     {
-        andQuery();
+        andQ();
     }
-    else if(input.front()=="or")
+    else if(inputQuery.front()=="or")
     {
-        orQuery();
+        orQ();
     }
     else {
-        notQuery();
+        notQ();
     }
 }
 
-bool QuerySearcher::checkWordExists(string word){
-    cout << endl;
-    if (index->contains(word)) {
-        cout << word << " exists in corpus" << endl;
-        return true;
-    }
-    else {
-        cout << word << " does not exist in the corpus" << endl;
-        return false;
-    }
+//traces back to file
+vector<pair<string, int>> QuerySearcher::getRequest(string request){
+    Word wordFile = indexObj->find(request);
+    return wordFile.getFiles();
 }
 
-void QuerySearcher::printResults(vector<pair<string, int>> d){
+//prints results including court case title, date, etc.
+void QuerySearcher::print(vector<pair<string, int>> d){
     cout <<"\nDocument Results:" << endl;
     cout << endl << "The number of documents found: " << d.size() << endl<<endl;
 
@@ -100,7 +94,6 @@ void QuerySearcher::printResults(vector<pair<string, int>> d){
         cin >> answer;
 
         resultPath = path_ + answer;
-//cout <<resultPath <<endl;
         process.parseInputData(resultPath,"",'X');
 
     }
@@ -112,68 +105,76 @@ void QuerySearcher::printResults(vector<pair<string, int>> d){
     cout << endl;
 }
 
-vector<pair<string, int>> QuerySearcher::receiveStringRequest(string request){
-    Word wordFile = index->find(request);
-    return wordFile.getFiles();
+//checking if the word exists in corpus
+bool QuerySearcher::checkWordExists(string word){
+    cout << endl;
+    if (indexObj->contains(word)) {
+        cout << word << " exists in corpus" << endl;
+        return true;
+    }
+    else {
+        cout << word << " doesn't exist in the corpus" << endl;
+        return false;
+    }
 }
 
-void QuerySearcher::notQuery() {
+//'not' keyword query functionality
+void QuerySearcher::notQ() {
     vector<pair<string, int>> temp;
     vector<pair<string, int>> results;
 
 
-    while(!input.empty()){
-        if(input.front() == "not"){
+    while(!inputQuery.empty()){
+        if(inputQuery.front() == "not"){
 
-            input.pop();
-            if (checkWordExists(input.front())) {
-                temp=receiveStringRequest(input.front());
+            inputQuery.pop();
+            if (checkWordExists(inputQuery.front())) {
+                temp=getRequest(inputQuery.front());
                 if(!results.empty()){
-                    results=differentVector(results, temp);
+                    results=notVec(results, temp);
                 }
             }
         }
         else {
-            if (checkWordExists(input.front())) {
-                temp=receiveStringRequest(input.front());
+            if (checkWordExists(inputQuery.front())) {
+                temp=getRequest(inputQuery.front());
                 if(results.empty()){
                     results=temp;
                 }
             }
         }
-        input.pop();
+        inputQuery.pop();
     }
-    printResults(results);
+    print(results);
 }
 
-void QuerySearcher::andQuery() {
+//'and' keyword query functionality
+void QuerySearcher::andQ() {
     vector<pair<string, int>> temp;
     vector<pair<string, int>> results;
 
     bool wordExists = true;
 
-    //we remove  first element "and" from  queue
-    input.pop();
+    inputQuery.pop();
 
-    //while queue not empty, search words implementd
-    while(!input.empty()){
-        if(input.front()=="not"){
-            input.pop();
-            if (checkWordExists(input.front())) {
-                temp=receiveStringRequest(input.front());
+    while(!inputQuery.empty()){
+        if(inputQuery.front()=="not"){
+            inputQuery.pop();
+            if (checkWordExists(inputQuery.front())) {
+                temp=getRequest(inputQuery.front());
                 if(!results.empty()){
-                    results=differentVector(results, temp);
+                    results=notVec(results, temp);
                 }
             }
         }
         else {
-            if (checkWordExists(input.front())) {
-                temp=receiveStringRequest(input.front());
+            if (checkWordExists(inputQuery.front())) {
+                temp=getRequest(inputQuery.front());
                 if(results.empty()){
                     results=temp;
                 }
                 else {
-                    results=intersectVector(results, temp);
+                    results=andVec(results, temp);
                 }
             }
             else {
@@ -181,7 +182,7 @@ void QuerySearcher::andQuery() {
             }
         }
 
-        input.pop();
+        inputQuery.pop();
         if (wordExists == false) {
             int resultsSize = results.size();
             for (int i = 0; i < resultsSize; i++) {
@@ -191,10 +192,10 @@ void QuerySearcher::andQuery() {
         }
     }
 
-    printResults(results);
+    print(results);
 }
 
-vector<pair<string, int>> QuerySearcher:: unionVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
+vector<pair<string, int>> QuerySearcher:: orVec(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
 
     for(unsigned int i = 0; i < a.size(); i++){
         for(unsigned int j = 0; j < b.size(); j++){
@@ -212,7 +213,7 @@ vector<pair<string, int>> QuerySearcher:: unionVector(vector<pair<string, int>>&
     return a;
 }
 
-vector<pair<string, int>> QuerySearcher:: differentVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b)
+vector<pair<string, int>> QuerySearcher:: notVec(vector<pair<string, int>>& a, vector<pair<string, int>>& b)
 {
     for(unsigned int i=0; i<a.size(); i++){
         for(unsigned int j=0; j<b.size(); j++){
@@ -226,11 +227,8 @@ vector<pair<string, int>> QuerySearcher:: differentVector(vector<pair<string, in
 }
 
 
-vector<pair<string, int>> QuerySearcher:: intersectVector(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
+vector<pair<string, int>> QuerySearcher:: andVec(vector<pair<string, int>>& a, vector<pair<string, int>>& b){
     vector<pair<string, int>> finalAndVector;
-    //vector<pair<string, int>>::iterator it;
-
-
     for(unsigned int i=0; i<a.size(); i++){
         for(unsigned int j=0; j<b.size(); j++){
             if(a[i].first==b[j].first){
@@ -243,38 +241,39 @@ vector<pair<string, int>> QuerySearcher:: intersectVector(vector<pair<string, in
     return finalAndVector;
 }
 
-void QuerySearcher::orQuery(){
+//'or' keyword query functionality
+void QuerySearcher::orQ(){
     vector<pair<string, int>> results;
     vector<pair<string, int>> temp;
 
-    //we remove the first element "and" from the queue
-    input.pop();
+    //we remove the first element
+    inputQuery.pop();
 
-    //while the queue is not empty, search words are implementd
-    while(!input.empty()) {
+    //search words implementd
+    while(!inputQuery.empty()) {
 
-        if(input.front()=="not") {
-            input.pop();
-            if (checkWordExists(input.front())) {
-                temp=receiveStringRequest(input.front());
+        if(inputQuery.front()=="not") {
+            inputQuery.pop();
+            if (checkWordExists(inputQuery.front())) {
+                temp=getRequest(inputQuery.front());
                 if(!results.empty()){
-                    results=differentVector(results, temp);
+                    results=notVec(results, temp);
                 }
             }
         }
         else {
-            if (checkWordExists(input.front())) {
-                temp=receiveStringRequest(input.front());
+            if (checkWordExists(inputQuery.front())) {
+                temp=getRequest(inputQuery.front());
                 if(results.empty()) {
                     results=temp;
                 }
                 else {
-                    results=unionVector(results, temp);
+                    results=orVec(results, temp);
                 }
             }
         }
-        input.pop();
+        inputQuery.pop();
     }
 
-    printResults(results);
+    print(results);
 }
