@@ -8,6 +8,4 @@ The user enters a search query, and any documents that satisfy that query are re
 We implemented functionality to handle simple prefix Boolean queries entered by the user such as AND, OR, NOT and ranked results by term frequency – inverse document frequency (td-idf).
 
 Custom implementation of:
--AVL Tree
--HashTable (with collisions handled by separate chaining)
--Inverted file index (relates each unique word from the corpus to the document(s) in which it appears; allows for efficient execution of a query to quickly determine in which documents a particular query term appears)
+AVL Tree, HashTable (with collisions handled by separate chaining), Inverted file index (relates each unique word from the corpus to the document(s) in which it appears; allows for efficient execution of a query to quickly determine in which documents a particular query term appears)
